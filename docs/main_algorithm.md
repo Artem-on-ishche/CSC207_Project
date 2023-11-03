@@ -1,0 +1,5 @@
+- load the weather
+- load available items grouped by category
+- decide if we need each of the clothing items based on weather
+- filter available items in each of the categories based on weather
+- randomly select an item in each of the required categories
