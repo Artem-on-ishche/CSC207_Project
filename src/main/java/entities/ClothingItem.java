@@ -9,6 +9,7 @@ public record ClothingItem(
         Image image,
         BodyPart bodyPart,
         Weather appropriateWeather,
-        Optional<String> description
+        Optional<String> description,
+        Boolean rainAppropriate
 ) {
 }

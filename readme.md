@@ -18,7 +18,10 @@ using weather API, perhaps even incorporating some fashion / colour theory to fo
 In the future we could add promotional integrations with some brands by recommending their clothing more.
 
 # Weather API
+// Isn't it OpenWeatherAPI??, I think we need to change this at some point
+// TODO: change this
 The API we're using is [OpenMeteo](https://open-meteo.com/).
 
+// TODO: add info about Ximilar API in the readme
 ![postman_screenshot](postman_screenshot.png)
 ![output_screenshot](img.png)
