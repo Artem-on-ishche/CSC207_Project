@@ -9,13 +9,15 @@ import java.util.stream.Collectors;
 
 public class OutfitSelectorInteractor implements InputBoundary {
 
+    LocationDataSource locationDataSource;
     WeatherDataSource weatherDataSource;
     ClothingDataSource clothingDataSource;
     OutputBoundary outputBoundary;
 
     @Override
     public void execute(InputData inputData) {
-        var weather = weatherDataSource.getWeatherData();
+        var location = locationDataSource.getLocationData();
+        var weather = weatherDataSource.getWeatherData(location);
         var allClothingItems = clothingDataSource.getAllClothingItems();
         var clothingItemsByCategory = groupClothingItemsByCategory(allClothingItems);
         var clothingTypeRequirements = getClothingTypeRequirementBasedOnWeather(weather);
