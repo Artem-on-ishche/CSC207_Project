@@ -7,7 +7,7 @@ public record ClothingItem(
         Long id,
         String name,
         Image image,
-        BodyPart bodyPart,
+        ClothingType clothingType,
         Weather appropriateWeather,
         Optional<String> description
 ) {
