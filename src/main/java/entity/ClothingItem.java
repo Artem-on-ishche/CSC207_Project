@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 import java.awt.*;
 import java.util.Optional;
@@ -7,7 +7,7 @@ public record ClothingItem(
         Long id,
         String name,
         Image image,
-        BodyPart bodyPart,
+        ClothingType clothingType,
         Weather appropriateWeather,
         Optional<String> description,
         Boolean rainAppropriate
