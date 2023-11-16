@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 public enum Weather {
     FREEZING(-300, -10),
