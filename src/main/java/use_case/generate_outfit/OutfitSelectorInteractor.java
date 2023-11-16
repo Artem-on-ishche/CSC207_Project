@@ -1,8 +1,8 @@
-package service;
+package use_case.generate_outfit;
 
-import entities.ClothingType;
-import entities.ClothingItem;
-import entities.Outfit;
+import entity.ClothingType;
+import entity.ClothingItem;
+import entity.Outfit;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +30,7 @@ public class OutfitSelectorInteractor implements InputBoundary {
     }
 
     private Map<ClothingType, Boolean> getClothingTypeRequirementBasedOnWeather(WeatherData weather) {
+        // TODO implement real mapping logic
         return Map.of(
                 ClothingType.INNER_UPPER_BODY, true,
                 ClothingType.LOWER_BODY, true,

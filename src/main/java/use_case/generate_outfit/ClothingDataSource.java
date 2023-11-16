@@ -1,6 +1,6 @@
-package service;
+package use_case.generate_outfit;
 
-import entities.ClothingItem;
+import entity.ClothingItem;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package service;
+package use_case.generate_outfit;
 
 public interface OutputBoundary {
     void prepareSuccessView(OutfitOutputData outfit);

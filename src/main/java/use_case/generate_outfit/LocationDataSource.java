@@ -1,6 +1,6 @@
-package service;
+package use_case.generate_outfit;
 
-import entities.Location;
+import entity.Location;
 
 public interface LocationDataSource {
     Location getLocationData();

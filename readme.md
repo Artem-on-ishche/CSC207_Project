@@ -20,5 +20,5 @@ In the future we could add promotional integrations with some brands by recommen
 # Weather API
 The API we're using is [OpenMeteo](https://open-meteo.com/).
 
-![postman_screenshot](postman_screenshot.png)
-![output_screenshot](img.png)
+![postman_screenshot](docs/postman_screenshot.png)
+![output_screenshot](docs/img.png)
