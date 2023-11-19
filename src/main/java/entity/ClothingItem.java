@@ -8,7 +8,10 @@ public record ClothingItem(
         String name,
         Image image,
         ClothingType clothingType,
-        Weather appropriateWeather,
+        double minimumAppropriateTemperature,
         Optional<String> description
 ) {
+    public boolean isAppropriateForTemperature(double temperature) {
+        return temperature >= minimumAppropriateTemperature;
+    }
 }

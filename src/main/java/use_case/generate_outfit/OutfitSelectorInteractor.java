@@ -3,6 +3,7 @@ package use_case.generate_outfit;
 import entity.ClothingType;
 import entity.ClothingItem;
 import entity.Outfit;
+import entity.TemperatureBoundaries;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,10 +20,19 @@ public class OutfitSelectorInteractor implements InputBoundary {
         var location = locationDataSource.getLocationData();
         var weather = weatherDataSource.getWeatherData(location);
         var allClothingItems = clothingDataSource.getAllClothingItems();
-        var clothingItemsByCategory = groupClothingItemsByCategory(allClothingItems);
+
+        var temperatureAppropriateClothingItems = filterClothingItemsByTemperature(allClothingItems, weather.temperature());
+        var clothingItemsByCategory = groupClothingItemsByCategory(temperatureAppropriateClothingItems);
         var clothingTypeRequirements = getClothingTypeRequirementBasedOnWeather(weather);
 
         randomlySelectAppropriateOutfit(clothingItemsByCategory, clothingTypeRequirements);
+    }
+
+    private List<ClothingItem> filterClothingItemsByTemperature(Collection<ClothingItem> clothingItems, double temperature) {
+        return clothingItems
+                .stream()
+                .filter(clothingItem -> clothingItem.isAppropriateForTemperature(temperature))
+                .toList();
     }
 
     private Map<ClothingType, List<ClothingItem>> groupClothingItemsByCategory(Collection<ClothingItem> clothingItems) {
@@ -30,12 +40,10 @@ public class OutfitSelectorInteractor implements InputBoundary {
     }
 
     private Map<ClothingType, Boolean> getClothingTypeRequirementBasedOnWeather(WeatherData weather) {
-        // TODO implement real mapping logic
-        return Map.of(
-                ClothingType.INNER_UPPER_BODY, true,
-                ClothingType.LOWER_BODY, true,
-                ClothingType.FOOTWEAR, true
-        );
+        return Arrays.stream(ClothingType.values()).collect(Collectors.toMap(
+                clothingType -> clothingType,
+                clothingType -> weather.temperature() <= clothingType.maximumAppropriateTemperature
+        ));
     }
 
     public static <E> E getRandom(List<E> list) {
