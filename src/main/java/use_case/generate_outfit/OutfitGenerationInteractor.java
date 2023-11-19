@@ -3,12 +3,11 @@ package use_case.generate_outfit;
 import entity.ClothingType;
 import entity.ClothingItem;
 import entity.Outfit;
-import entity.TemperatureBoundaries;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OutfitSelectorInteractor implements InputBoundary {
+public class OutfitGenerationInteractor implements InputBoundary {
 
     LocationDataSource locationDataSource;
     WeatherDataSource weatherDataSource;
