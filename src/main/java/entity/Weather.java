@@ -1,4 +1,4 @@
-package use_case.generate_outfit;
+package entity;
 
-public record WeatherData(double temperature, boolean isRaining) {
+public record Weather(double temperature, boolean isRaining) {
 }
