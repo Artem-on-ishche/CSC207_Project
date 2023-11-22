@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class OutfitGenerator {
-    private final ClothingItemSelectionStrategy clothingItemSelectionStrategy;
+    public ClothingItemSelectionStrategy clothingItemSelectionStrategy;
 
     public OutfitGenerator(ClothingItemSelectionStrategy clothingItemSelectionStrategy) {
         this.clothingItemSelectionStrategy = clothingItemSelectionStrategy;
@@ -57,7 +57,7 @@ public class OutfitGenerator {
             if (!isNeeded) continue;
 
             var clothingItemsOfThisCategory = clothingItemsByCategory.get(clothingType);
-            if (clothingItemsOfThisCategory.isEmpty()) {
+            if (clothingItemsOfThisCategory == null || clothingItemsOfThisCategory.isEmpty()) {
                 throw new OutfitGenerationException("No items found in " + clothingType + " category");
             }
 
