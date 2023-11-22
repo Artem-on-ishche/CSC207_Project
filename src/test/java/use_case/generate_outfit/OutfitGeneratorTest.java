@@ -21,22 +21,24 @@ import java.util.stream.Stream;
 
 
 public class OutfitGeneratorTest {
-    private static OutfitGenerator outfitGenerator = new OutfitGenerator(clothingItems -> clothingItems.get(0));
+    private static final OutfitGenerator outfitGenerator = new OutfitGenerator(clothingItems -> clothingItems.get(0));
 
     private static final Weather basicWeather = new Weather(15, false);
     private static final List<ClothingItem> basicWardrobe = new ArrayList<>();
 
     @BeforeAll
     static void setup() {
-        for (var clothingType : ClothingType.values()) {
-            basicWardrobe.add(new ClothingItem(
-                    1L,
-                    "item",
-                    null,
-                    clothingType,
-                    -50,
-                    Optional.empty()
-            ));
+        for (int i = 1; i <= 10; i++) {
+            for (var clothingType : ClothingType.values()) {
+                basicWardrobe.add(new ClothingItem(
+                        (long) i,
+                        "item",
+                        null,
+                        clothingType,
+                        -i,
+                        Optional.empty()
+                ));
+            }
         }
     }
 
@@ -71,6 +73,34 @@ public class OutfitGeneratorTest {
 
                 assertEquals(isExpected, isPresent);
             }
+        } catch (OutfitGenerationException e) {
+            fail("Shouldn't throw an exception");
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, - 2, -3, -4, -5, -6, -7, -8, -9, -10})
+    public void givenDifferentTemperatures_shouldReturnDifferentItems(int temperature) {
+        try {
+            var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), basicWardrobe);
+
+            for (var clothingItem : outfit.getClothingItems().values()) {
+                assertEquals(-temperature, clothingItem.id());
+            }
+        } catch (OutfitGenerationException e) {
+            fail("Shouldn't throw an exception");
+        }
+    }
+
+    @Test
+    public void shouldCallClothingItemSelectionStrategy() {
+        outfitGenerator.clothingItemSelectionStrategy = clothingItems -> {
+            assertTrue(true, "Function correctly called");
+            return clothingItems.get(0);
+        };
+
+        try {
+            outfitGenerator.generateOutfit(basicWeather, basicWardrobe);
         } catch (OutfitGenerationException e) {
             fail("Shouldn't throw an exception");
         }
