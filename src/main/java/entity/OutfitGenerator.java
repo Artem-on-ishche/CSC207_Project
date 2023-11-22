@@ -4,6 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class OutfitGenerator {
+    private final ClothingItemSelectionStrategy clothingItemSelectionStrategy;
+
+    public OutfitGenerator(ClothingItemSelectionStrategy clothingItemSelectionStrategy) {
+        this.clothingItemSelectionStrategy = clothingItemSelectionStrategy;
+    }
 
     public Outfit generateOutfit(
             Weather weather,
@@ -34,11 +39,6 @@ public class OutfitGenerator {
         ));
     }
 
-    public static <E> E getRandom(List<E> list) {
-        var randomIndex = new Random().nextInt(list.size());
-        return list.get(randomIndex);
-    }
-
     private Outfit randomlySelectAppropriateOutfit(
             Map<ClothingType, List<ClothingItem>> clothingItemsByCategory,
             Map<ClothingType, Boolean> clothingTypeRequirements
@@ -54,7 +54,7 @@ public class OutfitGenerator {
                 throw new OutfitGenerationException("No items found in " + clothingType + " category");
             }
 
-            var clothingItem = getRandom(clothingItemsOfThisCategory);
+            var clothingItem = clothingItemSelectionStrategy.selectClothingItem(clothingItemsOfThisCategory);
             outfit.addClothingItem(clothingItem);
         }
 
