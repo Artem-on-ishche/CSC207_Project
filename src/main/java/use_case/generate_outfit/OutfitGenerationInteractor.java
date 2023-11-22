@@ -1,7 +1,5 @@
 package use_case.generate_outfit;
 
-import entity.*;
-
 public class OutfitGenerationInteractor implements InputBoundary {
 
     private final LocationDataSource locationDataSource;

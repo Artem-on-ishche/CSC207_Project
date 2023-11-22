@@ -1,4 +1,4 @@
-package entity;
+package use_case.generate_outfit;
 
 public class OutfitGenerationException extends Exception {
     public OutfitGenerationException(String s) {

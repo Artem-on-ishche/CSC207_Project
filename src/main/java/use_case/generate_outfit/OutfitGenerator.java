@@ -1,4 +1,9 @@
-package entity;
+package use_case.generate_outfit;
+
+import entity.ClothingItem;
+import entity.ClothingType;
+import entity.Outfit;
+import entity.Weather;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,8 +22,9 @@ public class OutfitGenerator {
         var temperatureAppropriateClothingItems = filterClothingItemsByTemperature(allClothingItems, weather.temperature());
         var clothingItemsByCategory = groupClothingItemsByCategory(temperatureAppropriateClothingItems);
         var clothingTypeRequirements = getClothingTypeRequirementBasedOnWeather(weather);
+        var isUmbrellaRequired = weather.isRaining();
 
-        return randomlySelectAppropriateOutfit(clothingItemsByCategory, clothingTypeRequirements);
+        return randomlySelectAppropriateOutfit(clothingItemsByCategory, clothingTypeRequirements, isUmbrellaRequired);
     }
 
     private List<ClothingItem> filterClothingItemsByTemperature(Collection<ClothingItem> clothingItems, double temperature) {
@@ -41,9 +47,10 @@ public class OutfitGenerator {
 
     private Outfit randomlySelectAppropriateOutfit(
             Map<ClothingType, List<ClothingItem>> clothingItemsByCategory,
-            Map<ClothingType, Boolean> clothingTypeRequirements
+            Map<ClothingType, Boolean> clothingTypeRequirements,
+            boolean isUmbrellaRequired
     ) throws OutfitGenerationException {
-        var outfit = new Outfit(new HashMap<>());
+        var outfit = new Outfit(new HashMap<>(), isUmbrellaRequired);
         for (var clothingType : ClothingType.values()) {
             var isNeeded = clothingTypeRequirements.getOrDefault(clothingType, false);
 
