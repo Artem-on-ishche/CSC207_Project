@@ -55,7 +55,7 @@ public class OutfitGeneratorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, - 2, -3, -4, -5, -6, -7, -8, -9, -10})
+    @ValueSource(ints = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10})
     public void givenDifferentTemperatures_shouldReturnDifferentItems(int temperature) {
         try {
             var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), getBasicWardrobe());
@@ -68,17 +68,26 @@ public class OutfitGeneratorTest {
         }
     }
 
-    // TODO add rain tests
+    @Test
+    public void givenItIsRaining_shouldRequireUmbrella() {
+        try {
+            var outfit = outfitGenerator.generateOutfit(new Weather(basicWeather.temperature(), true), getBasicWardrobe());
+
+            assertTrue(outfit.isUmbrellaRequired());
+        } catch (OutfitGenerationException e) {
+            fail("Shouldn't throw an exception");
+        }
+    }
 
     @Test
     public void shouldCallClothingItemSelectionStrategy() {
-        outfitGenerator.clothingItemSelectionStrategy = clothingItems -> {
+        var outfitGeneratorWithSpyStrategy = new OutfitGenerator(clothingItems -> {
             assertTrue(true, "Function correctly called");
             return clothingItems.get(0);
-        };
+        });
 
         try {
-            outfitGenerator.generateOutfit(basicWeather, getBasicWardrobe());
+            outfitGeneratorWithSpyStrategy.generateOutfit(basicWeather, getBasicWardrobe());
         } catch (OutfitGenerationException e) {
             fail("Shouldn't throw an exception");
         }

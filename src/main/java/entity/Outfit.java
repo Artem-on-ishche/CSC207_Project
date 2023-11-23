@@ -16,6 +16,10 @@ public final class Outfit {
         return clothingItems;
     }
 
+    public boolean isUmbrellaRequired() {
+        return isUmbrellaRequired;
+    }
+
     public void addClothingItem(ClothingItem clothingItem) {
         clothingItems.put(clothingItem.clothingType(), clothingItem);
     }
