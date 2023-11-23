@@ -1,11 +1,8 @@
 package use_case.generate_outfit;
 
-import entity.ClothingItem;
 import entity.ClothingType;
-import entity.Outfit;
 import entity.Weather;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,34 +10,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static use_case.generate_outfit.OutfitGenerationConstants.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 
 public class OutfitGeneratorTest {
-    private static final OutfitGenerator outfitGenerator = new OutfitGenerator(clothingItems -> clothingItems.get(0));
-
-    private static final Weather basicWeather = new Weather(15, false);
-    private static final List<ClothingItem> basicWardrobe = new ArrayList<>();
-
-    @BeforeAll
-    static void setup() {
-        for (int i = 1; i <= 10; i++) {
-            for (var clothingType : ClothingType.values()) {
-                basicWardrobe.add(new ClothingItem(
-                        (long) i,
-                        "item",
-                        null,
-                        clothingType,
-                        -i,
-                        Optional.empty()
-                ));
-            }
-        }
-    }
 
     @Test
     public void givenNoClothingItems_shouldThrowException() {
@@ -63,7 +39,7 @@ public class OutfitGeneratorTest {
             List<Boolean> categoryRequirements
     ) {
         try {
-            var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), basicWardrobe);
+            var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), getBasicWardrobe());
 
             var categoriesPresent = outfit.getClothingItems().keySet();
             for (int i = 0; i < categoryRequirements.size(); i++) {
@@ -82,7 +58,7 @@ public class OutfitGeneratorTest {
     @ValueSource(ints = {-1, - 2, -3, -4, -5, -6, -7, -8, -9, -10})
     public void givenDifferentTemperatures_shouldReturnDifferentItems(int temperature) {
         try {
-            var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), basicWardrobe);
+            var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), getBasicWardrobe());
 
             for (var clothingItem : outfit.getClothingItems().values()) {
                 assertEquals(-temperature, clothingItem.id());
@@ -92,6 +68,8 @@ public class OutfitGeneratorTest {
         }
     }
 
+    // TODO add rain tests
+
     @Test
     public void shouldCallClothingItemSelectionStrategy() {
         outfitGenerator.clothingItemSelectionStrategy = clothingItems -> {
@@ -100,7 +78,7 @@ public class OutfitGeneratorTest {
         };
 
         try {
-            outfitGenerator.generateOutfit(basicWeather, basicWardrobe);
+            outfitGenerator.generateOutfit(basicWeather, getBasicWardrobe());
         } catch (OutfitGenerationException e) {
             fail("Shouldn't throw an exception");
         }
