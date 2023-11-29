@@ -1,9 +1,12 @@
-package use_case.generate_outfit;
+package data_access;
 
 
+import entity.ClothingType;
+import entity.Weather;
 import org.json.JSONObject;
+import entity.ClothingItem;
 
-
+import java.awt.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,7 +21,7 @@ public class FashionAPI {
     private static final String API_URL = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/apparel-recognition/versions/dc2cd6d9bff5425a80bfe0c4105583c1/outputs";
 
 
-    public String identifyClothingItem(String imageUrl) {
+    public ClothingItem identifyClothingItem(String imageUrl) {
         String requestBody = "{\n" +
                 "  \"inputs\": [\n" +
                 "    {\n" +
