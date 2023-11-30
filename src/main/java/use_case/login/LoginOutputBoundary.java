@@ -1,4 +1,6 @@
-package use_case_login;
+package use_case.login;
+
+import use_case.login.LoginDataOutput;
 
 public interface LoginOutputBoundary {
 

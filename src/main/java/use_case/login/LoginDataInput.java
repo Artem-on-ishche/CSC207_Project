@@ -1,4 +1,4 @@
-package use_case_login;
+package use_case.login;
 
 public class LoginDataInput {
     final private String username;
