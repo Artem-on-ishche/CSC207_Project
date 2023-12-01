@@ -5,5 +5,5 @@ import entity.ClothingItem;
 import java.util.Collection;
 
 public interface ClothingDataSource {
-    Collection<ClothingItem> getAllClothingItems();
+    Collection<ClothingItem> getAllClothingItemsForUser(String username);
 }

@@ -1,4 +1,4 @@
-package interface_adapters;
+package interface_adapter;
 
 public class LogInController {
 }
