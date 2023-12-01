@@ -1,8 +1,10 @@
 package use_case.generate_outfit;
 
+import entity.ClothingItem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +12,7 @@ import static use_case.generate_outfit.OutfitGenerationConstants.*;
 
 class OutfitGenerationInteractorTest {
 
-    private static final InputData emptyInputData = new InputData();
+    private static final InputData emptyInputData = new InputData("test");
     private static final LocationDataSource locationDataSource = () -> null;
     private static final WeatherDataSource weatherDataSource = location -> basicWeather;
     private static ClothingDataSource clothingDataSource;
@@ -26,7 +28,7 @@ class OutfitGenerationInteractorTest {
 
     @Test
     void givenCorrectData_shouldPrepareSuccessView() {
-        clothingDataSource = OutfitGenerationConstants::getBasicWardrobe;
+        clothingDataSource = username -> OutfitGenerationConstants.getBasicWardrobe();
         outputBoundary = new OutputBoundary() {
             @Override
             public void prepareSuccessView(OutfitOutputData outfit) {
@@ -52,7 +54,7 @@ class OutfitGenerationInteractorTest {
 
     @Test
     void givenNoClothingItemsExist_shouldPrepareFailureView() {
-        clothingDataSource = List::of;
+        clothingDataSource = username -> List.of();
         outputBoundary = new OutputBoundary() {
             @Override
             public void prepareSuccessView(OutfitOutputData outfit) {
