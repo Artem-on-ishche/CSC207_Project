@@ -1,4 +1,4 @@
-package interface_adapter.log_in;
+package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
