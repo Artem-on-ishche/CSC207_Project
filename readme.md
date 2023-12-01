@@ -1,27 +1,32 @@
-# Problem Domain
+# Project Domain
 
 **Outfit Manager**
-- add, remove, modify items of clothing a person has
-- help select an outfit based on parameters
-- use fashion guidelines / colour theory to select clothing
-- use weather API to determine weather conditions
+- Create and modify a wardrobe of clothing items a user has
+- Generate an outfit for the user based on the weather and their existing wardrobe
+- Use fashion tagging API to create and log characteristics of pictures of user's clothing for wardrobe 
+- Use weather API to determine weather conditions in order to select suitable clothes
 
 # Description
 
-We have an idea of an app that would tell users what to wear on a given day based on the weather, users' plans,
-and perhaps some other conditions.
 
-It is based on the idea of eliminating decision fatigue - saving time on making everyday choices.
+Our idea was for an app that would generate users an outfit to wear for the day based on specific conditions.
+The current implementation creates an outfit randomly, except for weather suitability. That is to say,
+the random outfit would always be weather appropriate. 
 
-We can add many interesting features to it, like adding pictures of clothing items a user has, accessing location,
-using weather API, perhaps even incorporating some fashion / colour theory to form interesting outfit combinations.
-In the future we could add promotional integrations with some brands by recommending their clothing more.
+In the future, we would implement features to reduce the randomness of the generated outfit. so a user
+could select outfit parameters such as specific colours, warm or cool tones, the formality of the clothes, or 
+the inclusion of one or more specific clothing items.
+
+Another possibility would be to add promotional integration to have brands promote their clothes to interested
+users.
 
 # Weather API
-// Isn't it OpenWeatherAPI??, I think we need to change this at some point
-// TODO: change this
-The API we're using is [OpenMeteo](https://open-meteo.com/).
 
-// TODO: add info about Ximilar API in the readme
-![postman_screenshot](postman_screenshot.png)
-![output_screenshot](img.png)
+The API we're using to get weather data is [OpenMeteo](https://open-meteo.com/).
+
+![postman_screenshot](docs/postman_screenshot.png)
+![output_screenshot](docs/img.png)
+
+# Fashion Tagging API
+
+The API we're using to tag clothing images is [Clarifai](https://www.clarifai.com/computer-vision).
