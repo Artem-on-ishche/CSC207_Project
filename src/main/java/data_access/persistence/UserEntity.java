@@ -1,12 +1,14 @@
 package data_access.persistence;
 
+import entity.User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name= "users")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -38,5 +40,16 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static UserEntity fromUser(User user) {
+        return new UserEntity(user.getUsername(), user.getPassword());
+    }
+
+    public static User toUser(UserEntity userEntity) {
+        if (userEntity == null)
+            return null;
+
+        return new User(userEntity.username, userEntity.password);
     }
 }
