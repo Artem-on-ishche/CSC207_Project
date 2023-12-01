@@ -1,11 +1,13 @@
 package use_case.login;
 
 import entity.User;
+
+import java.util.Optional;
+
 public interface LoginDataAccessInterface {
 
-    boolean existsByUserame(String identifier);
 
     void save(User user);
 
-    User get(String username);
+    Optional<User> get(String username);
 }
