@@ -1,10 +1,9 @@
 package data_access;
 
 
+
 import entity.ClothingType;
-import entity.Weather;
 import org.json.JSONObject;
-import entity.ClothingItem;
 
 import java.awt.*;
 import java.net.URI;
@@ -21,7 +20,7 @@ public class FashionAPI {
     private static final String API_URL = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/apparel-recognition/versions/dc2cd6d9bff5425a80bfe0c4105583c1/outputs";
 
 
-    public ClothingItem identifyClothingItem(String imageUrl) {
+    public String identifyClothingItem(String imageUrl) {
         String requestBody = "{\n" +
                 "  \"inputs\": [\n" +
                 "    {\n" +
@@ -54,17 +53,33 @@ public class FashionAPI {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject responseJSONObject = new JSONObject(response.body());
+
             return responseJSONObject.getJSONArray("outputs").getJSONObject(0).getJSONObject("data").getJSONArray("concepts").getJSONObject(0).getString("name");
+
         } catch (Exception e) {
             throw new RuntimeException("Fashion API failed call.");
         }
     }
 
 
+
     public static void main(String[] args) {
         FashionAPI fashionAPI = new FashionAPI();
-        System.out.println(fashionAPI.identifyClothingItem("https://img.freepik.com/free-photo/black-woman-trendy-grey-leather-jacket-posing-beige-background-studio-winter-autumn-fashion-look_273443-141.jpg"));
-    }
+        Map<String, ClothingType> clothingMap = new HashMap<>();
 
+        // Add clothing items to the map
+        clothingMap.put("T-shirt", ClothingType.INNER_UPPER_BODY);
+        clothingMap.put("Jeans", ClothingType.LOWER_BODY);
+        clothingMap.put("Hat", ClothingType.HEAD);
+        // Add more clothing items as needed
+
+        // Get the clothing type based on a specific clothing item
+        String inputClothingItem = fashionAPI.identifyClothingItem("https://img.freepik.com/free-photo/black-woman-trendy-grey-leather-jacket-posing-beige-background-studio-winter-autumn-fashion-look_273443-141.jpg");
+
+        ClothingType foundClothingType = clothingMap.get(inputClothingItem);
+
+        System.out.println(foundClothingType);
+
+    }
 
 }
