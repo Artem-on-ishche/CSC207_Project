@@ -26,7 +26,7 @@ public class OutfitGenerationInteractor implements InputBoundary {
     public void execute(InputData inputData) {
         var location = locationDataSource.getLocationData();
         var weather = weatherDataSource.getWeatherData(location);
-        var allClothingItems = clothingDataSource.getAllClothingItems();
+        var allClothingItems = clothingDataSource.getAllClothingItemsForUser(inputData.username());
 
         try {
             var outfit = outfitGenerator.generateOutfit(weather, allClothingItems);
