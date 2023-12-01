@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.*;
 import java.util.Optional;
 
 public record ClothingItem(
@@ -8,7 +7,7 @@ public record ClothingItem(
         String name,
         Image image,
         ClothingType clothingType,
-        double minimumAppropriateTemperature,
+        int minimumAppropriateTemperature,
         Optional<String> description
 ) {
     public boolean isAppropriateForTemperature(double temperature) {

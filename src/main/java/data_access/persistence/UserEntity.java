@@ -2,10 +2,8 @@ package data_access.persistence;
 
 import entity.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +15,9 @@ class UserEntity {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<ClothingItemEntity> clothingItemEntities;
 
     public UserEntity(String username, String password) {
         this.username = username;
@@ -40,6 +41,14 @@ class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<ClothingItemEntity> getClothingItemEntities() {
+        return clothingItemEntities;
+    }
+
+    public void setClothingItemEntities(List<ClothingItemEntity> clothingItemEntities) {
+        this.clothingItemEntities = clothingItemEntities;
     }
 
     public static UserEntity fromUser(User user) {
