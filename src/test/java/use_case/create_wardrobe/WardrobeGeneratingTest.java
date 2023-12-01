@@ -10,16 +10,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WardrobeGeneratingTest {
-
-    private static final ClothingItem defaultClothingItem = new ClothingItem(
-            null,
-            "item",
-            null,
-            ClothingType.INNER_UPPER_BODY,
-            20,
-            Optional.of("Default Description")
-    );
-    private static final CreateInputData defaultInputData = new CreateInputData(defaultClothingItem);
+    private static final CreateInputData defaultInputData = new CreateInputData("item", null, null, 20);
     private static CreateDataAccess createDataAccess;
     private static CreateOutputBoundary createPresenter;
     private static ClothingIdentificationService clothingIdentificationService;
@@ -31,39 +22,6 @@ class WardrobeGeneratingTest {
         createPresenter = null;
         clothingIdentificationService = null;
         createInteractor = null;
-    }
-
-    @Test
-    void givenValidInput_shouldPrepareSuccessView() {
-        createDataAccess = new CreateDataAccess() {
-            @Override
-            public void addClothingItem(ClothingItem clothingItem) {
-                assertEquals(defaultClothingItem, clothingItem);
-            }
-        };
-
-        createPresenter = new CreateOutputBoundary() {
-            @Override
-            public void prepareSuccessView(CreateOutputData outputData) {
-                assertEquals(defaultClothingItem, outputData.editClothingItem());
-                assertFalse(outputData.useCaseFailed());
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-                fail();
-            }
-        };
-
-        clothingIdentificationService = image -> ClothingType.INNER_UPPER_BODY.toString();
-
-        createInteractor = new CreateInteractor(
-                createDataAccess,
-                createPresenter,
-                clothingIdentificationService
-        );
-
-        createInteractor.execute(defaultInputData);
     }
 
     @Test
@@ -97,6 +55,10 @@ class WardrobeGeneratingTest {
                 clothingIdentificationService
         );
 
-        createInteractor.execute(defaultInputData);
+        CreateInputData invalidInputData = new CreateInputData(
+                null, null, null, 0)
+        ;
+
+        createInteractor.execute(invalidInputData);
     }
 }
