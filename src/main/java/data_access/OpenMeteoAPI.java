@@ -1,11 +1,11 @@
 package data_access;
 
 import entity.Location;
+import entity.Weather;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import use_case.generate_outfit.WeatherData;
 import use_case.generate_outfit.WeatherDataSource;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class OpenMeteoAPI implements WeatherDataSource {
 
     @Override
-    public WeatherData getWeatherData(Location userLocation) {
+    public Weather getWeatherData(Location userLocation) {
         double userLong = userLocation.longitude();
         double userLat = userLocation.latitude();
         OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -27,7 +27,7 @@ public class OpenMeteoAPI implements WeatherDataSource {
         try(Response response = client.newCall(request).execute()){
             JSONObject responseBody = new JSONObject(response.body().string()).getJSONObject("current");
 
-            return new WeatherData(
+            return new Weather(
                     responseBody.getDouble("temperature_2m"),
                     responseBody.getDouble("precipitation") > 0
             );

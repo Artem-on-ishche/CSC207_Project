@@ -24,8 +24,8 @@ users.
 
 The API we're using to get weather data is [OpenMeteo](https://open-meteo.com/).
 
-![postman_screenshot](postman_screenshot.png)
-![output_screenshot](img.png)
+![postman_screenshot](docs/postman_screenshot.png)
+![output_screenshot](docs/img.png)
 
 # Fashion Tagging API
 

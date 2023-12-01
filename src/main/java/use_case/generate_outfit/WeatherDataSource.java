@@ -1,7 +1,8 @@
 package use_case.generate_outfit;
 
 import entity.Location;
+import entity.Weather;
 
 public interface WeatherDataSource {
-    WeatherData getWeatherData(Location location);
+    Weather getWeatherData(Location location);
 }
