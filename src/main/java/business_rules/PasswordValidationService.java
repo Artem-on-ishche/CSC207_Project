@@ -1,4 +1,4 @@
-package entity;
+package business_rules;
 
 public class PasswordValidationService implements PasswordValidator{
     public boolean passwordIsValid(String password){

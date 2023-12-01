@@ -1,4 +1,4 @@
 package use_case.generate_outfit;
 
-public class InputData {
+public record InputData(String username) {
 }

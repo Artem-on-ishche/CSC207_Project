@@ -1,6 +1,6 @@
 package use_case.generate_outfit;
 
-import entity.Location;
+import model.Location;
 
 public interface LocationDataSource {
     Location getLocationData();

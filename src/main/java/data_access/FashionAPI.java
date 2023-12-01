@@ -2,10 +2,9 @@ package data_access;
 
 
 
-import entity.ClothingType;
+import model.ClothingType;
 import org.json.JSONObject;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
