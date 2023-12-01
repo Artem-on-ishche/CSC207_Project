@@ -1,10 +1,10 @@
 package use_case.login;
 
-public class LoginDataOutput {
+public class LoginOutputData {
     private final String username;
     private final boolean useCaseFailed;
 
-    public LoginDataOutput(String username, boolean useCaseFailed) {
+    public LoginOutputData(String username, boolean useCaseFailed) {
         this.username = username;
         this.useCaseFailed = useCaseFailed;
     }

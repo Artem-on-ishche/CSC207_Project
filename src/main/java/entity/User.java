@@ -1,9 +1,9 @@
 package entity;
 
 public class User {
-        private final String username;
+    private final String username;
 
-        private final String password;
+    private final String password;
 
 
     public User(String username, String password) {

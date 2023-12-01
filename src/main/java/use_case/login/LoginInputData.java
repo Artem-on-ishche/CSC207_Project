@@ -1,10 +1,10 @@
 package use_case.login;
 
-public class LoginDataInput {
+public class LoginInputData {
     final private String username;
     final private String password;
 
-    public LoginDataInput(String username, String password) {
+    public LoginInputData(String username, String password) {
         this.username = username;
         this.password = password;
     }
