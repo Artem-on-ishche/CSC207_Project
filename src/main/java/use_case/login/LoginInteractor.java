@@ -13,10 +13,10 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     @Override
-    public void execute(LoginDataInput loginData) {
+    public void execute(LoginInputData loginData) {
         String username = loginData.getUsername();
         String password = loginData.getPassword();
-        if (!userDataAccessObject.existsByName(username)) {
+        if (!userDataAccessObject.existsByUserame(username)) {
             loginPresenter.prepareFailView(username + ": No account found.");
         } else {
             String pwd = userDataAccessObject.get(username).getPassword();
@@ -26,7 +26,7 @@ public class LoginInteractor implements LoginInputBoundary {
 
                 User user = userDataAccessObject.get(loginData.getUsername());
 
-                LoginDataOutput loginOutputData = new LoginDataOutput(user.getUsername(), false);
+                LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
