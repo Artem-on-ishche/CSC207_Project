@@ -23,23 +23,23 @@ public class CreateInteractor implements CreateInputBoundary {
     @Override
     public void execute(CreateInputData inputData) {
         try {
-            Image clothingImage = inputData.clothingItemToCreate().image();
+            Image clothingImage = inputData.image();
             String identifiedClothingType = clothingIdentificationService.identifyClothingItem(clothingImage);
 
 
             ClothingItem clothingItem = new ClothingItem(
                     null,
-                    inputData.clothingItemToCreate().name(),
+                    inputData.name(),
                     clothingImage,
                     ClothingType.valueOf(identifiedClothingType),
-                    inputData.clothingItemToCreate().minimumAppropriateTemperature(),
-                    inputData.clothingItemToCreate().description()
+                    inputData.minimumAppropriateTemperature(),
+                    inputData.description()
             );
             createDataAccess.addClothingItem(clothingItem);
             createPresenter.prepareSuccessView(new CreateOutputData(clothingItem, false));
 
         } catch (RuntimeException e) {
-            createPresenter.prepareFailView("Error adding clothing item with id " + inputData.clothingItemToCreate().id() + ". \n" + e.getMessage());
+            createPresenter.prepareFailView("Error adding clothing item "+ e.getMessage());
         }
     }
 }
