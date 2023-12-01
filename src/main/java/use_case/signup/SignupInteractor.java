@@ -1,6 +1,5 @@
 package use_case.signup;
-import entity.User;
-import use_case.login.LoginDataAccessInterface;
+import model.User;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupDataAccessInterface userDataAccessObject;

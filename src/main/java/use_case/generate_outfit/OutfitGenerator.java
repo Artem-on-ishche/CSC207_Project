@@ -1,9 +1,9 @@
 package use_case.generate_outfit;
 
-import entity.ClothingItem;
-import entity.ClothingType;
-import entity.Outfit;
-import entity.Weather;
+import model.ClothingItem;
+import model.ClothingType;
+import model.Outfit;
+import model.Weather;
 
 import java.util.*;
 import java.util.stream.Collectors;

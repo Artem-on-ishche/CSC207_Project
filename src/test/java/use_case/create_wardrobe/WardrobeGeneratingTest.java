@@ -1,11 +1,8 @@
 package use_case.create_wardrobe;
 
-import entity.ClothingItem;
-import entity.ClothingType;
+import model.ClothingItem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,6 +1,6 @@
 package use_case.create_wardrobe;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 
 public record CreateOutputData(ClothingItem editClothingItem, boolean useCaseFailed) {
 }

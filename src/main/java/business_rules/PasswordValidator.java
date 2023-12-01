@@ -1,4 +1,4 @@
-package entity;
+package business_rules;
 
 
 public interface PasswordValidator {

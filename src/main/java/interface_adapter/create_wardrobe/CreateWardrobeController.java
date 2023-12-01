@@ -1,6 +1,5 @@
 package interface_adapter.create_wardrobe;
 
-import entity.ClothingItem;
 import use_case.create_wardrobe.CreateInputBoundary;
 import use_case.create_wardrobe.CreateInputData;
 

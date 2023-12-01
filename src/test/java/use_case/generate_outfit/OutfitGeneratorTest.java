@@ -1,7 +1,7 @@
 package use_case.generate_outfit;
 
-import entity.ClothingType;
-import entity.Weather;
+import model.ClothingType;
+import model.Weather;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

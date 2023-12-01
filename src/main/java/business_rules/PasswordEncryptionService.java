@@ -1,4 +1,4 @@
-package entity;
+package business_rules;
 
 import javax.crypto.*;
 import java.nio.charset.StandardCharsets;
