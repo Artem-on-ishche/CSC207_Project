@@ -7,7 +7,7 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class PasswordEncryptionService {
+public class PasswordEncryptionService implements PasswordEncryption{
     private final Cipher cipher;
     private final Key key;
 
@@ -23,21 +23,21 @@ public class PasswordEncryptionService {
         return keyGenerator.generateKey();
     }
 
-    public String encryptMessage(String message) throws IllegalBlockSizeException, BadPaddingException {
+    public String encryptMessage(String message) {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, key);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            return new String(cipher.doFinal(message.getBytes()), StandardCharsets.UTF_8);
+        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            throw new RuntimeException(e);
         }
-        return new String(cipher.doFinal(message.getBytes()), StandardCharsets.UTF_8);
     }
 
-    public String decryption(String message) throws IllegalBlockSizeException, BadPaddingException {
+   /* public String decryption(String message) throws IllegalBlockSizeException, BadPaddingException {
         try {
             cipher.init(Cipher.DECRYPT_MODE, key);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            return new String(cipher.doFinal(message.getBytes()), StandardCharsets.UTF_8);
+        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            throw new RuntimeException(e);
         }
-        return new String(cipher.doFinal(message.getBytes()), StandardCharsets.UTF_8);
-    }
+    } */
 }
