@@ -1,6 +1,6 @@
 package use_case.generate_outfit;
 
-import entity.Outfit;
+import model.Outfit;
 
 public record OutfitOutputData(Outfit outfit) {
 }

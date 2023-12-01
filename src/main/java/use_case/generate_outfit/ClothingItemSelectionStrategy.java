@@ -1,6 +1,6 @@
 package use_case.generate_outfit;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 
 import java.util.List;
 

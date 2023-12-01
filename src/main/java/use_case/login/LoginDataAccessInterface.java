@@ -1,6 +1,6 @@
 package use_case.login;
 
-import entity.User;
+import model.User;
 
 import java.util.Optional;
 

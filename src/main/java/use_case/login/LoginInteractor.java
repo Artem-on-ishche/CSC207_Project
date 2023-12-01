@@ -1,9 +1,7 @@
 package use_case.login;
 
-import entity.PasswordEncryptionService;
-import entity.User;
-
-import java.util.Optional;
+import business_rules.PasswordEncryptionService;
+import model.User;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginDataAccessInterface userDataAccessObject;

@@ -1,7 +1,7 @@
 package use_case.create_wardrobe;
 
-import entity.ClothingItem;
-import entity.ClothingType;
+import model.ClothingItem;
+import model.ClothingType;
 
 import java.awt.*;
 

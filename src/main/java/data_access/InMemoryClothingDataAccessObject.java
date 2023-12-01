@@ -1,6 +1,6 @@
 package data_access;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 import use_case.create_wardrobe.CreateDataAccess;
 
 public class InMemoryClothingDataAccessObject implements CreateDataAccess {

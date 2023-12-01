@@ -1,7 +1,6 @@
 package app;
 
 import data_access.InMemoryClothingDataAccessObject;
-import entity.ClothingItem;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import use_case.create_wardrobe.ClothingIdentificationService;
