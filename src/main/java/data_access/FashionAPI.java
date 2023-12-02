@@ -43,6 +43,8 @@ public class FashionAPI {
         //        clothingMap.put("Socks", ClothingType.FOOTWEAR);
         //        clothingMap.put("Men's Underwear", ClothingType.INNER_UPPER_BODY);
         //        clothingMap.put("Panties", ClothingType.INNER_UPPER_BODY);
+        //        clothingMap.put("Umbrella", ClothingType.INNER_UPPER_BODY);
+        //        clothingMap.put("Bra", ClothingType.INNER_UPPER_BODY);
 
         clothingMap.put("Activewear T Shirt", ClothingType.INNER_UPPER_BODY);
         clothingMap.put("Backpack", ClothingType.OUTER_UPPER_BODY);
