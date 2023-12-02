@@ -1,4 +1,4 @@
-package use_case.edit_wardrobe.update_clothing_item;
+package use_case.update_clothing_item;
 
 import model.ClothingItem;
 
