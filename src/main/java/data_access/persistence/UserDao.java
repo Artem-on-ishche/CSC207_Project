@@ -54,13 +54,15 @@ public class UserDao {
         entityManager.close();
     }
 
-    public void deleteUser(User user) {
-        UserEntity userEntity = UserEntity.fromUser(user);
+    public void deleteUser(String username) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        UserEntity userEntity = entityManager.find(UserEntity.class, username);
 
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.contains(userEntity) ? userEntity : entityManager.merge(userEntity));
-        entityManager.getTransaction().commit();
+        if (userEntity != null) {
+            entityManager.getTransaction().begin();
+            entityManager.remove(userEntity);
+            entityManager.getTransaction().commit();
+        }
 
         entityManager.close();
     }
