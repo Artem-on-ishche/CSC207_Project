@@ -1,6 +1,6 @@
 package data_access.persistence;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package data_access.persistence;
 
-import entity.User;
+import model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

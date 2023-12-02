@@ -1,6 +1,6 @@
 package data_access.persistence;
 
-import entity.User;
+import model.User;
 
 import javax.persistence.*;
 import java.util.List;
