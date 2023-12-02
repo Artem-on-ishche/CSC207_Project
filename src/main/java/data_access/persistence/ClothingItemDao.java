@@ -1,16 +1,19 @@
 package data_access.persistence;
 
-import data_access.FileImageCreator;
 import model.ClothingItem;
-import model.ClothingType;
-import model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
+import org.apache.commons.io.FileUtils;
+
+
 public class ClothingItemDao implements AutoCloseable {
+    public static final String IMAGES_DIRECTORY = "images";
 
     private final EntityManagerFactory entityManagerFactory;
 
@@ -45,50 +48,43 @@ public class ClothingItemDao implements AutoCloseable {
         return Optional.ofNullable(ClothingItemEntity.toClothingItem(clothingItemEntity));
     }
 
-    public void updateClothingItem(ClothingItem clothingItem, String ownerUsername) {
+    public void updateClothingItem(ClothingItem updatedClothingItem) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        var ownerEntity = entityManager.find(UserEntity.class, ownerUsername);
-        var owner = UserEntity.toUser(ownerEntity);
-        var clothingItemEntity = ClothingItemEntity.fromClothingItemAndOwner(clothingItem, owner);
+        var savedClothingItemEntity = entityManager.find(ClothingItemEntity.class, updatedClothingItem.id());
+        var updatedClothingItemEntity = savedClothingItemEntity.toBuilder()
+                .name(updatedClothingItem.name())
+                .minimumAppropriateTemperature(updatedClothingItem.minimumAppropriateTemperature())
+                .description(updatedClothingItem.description().orElse(null))
+                .build();
 
         entityManager.getTransaction().begin();
-        entityManager.merge(clothingItemEntity);
+        entityManager.merge(updatedClothingItemEntity);
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public void deleteClothingItem(ClothingItem clothingItem, String ownerUsername) {
+    public void deleteClothingItem(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        var clothingItemEntity = entityManager.find(ClothingItemEntity.class, id);
 
-        var ownerEntity = entityManager.find(UserEntity.class, ownerUsername);
-        var owner = UserEntity.toUser(ownerEntity);
-        var clothingItemEntity = ClothingItemEntity.fromClothingItemAndOwner(clothingItem, owner);
+        if (clothingItemEntity != null) {
+            entityManager.getTransaction().begin();
+            entityManager.remove(clothingItemEntity);
+            entityManager.getTransaction().commit();
+        }
 
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.contains(clothingItemEntity) ? clothingItemEntity : entityManager.merge(clothingItemEntity));
-        entityManager.getTransaction().commit();
         entityManager.close();
-    }
-
-    public static void main(String[] args) {
-        var imageCreator = new FileImageCreator();
-        var dao = new ClothingItemDao();
-
-        var image = imageCreator.fromImageSrc("docs/img.png");
-        var item = new ClothingItem(null, "name", image, ClothingType.HEAD, 1, Optional.empty());
-        var owner = new User("test", "test");
-//        var entity = ClothingItemEntity.fromClothingItemAndOwner(item, owner);
-
-        var id = dao.saveClothingItem(item, owner.getUsername());
-        var retrievedItem = dao.getClothingItemById(id);
-
-        System.out.println(retrievedItem);
     }
 
     @Override
     public void close() throws Exception {
         closeEntityManagerFactory();
+        deleteImagesDirectory();
+    }
+
+    private void deleteImagesDirectory() throws IOException {
+        FileUtils.deleteDirectory(new File(IMAGES_DIRECTORY));
     }
 }
 
