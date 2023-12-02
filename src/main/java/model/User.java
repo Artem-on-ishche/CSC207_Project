@@ -1,4 +1,4 @@
-package entity;
+package model;
 
 public class User {
     private final String username;
@@ -10,6 +10,8 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+
 
     public String getUsername() {
         return username;

@@ -1,31 +1,38 @@
 package use_case.login;
 
-import entity.User;
+import business_rules.PasswordEncryptionService;
+import model.User;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
+    final PasswordEncryptionService passwordEncryptionService;
+
     public LoginInteractor(LoginDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           LoginOutputBoundary loginOutputBoundary,
+                           PasswordEncryptionService passwordEncryptionService) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.passwordEncryptionService = passwordEncryptionService;
     }
 
     @Override
     public void execute(LoginInputData loginData) {
         String username = loginData.getUsername();
         String password = loginData.getPassword();
-        if (!userDataAccessObject.existsByUserame(username)) {
+        String encrypted = passwordEncryptionService.encryptMessage(password);
+
+        var optionalUser = userDataAccessObject.get(username);
+        if (optionalUser.isEmpty()) {
             loginPresenter.prepareFailView(username + ": No account found.");
         } else {
-            String pwd = userDataAccessObject.get(username).getPassword();
-            if (!password.equals(pwd)) {
+            User user = optionalUser.get();
+            String correctEncrypted = user.getPassword();
+
+            if (!encrypted.equals(correctEncrypted)) {
                 loginPresenter.prepareFailView("Incorrect password.");
             } else {
-
-                User user = userDataAccessObject.get(loginData.getUsername());
-
                 LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }

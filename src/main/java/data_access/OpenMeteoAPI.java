@@ -1,7 +1,7 @@
 package data_access;
 
-import entity.Location;
-import entity.Weather;
+import model.Location;
+import model.Weather;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

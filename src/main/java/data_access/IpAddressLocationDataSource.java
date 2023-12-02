@@ -1,6 +1,6 @@
 package data_access;
 
-import entity.Location;
+import model.Location;
 import org.json.JSONObject;
 import use_case.generate_outfit.LocationDataSource;
 

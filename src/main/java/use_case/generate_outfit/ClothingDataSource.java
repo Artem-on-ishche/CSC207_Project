@@ -1,9 +1,9 @@
 package use_case.generate_outfit;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 
 import java.util.Collection;
 
 public interface ClothingDataSource {
-    Collection<ClothingItem> getAllClothingItems();
+    Collection<ClothingItem> getAllClothingItemsForUser(String username);
 }

@@ -1,6 +1,6 @@
 package use_case.edit_wardrobe;
 
-import entity.ClothingItem;
+import model.ClothingItem;
 
 public record EditInputData(ClothingItem clothingItemToEdit) {
 }
