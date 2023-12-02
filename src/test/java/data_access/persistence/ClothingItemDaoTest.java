@@ -14,51 +14,47 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClothingItemDaoTest {
     private static final User owner = new User("test", "test");
+    private static final String itemName1 = "test item";
+    private static final String itemName2 = "test item 2";
+    private static final UserDao userDao = new UserDao();
     private static final ClothingItemDao clothingItemDao = new ClothingItemDao();
     private static final ImageCreator imageCreator = new FileImageCreator();
     private static final Image image = imageCreator.fromImageSrc("docs/img.png");
 
+    @BeforeAll
+    static void setUp() {
+        userDao.saveUser(owner);
+    }
 
     @AfterAll
     static void tearDown() throws Exception {
+        userDao.deleteUser(owner.getUsername());
+        userDao.closeEntityManagerFactory();
         clothingItemDao.close();
     }
 
     @Test
     void givenManySequentialOperations_AllCorrect() {
         // create
-        var item = new ClothingItem(null, "test item", image, ClothingType.HEAD, 1, Optional.empty());
+        var item = new ClothingItem(null, itemName1, image, ClothingType.HEAD, 1, Optional.empty());
+        var id = clothingItemDao.saveClothingItem(item, owner.getUsername());
 
-//        var id = clothingItemDao.saveClothingItem(item, owner.getUsername());
-//        var retrievedItem = dao.getClothingItemById(id);
-//
-//        System.out.println(retrievedItem);
-//
-//
-//        // create
-////        var clothingItem = new
-//
-//        var user = new User(username, password1);
-//        userDao.saveUser(user);
-//        assertTrue(userDao.existsByUsername(username));
-//
-//        // read
-//        var queriedUser = userDao.getByUsername(username);
-//        assertTrue(queriedUser.isPresent());
-//        assertEquals(queriedUser.get().getPassword(), password1);
-//
-//        // update
-//        user = new User(username, password2);
-//        userDao.updateUser(user);
-//
-//        queriedUser = userDao.getByUsername(username);
-//        assertTrue(queriedUser.isPresent());
-//        assertEquals(queriedUser.get().getPassword(), password2);
-//
-//        // delete
-//        userDao.deleteUser(username);
-//        queriedUser = userDao.getByUsername(username);
-//        assertFalse(queriedUser.isPresent());
-//        assertFalse(userDao.existsByUsername(username));
+        // read
+        var queriedItem = clothingItemDao.getClothingItemById(id);
+        assertTrue(queriedItem.isPresent());
+        assertEquals(queriedItem.get().name(), itemName1);
+
+        // update
+        item = new ClothingItem(id, itemName2, image, ClothingType.HEAD, 1, Optional.empty());
+        clothingItemDao.updateClothingItem(item);
+
+        queriedItem = clothingItemDao.getClothingItemById(id);
+        assertTrue(queriedItem.isPresent());
+        assertEquals(queriedItem.get().name(), itemName2);
+
+        // delete
+        clothingItemDao.deleteClothingItem(id);
+        queriedItem = clothingItemDao.getClothingItemById(id);
+        assertFalse(queriedItem.isPresent());
     }
 }

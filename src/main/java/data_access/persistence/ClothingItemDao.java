@@ -19,6 +19,8 @@ public class ClothingItemDao implements AutoCloseable {
 
     public ClothingItemDao() {
         this.entityManagerFactory = Persistence.createEntityManagerFactory("OutfitManager");
+
+        createImagesDirectory();
     }
 
     public void closeEntityManagerFactory() {
@@ -83,8 +85,12 @@ public class ClothingItemDao implements AutoCloseable {
         deleteImagesDirectory();
     }
 
+    private void createImagesDirectory() {
+        new File(IMAGES_DIRECTORY).mkdirs();
+    }
+
     private void deleteImagesDirectory() throws IOException {
-        FileUtils.deleteDirectory(new File(IMAGES_DIRECTORY));
+        FileUtils.cleanDirectory(new File(IMAGES_DIRECTORY));
     }
 }
 
