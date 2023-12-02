@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-class UserEntity {
+public class UserEntity {
 
     @Id
     @Column(name = "username")
@@ -16,7 +16,7 @@ class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<ClothingItemEntity> clothingItemEntities;
 
     public UserEntity(String username, String password) {

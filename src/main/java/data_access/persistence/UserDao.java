@@ -67,9 +67,10 @@ public class UserDao {
 
     public static void main(String[] args) {
         var userDao = new UserDao();
-        var user = userDao.getByUsername("test");
+        var user = new User("test", "test");
 
-        userDao.deleteUser(user.get());
+        userDao.saveUser(user);
+//        userDao.deleteUser(user.get());
 
         System.out.println(userDao.getByUsername("test").isPresent());
     }
