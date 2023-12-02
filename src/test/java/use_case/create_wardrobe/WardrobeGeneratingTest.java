@@ -1,8 +1,11 @@
 package use_case.create_wardrobe;
 
 import model.ClothingItem;
+import model.ImageData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +15,7 @@ class WardrobeGeneratingTest {
     private static CreateOutputBoundary createPresenter;
     private static ClothingIdentificationService clothingIdentificationService;
     private static CreateInteractor createInteractor;
+    private static ImageCreator createImage;
 
     @AfterEach
     void cleanup() {
@@ -19,6 +23,7 @@ class WardrobeGeneratingTest {
         createPresenter = null;
         clothingIdentificationService = null;
         createInteractor = null;
+        createImage = null;
     }
 
     @Test
@@ -46,11 +51,13 @@ class WardrobeGeneratingTest {
             throw new RuntimeException("Identification error");
         };
 
+        createImage = src -> new ImageData(new File(src), new byte[]{});
+
         createInteractor = new CreateInteractor(
                 createDataAccess,
                 createPresenter,
-                clothingIdentificationService
-        );
+                clothingIdentificationService,
+                createImage);
 
         CreateInputData invalidInputData = new CreateInputData(
                 null, null, null, 0)
