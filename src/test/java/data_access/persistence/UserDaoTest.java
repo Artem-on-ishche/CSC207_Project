@@ -16,8 +16,8 @@ class UserDaoTest {
     private static final String password2 = "test new";
 
     @AfterAll
-    static void tearDown() {
-        userDao.closeEntityManagerFactory();
+    static void tearDown() throws Exception {
+        userDao.close();
     }
 
     @Test

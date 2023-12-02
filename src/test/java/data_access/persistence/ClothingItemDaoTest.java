@@ -72,5 +72,7 @@ class ClothingItemDaoTest {
         var queriedClothingItems = clothingItemDao.getClothingItemsByUser(owner.getUsername());
 
         assertEquals(clothingItems, queriedClothingItems);
+
+        clothingItems.forEach(clothingItem -> clothingItemDao.deleteClothingItem(clothingItem.getId()));
     }
 }
