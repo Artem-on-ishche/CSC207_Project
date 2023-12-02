@@ -49,7 +49,7 @@ public class ClothingItemEntity {
         return new ClothingItemEntity(
                 clothingItem.getId(),
                 clothingItem.getName(),
-                clothingItem.getImage().imageData(),
+                clothingItem.getImage().getImageData(),
                 clothingItem.getClothingType().toString(),
                 clothingItem.getMinimumAppropriateTemperature(),
                 clothingItem.getDescription().orElse(null),

@@ -80,21 +80,29 @@ public final class ClothingItem {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (ClothingItem) obj;
-        return Objects.equals(this.id, that.id) &&
-                Objects.equals(this.name, that.name) &&
-                Objects.equals(this.image, that.image) &&
-                Objects.equals(this.clothingType, that.clothingType) &&
-                this.minimumAppropriateTemperature == that.minimumAppropriateTemperature &&
-                Objects.equals(this.description, that.description);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClothingItem that = (ClothingItem) o;
+
+        if (getMinimumAppropriateTemperature() != that.getMinimumAppropriateTemperature()) return false;
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (!getName().equals(that.getName())) return false;
+        if (getImage() != null ? !getImage().equals(that.getImage()) : that.getImage() != null) return false;
+        if (getClothingType() != that.getClothingType()) return false;
+        return getDescription().equals(that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, image, clothingType, minimumAppropriateTemperature, description);
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
+        result = 31 * result + getClothingType().hashCode();
+        result = 31 * result + getMinimumAppropriateTemperature();
+        result = 31 * result + getDescription().hashCode();
+        return result;
     }
 
     @Override
