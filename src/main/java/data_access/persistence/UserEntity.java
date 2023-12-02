@@ -1,10 +1,18 @@
 package data_access.persistence;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import model.User;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -22,33 +30,6 @@ public class UserEntity {
     public UserEntity(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public UserEntity() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<ClothingItemEntity> getClothingItemEntities() {
-        return clothingItemEntities;
-    }
-
-    public void setClothingItemEntities(List<ClothingItemEntity> clothingItemEntities) {
-        this.clothingItemEntities = clothingItemEntities;
     }
 
     public static UserEntity fromUser(User user) {

@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 
 import java.util.Optional;
 
-public class UserDao {
+public class UserDao implements AutoCloseable {
 
     private final EntityManagerFactory entityManagerFactory;
 
@@ -67,13 +67,8 @@ public class UserDao {
         entityManager.close();
     }
 
-    public static void main(String[] args) {
-        var userDao = new UserDao();
-        var user = new User("test", "test");
-
-        userDao.saveUser(user);
-//        userDao.deleteUser(user.get());
-
-        System.out.println(userDao.getByUsername("test").isPresent());
+    @Override
+    public void close() throws Exception {
+        entityManagerFactory.close();
     }
 }
