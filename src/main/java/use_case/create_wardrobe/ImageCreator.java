@@ -1,7 +1,7 @@
 package use_case.create_wardrobe;
 
-import model.ImageData;
+import model.Image;
 
 public interface ImageCreator {
-    ImageData fromImageSrc(String src);
+    Image fromImageSrc(String src);
 }

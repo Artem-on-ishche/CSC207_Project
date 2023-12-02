@@ -1,8 +1,11 @@
 package data_access.persistence;
 
+import data_access.FileImageCreator;
 import model.ClothingItem;
+import model.ClothingType;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "clothing_item")
@@ -101,11 +104,17 @@ public class ClothingItemEntity {
         this.userEntity = userEntity;
     }
 
-//    static ClothingItem toClothingItem(ClothingItemEntity clothingItemEntity) {
-//        return new ClothingItem(
-//                clothingItemEntity.id,
-//                clothingItemEntity.name,
-//
-//        );
-//    }
+    static ClothingItem toClothingItem(ClothingItemEntity clothingItemEntity) {
+        var filename = clothingItemEntity.id + " " + clothingItemEntity.name + ".jpg";
+        var image = FileImageCreator.convertByteArrayAndSaveToFile(clothingItemEntity.imageData, filename);
+
+        return new ClothingItem(
+                clothingItemEntity.id,
+                clothingItemEntity.name,
+                image,
+                ClothingType.valueOf(clothingItemEntity.clothingType),
+                clothingItemEntity.minimumAppropriateTemperature,
+                Optional.ofNullable(clothingItemEntity.description)
+        );
+    }
 }

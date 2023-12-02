@@ -2,7 +2,7 @@ package use_case.create_wardrobe;
 
 import model.ClothingItem;
 import model.ClothingType;
-import model.ImageData;
+import model.Image;
 
 public class CreateInteractor implements CreateInputBoundary {
     private final CreateDataAccess createDataAccess;
@@ -26,7 +26,7 @@ public class CreateInteractor implements CreateInputBoundary {
         try {
             String clothingImageSrc = inputData.imageSrc();
             ClothingType identifiedClothingType = clothingIdentificationService.identifyClothingItem(clothingImageSrc);
-            ImageData clothingImage = imageCreator.fromImageSrc(clothingImageSrc);
+            Image clothingImage = imageCreator.fromImageSrc(clothingImageSrc);
 
 
             ClothingItem clothingItem = new ClothingItem(

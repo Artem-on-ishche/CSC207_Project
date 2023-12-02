@@ -5,7 +5,7 @@ import java.util.Optional;
 public record ClothingItem(
         Long id,
         String name,
-        ImageData imageData,
+        Image image,
         ClothingType clothingType,
         int minimumAppropriateTemperature,
         Optional<String> description

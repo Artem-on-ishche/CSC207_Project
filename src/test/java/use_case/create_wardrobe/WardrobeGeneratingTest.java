@@ -1,7 +1,7 @@
 package use_case.create_wardrobe;
 
 import model.ClothingItem;
-import model.ImageData;
+import model.Image;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +51,7 @@ class WardrobeGeneratingTest {
             throw new RuntimeException("Identification error");
         };
 
-        createImage = src -> new ImageData(new File(src), new byte[]{});
+        createImage = src -> new Image(new File(src), new byte[]{});
 
         createInteractor = new CreateInteractor(
                 createDataAccess,
