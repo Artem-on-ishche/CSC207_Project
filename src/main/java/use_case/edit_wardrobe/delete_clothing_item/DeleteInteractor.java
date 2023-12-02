@@ -16,10 +16,10 @@ public class DeleteInteractor implements EditInputBoundary {
     @Override
     public void execute(EditInputData inputData) {
         try {
-            deleteDataAccessObject.deleteClothingItem(inputData.clothingItemToEdit().id());
+            deleteDataAccessObject.deleteClothingItem(inputData.clothingItemToEdit().getId());
             deletePresenter.prepareSuccessView(new EditOutputData(inputData.clothingItemToEdit(), false));
         } catch (RuntimeException e) {
-            deletePresenter.prepareFailView("Error deleting clothing item with id " + inputData.clothingItemToEdit().id() + ". \n" + e.getMessage());
+            deletePresenter.prepareFailView("Error deleting clothing item with id " + inputData.clothingItemToEdit().getId() + ". \n" + e.getMessage());
         }
     }
 }

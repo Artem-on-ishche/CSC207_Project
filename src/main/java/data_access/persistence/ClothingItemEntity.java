@@ -47,12 +47,12 @@ public class ClothingItemEntity {
 
     static ClothingItemEntity fromClothingItemAndOwner(ClothingItem clothingItem, User owner) {
         return new ClothingItemEntity(
-                clothingItem.id(),
-                clothingItem.name(),
-                clothingItem.image().imageData(),
-                clothingItem.clothingType().toString(),
-                clothingItem.minimumAppropriateTemperature(),
-                clothingItem.description().orElse(null),
+                clothingItem.getId(),
+                clothingItem.getName(),
+                clothingItem.getImage().imageData(),
+                clothingItem.getClothingType().toString(),
+                clothingItem.getMinimumAppropriateTemperature(),
+                clothingItem.getDescription().orElse(null),
                 UserEntity.fromUser(owner)
         );
     }

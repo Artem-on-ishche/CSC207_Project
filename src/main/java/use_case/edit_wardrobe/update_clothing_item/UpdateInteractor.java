@@ -19,7 +19,7 @@ public class UpdateInteractor implements EditInputBoundary {
             updateDataAccessObject.updateClothingItem(inputData.clothingItemToEdit());
             updatePresenter.prepareSuccessView(new EditOutputData(inputData.clothingItemToEdit(), false));
         } catch (RuntimeException e) {
-            updatePresenter.prepareFailView("Error updating clothing item with id " + inputData.clothingItemToEdit().id() + ". \n" + e.getMessage());
+            updatePresenter.prepareFailView("Error updating clothing item with id " + inputData.clothingItemToEdit().getId() + ". \n" + e.getMessage());
         }
     }
 }

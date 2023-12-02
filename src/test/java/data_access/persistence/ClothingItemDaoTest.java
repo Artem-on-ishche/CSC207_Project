@@ -8,6 +8,7 @@ import model.User;
 import org.junit.jupiter.api.*;
 import use_case.create_wardrobe.ImageCreator;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +35,7 @@ class ClothingItemDaoTest {
     }
 
     @Test
-    void givenManySequentialOperations_AllCorrect() {
+    void givenManySequentialOperations_thenAllCorrect() {
         // create
         var item = new ClothingItem(null, itemName1, image, ClothingType.HEAD, 1, Optional.empty());
         var id = clothingItemDao.saveClothingItem(item, owner.getUsername());
@@ -42,7 +43,7 @@ class ClothingItemDaoTest {
         // read
         var queriedItem = clothingItemDao.getClothingItemById(id);
         assertTrue(queriedItem.isPresent());
-        assertEquals(queriedItem.get().name(), itemName1);
+        assertEquals(queriedItem.get().getName(), itemName1);
 
         // update
         item = new ClothingItem(id, itemName2, image, ClothingType.HEAD, 1, Optional.empty());
@@ -50,11 +51,26 @@ class ClothingItemDaoTest {
 
         queriedItem = clothingItemDao.getClothingItemById(id);
         assertTrue(queriedItem.isPresent());
-        assertEquals(queriedItem.get().name(), itemName2);
+        assertEquals(queriedItem.get().getName(), itemName2);
 
         // delete
         clothingItemDao.deleteClothingItem(id);
         queriedItem = clothingItemDao.getClothingItemById(id);
         assertFalse(queriedItem.isPresent());
+    }
+
+    @Test
+    void givenMultipleItemsForOneUser_thenGetAllIsCorrect() {
+        var clothingItems = List.of(
+                new ClothingItem(null, itemName1, image, ClothingType.HEAD, 1, Optional.empty()),
+                new ClothingItem(null, itemName2, image, ClothingType.LOWER_BODY, -5, Optional.empty())
+        );
+
+        clothingItems.forEach(clothingItem ->
+                clothingItem.setId(clothingItemDao.saveClothingItem(clothingItem, owner.getUsername())));
+
+        var queriedClothingItems = clothingItemDao.getClothingItemsByUser(owner.getUsername());
+
+        assertEquals(clothingItems, queriedClothingItems);
     }
 }
