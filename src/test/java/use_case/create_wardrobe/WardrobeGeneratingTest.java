@@ -30,8 +30,9 @@ class WardrobeGeneratingTest {
     void givenInvalidInput_shouldPrepareFailView() {
         createDataAccess = new CreateDataAccess() {
             @Override
-            public void addClothingItem(ClothingItem clothingItem) {
+            public Long addClothingItem(ClothingItem clothingItem) {
                 fail("Should not be called");
+                return null;
             }
         };
 
