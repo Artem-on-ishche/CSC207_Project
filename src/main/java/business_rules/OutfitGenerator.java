@@ -1,4 +1,4 @@
-package use_case.generate_outfit;
+package business_rules;
 
 import model.ClothingItem;
 import model.ClothingType;

@@ -1,5 +1,8 @@
 package use_case.generate_outfit;
 
+import business_rules.OutfitGenerationException;
+import business_rules.OutfitGenerator;
+
 public class OutfitGenerationInteractor implements InputBoundary {
 
     private final LocationDataSource locationDataSource;
