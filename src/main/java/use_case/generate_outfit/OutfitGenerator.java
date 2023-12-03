@@ -35,7 +35,7 @@ public class OutfitGenerator {
     }
 
     private Map<ClothingType, List<ClothingItem>> groupClothingItemsByCategory(Collection<ClothingItem> clothingItems) {
-        return clothingItems.stream().collect(Collectors.groupingBy(ClothingItem::clothingType));
+        return clothingItems.stream().collect(Collectors.groupingBy(ClothingItem::getClothingType));
     }
 
     private Map<ClothingType, Boolean> getClothingTypeRequirementBasedOnWeather(Weather weather) {

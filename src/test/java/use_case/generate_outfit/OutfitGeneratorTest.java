@@ -61,7 +61,7 @@ public class OutfitGeneratorTest {
             var outfit = outfitGenerator.generateOutfit(new Weather(temperature, false), getBasicWardrobe());
 
             for (var clothingItem : outfit.getClothingItems().values()) {
-                assertEquals(-temperature, clothingItem.id());
+                assertEquals(-temperature, clothingItem.getId());
             }
         } catch (OutfitGenerationException e) {
             fail("Shouldn't throw an exception");

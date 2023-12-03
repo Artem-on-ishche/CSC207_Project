@@ -53,7 +53,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
 
                             CreateWardrobeView.this.createWardrobeController.execute(
                                     currentState.getName(),
-                                    currentState.getPhoto(),
+                                    currentState.getImageSrc(),
                                     currentState.getDescription(),
                                     currentState.getMinimumAppropriateTemperature()
                             );
@@ -108,7 +108,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                     @Override
                     public void keyTyped(KeyEvent e) {
                         CreateWardrobeState currentState = createWardrobeViewModel.getState();
-                        currentState.setMinimumAppropriateTemperature(Double.parseDouble(minTemp.getText() + e.getKeyChar()));
+                        currentState.setMinimumAppropriateTemperature(Integer.parseInt(minTemp.getText() + e.getKeyChar()));
                         createWardrobeViewModel.setState(currentState); // Hmm, is this necessary?
                     }
 
