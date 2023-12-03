@@ -6,7 +6,7 @@ import use_case.delete_clothing_item.DeleteOutputData;
 
 public class DeletePresenter implements DeleteOutputBoundary {
     private final DeleteViewModel deleteViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public DeletePresenter(DeleteViewModel deleteViewModel, ViewManagerModel viewManagerModel) {
         this.deleteViewModel = deleteViewModel;
