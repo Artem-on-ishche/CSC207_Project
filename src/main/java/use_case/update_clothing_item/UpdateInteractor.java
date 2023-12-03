@@ -12,7 +12,7 @@ public class UpdateInteractor implements UpdateInputBoundary {
     public void execute(UpdateInputData inputData) {
         try {
             updatePresenter.prepareSuccessView(
-                    new UpdateOutputData(updateDataAccessObject.updateClothingItem(inputData.clothingItemToUpdate()), false)
+                    new UpdateOutputData(updateDataAccessObject.updateClothingItem(inputData.clothingItemToUpdate()))
             );
         } catch (RuntimeException e) {
             updatePresenter.prepareFailView("Error updating clothing item with id " + inputData.clothingItemToUpdate().id() + ". \n" + e.getMessage());
