@@ -10,7 +10,7 @@ public class UpdateController {
     }
 
     public void execute(Long clothingItemToDeleteId) {
-        UpdateInputData updateInputData = new UpdateInputData();
-        updateUseCaseInteractor.execute(updateInputData);
+//        UpdateInputData updateInputData = new UpdateInputData();
+//        updateUseCaseInteractor.execute(updateInputData);
     }
 }
