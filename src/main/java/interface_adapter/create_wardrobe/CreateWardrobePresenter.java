@@ -22,10 +22,10 @@ public class CreateWardrobePresenter implements CreateOutputBoundary {
     @Override
     public void prepareSuccessView(CreateOutputData outputData) {
         CreateWardrobeState createWardrobeState = createWardrobeViewModel.getState();
-        createWardrobeState.setDescription(outputData.newClothingItem().description());
-        createWardrobeState.setName(outputData.newClothingItem().name());
-        createWardrobeState.setPhoto(outputData.newClothingItem().image());
-        createWardrobeState.setMinimumAppropriateTemperature(outputData.newClothingItem().minimumAppropriateTemperature());
+        createWardrobeState.setDescription(outputData.newClothingItem().getDescription());
+        createWardrobeState.setName(outputData.newClothingItem().getName());
+//        createWardrobeState.setImageSrc(outputData.newClothingItem().getImage());
+        createWardrobeState.setMinimumAppropriateTemperature(outputData.newClothingItem().getMinimumAppropriateTemperature());
         this.createWardrobeViewModel.setState(createWardrobeState);
         createWardrobeViewModel.firePropertyChanged();
 

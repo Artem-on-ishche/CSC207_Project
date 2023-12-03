@@ -1,6 +1,8 @@
 package interface_adapter.delete_clothing_item;
 
 import interface_adapter.ViewModel;
+import lombok.Getter;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -8,6 +10,7 @@ public class DeleteViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Delete Clothing Item";
     public static final String DELETE_BUTTON_LABEL = "Delete";
 
+    @Getter
     private DeleteState state = new DeleteState();
 
     public DeleteViewModel() {
@@ -28,9 +31,5 @@ public class DeleteViewModel extends ViewModel {
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
-    }
-
-    public DeleteState getState() {
-        return state;
     }
 }
