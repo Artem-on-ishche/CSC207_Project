@@ -1,5 +1,6 @@
-package use_case.generate_outfit;
+package business_rules;
 
+import business_rules.OutfitGenerator;
 import model.ClothingItem;
 import model.ClothingType;
 import model.Weather;
@@ -9,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class OutfitGenerationConstants {
-    static OutfitGenerator outfitGenerator = new OutfitGenerator(clothingItems -> clothingItems.get(0));
+    public static OutfitGenerator outfitGenerator = new OutfitGenerator(clothingItems -> clothingItems.get(0));
 
-    static Weather basicWeather = new Weather(15, false);
+    public static Weather basicWeather = new Weather(15, false);
 
     private static List<ClothingItem> basicWardrobeSingleton;
 
-    static List<ClothingItem> getBasicWardrobe() {
+    public static List<ClothingItem> getBasicWardrobe() {
         if (basicWardrobeSingleton == null) {
             generateBasicWardrobe();
         }
