@@ -1,7 +1,7 @@
 package use_case.create_wardrobe;
 
-import java.awt.*;
+import model.ClothingType;
 
 public interface ClothingIdentificationService {
-    String identifyClothingItem(Image image);
+    ClothingType identifyClothingItem(String imageSrc);
 }

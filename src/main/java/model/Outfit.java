@@ -21,7 +21,7 @@ public final class Outfit {
     }
 
     public void addClothingItem(ClothingItem clothingItem) {
-        clothingItems.put(clothingItem.clothingType(), clothingItem);
+        clothingItems.put(clothingItem.getClothingType(), clothingItem);
     }
 
     @Override
