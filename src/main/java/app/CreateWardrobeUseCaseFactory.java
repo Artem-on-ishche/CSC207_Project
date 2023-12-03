@@ -1,5 +1,6 @@
 package app;
 
+import data_access.FileImageCreator;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobePresenter;
@@ -36,10 +37,11 @@ public class CreateWardrobeUseCaseFactory {
     private static CreateWardrobeController createUserSignupUseCase(ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, CreateDataAccess userDataAccessObject, ClothingIdentificationService clothingIdentificationService, LoggedInViewModel loggedInViewModel) throws IOException {
 
         CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, loggedInViewModel);
+        ImageCreator imageCreator = new FileImageCreator();
 
 
         CreateInputBoundary userSignupInteractor = new CreateInteractor(
-                userDataAccessObject, createOutputBoundary, clothingIdentificationService);
+                userDataAccessObject, createOutputBoundary, clothingIdentificationService, imageCreator);
 
         return new CreateWardrobeController(userSignupInteractor);
     }
