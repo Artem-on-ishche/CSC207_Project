@@ -8,12 +8,12 @@ public class DeleteInteractor implements DeleteInputBoundary {
         this.deletePresenter = deletePresenter;
         this.deleteDataAccessObject = deleteDataAccessObject;
     }
+
     @Override
     public void execute(DeleteInputData inputData) {
         try {
-            deletePresenter.prepareSuccessView(
-                    new DeleteOutputData()
-            );
+            deleteDataAccessObject.deleteClothingItem(inputData.clothingItemToDeleteId());
+            deletePresenter.prepareSuccessView(new DeleteOutputData());
         } catch (RuntimeException e) {
             deletePresenter.prepareFailView("Error deleting clothing item with id " + inputData.clothingItemToDeleteId() + ". \n" + e.getMessage());
         }

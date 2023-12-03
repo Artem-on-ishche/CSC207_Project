@@ -1,15 +1,9 @@
 package use_case.create_wardrobe;
 
-import model.ClothingItem;
-
-import java.awt.*;
 import java.util.Optional;
 
 public record CreateInputData(String name,
-                              Image image,
+                              String imageSrc,
                               Optional<String> description,
-                              double minimumAppropriateTemperature) {
-    public ClothingItem toClothingItem() {
-        return new ClothingItem(null, name, image, null, minimumAppropriateTemperature, description);
-    }
+                              int minimumAppropriateTemperature) {
 }
