@@ -24,7 +24,7 @@ public class ClothingItemEntity {
     @Column(name = "clothing_item_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Lob
@@ -32,17 +32,17 @@ public class ClothingItemEntity {
     @Column(name = "image_data")
     private byte[] imageData;
 
-    @Column(name = "clothing_type")
+    @Column(name = "clothing_type", nullable = false)
     private String clothingType;
 
-    @Column(name = "minimum_appropriate_temperature")
+    @Column(name = "minimum_appropriate_temperature", nullable = false)
     private int minimumAppropriateTemperature;
 
     @Column(name = "description")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", nullable = false)
     private UserEntity userEntity;
 
     static ClothingItemEntity fromClothingItemAndOwner(ClothingItem clothingItem, User owner) {
@@ -61,7 +61,7 @@ public class ClothingItemEntity {
         if (clothingItemEntity == null)
             return null;
 
-        var filename = ClothingItemDao.IMAGES_DIRECTORY + "/" + clothingItemEntity.id + " " + clothingItemEntity.name + ".png";
+        var filename = ClothingItemDao.getImageEntityFilename(clothingItemEntity);
         var image = FileImageCreator.convertByteArrayAndSaveToFile(clothingItemEntity.imageData, filename);
 
         return new ClothingItem(
