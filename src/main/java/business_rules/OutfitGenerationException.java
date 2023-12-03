@@ -1,4 +1,4 @@
-package use_case.generate_outfit;
+package business_rules;
 
 public class OutfitGenerationException extends Exception {
     public OutfitGenerationException(String s) {
