@@ -21,12 +21,15 @@ public class FileImageCreator implements ImageCreator {
     }
 
     public static Image convertByteArrayAndSaveToFile(byte[] imageData, String filename) {
+        saveToFile(imageData, filename);
+        return new Image(new File(filename), imageData);
+    }
+
+    public static void saveToFile(byte[] imageData, String filename) {
         try (FileOutputStream outputStream = new FileOutputStream(filename)) {
             outputStream.write(imageData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return new Image(new File(filename), imageData);
     }
 }

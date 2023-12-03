@@ -1,5 +1,6 @@
 package data_access.persistence;
 
+import data_access.FileImageCreator;
 import model.ClothingItem;
 
 import javax.persistence.EntityManager;
@@ -35,6 +36,8 @@ public class ClothingItemDao implements AutoCloseable {
         var ownerEntity = entityManager.find(UserEntity.class, ownerUsername);
         var owner = UserEntity.toUser(ownerEntity);
         var clothingItemEntity = ClothingItemEntity.fromClothingItemAndOwner(clothingItem, owner);
+
+        saveImageToFile(clothingItemEntity);
 
         entityManager.getTransaction().begin();
         entityManager.persist(clothingItemEntity);
@@ -99,6 +102,14 @@ public class ClothingItemDao implements AutoCloseable {
     public void close() throws Exception {
         closeEntityManagerFactory();
         deleteImagesDirectory();
+    }
+
+    private void saveImageToFile(ClothingItemEntity clothingItemEntity) {
+        FileImageCreator.saveToFile(clothingItemEntity.getImageData(), getImageEntityFilename(clothingItemEntity));
+    }
+
+    static String getImageEntityFilename(ClothingItemEntity clothingItemEntity) {
+        return IMAGES_DIRECTORY + "/" + clothingItemEntity.getId() + " - " + clothingItemEntity.getName() + ".png";
     }
 
     private void createImagesDirectory() {
