@@ -1,5 +1,7 @@
 package use_case.generate_outfit;
 
+import business_rules.OutfitGenerationException;
+import business_rules.OutfitGenerator;
 import model.ClothingType;
 import model.Weather;
 
