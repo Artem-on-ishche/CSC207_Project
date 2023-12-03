@@ -1,7 +1,5 @@
-package use_case.generate_outfit;
+package business_rules;
 
-import business_rules.OutfitGenerationException;
-import business_rules.OutfitGenerator;
 import model.ClothingType;
 import model.Weather;
 
@@ -12,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static use_case.generate_outfit.OutfitGenerationConstants.*;
+import static business_rules.OutfitGenerationConstants.*;
 
 import java.util.List;
 import java.util.stream.Stream;
