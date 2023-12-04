@@ -1,8 +1,7 @@
-package data_access;
+package data_access.api;
 
+import data_access.api.IpAddressLocationDataSource;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class IpAddressLocationDataSourceTest {
 

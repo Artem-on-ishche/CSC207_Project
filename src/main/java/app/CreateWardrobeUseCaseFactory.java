@@ -1,11 +1,10 @@
 package app;
 
-import data_access.FileImageCreator;
+import data_access.persistence.FileImageCreator;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobePresenter;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import use_case.create_wardrobe.*;
 import view.CreateWardrobeView;

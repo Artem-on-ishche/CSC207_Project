@@ -1,10 +1,9 @@
-package data_access;
+package data_access.api;
 
+import data_access.api.OpenMeteoAPI;
 import model.Location;
 import org.junit.jupiter.api.Test;
 import use_case.generate_outfit.WeatherDataSource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OpenMeteoAPITest {
 
