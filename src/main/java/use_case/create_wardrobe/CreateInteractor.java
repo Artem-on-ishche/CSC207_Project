@@ -37,7 +37,7 @@ public class CreateInteractor implements CreateInputBoundary {
                     inputData.minimumAppropriateTemperature(),
                     inputData.description()
             );
-            createDataAccess.addClothingItem(clothingItem);
+            createDataAccess.addClothingItem(clothingItem, inputData.username());
             createPresenter.prepareSuccessView(new CreateOutputData(clothingItem, false));
 
         } catch (RuntimeException e) {
