@@ -4,7 +4,11 @@ import business_rules.PasswordEncryptionService;
 import data_access.InMemoryClothingDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingType;
@@ -12,8 +16,16 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import model.User;
 import use_case.create_wardrobe.ClothingIdentificationService;
 import use_case.create_wardrobe.CreateDataAccess;
+import use_case.login.LoginDataAccessInterface;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
 import use_case.signup.SignupDataAccessInterface;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 import view.CreateWardrobeView;
+import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 
@@ -21,6 +33,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException {
@@ -79,29 +92,37 @@ public class Main {
             }
         };
 
-        SignupView signupView = SignupUseCaseFactory.create(
-                viewManagerModel,
-                loginViewModel,
-                signupViewModel,
-                userDataAccessObject,
-                passwordEncryptionService
 
-        );
-        views.add(signupView, signupView.viewName);
+        //Sign Up
+        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
+        SignupInputBoundary userSignupInteractor = new SignupInteractor(
+                userDataAccessObject, signupOutputBoundary, passwordEncryptionService);
+        SignupController signupController = new SignupController(userSignupInteractor);
+        SignupView signupView = new SignupView(signupController, signupViewModel);
 
-        CreateWardrobeView createWardrobeView = CreateWardrobeUseCaseFactory.create(
-                viewManagerModel,
-                createWardrobeViewModel,
-                dataAccessObject,
-                clothingIdentificationService,
-                viewAllItemsViewModel
+        //Log In
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
+        LoginDataAccessInterface loginDataAccessObject = new LoginDataAccessInterface() {
+            @Override
+            public void save(User user) {
 
-        );
-        views.add(signupView, signupView.viewName);
+            }
 
+            @Override
+            public Optional<User> get(String username) {
+                return Optional.empty();
+            }
+        };
+        LoginInputBoundary userLoginInteractor = new LoginInteractor(
+                loginDataAccessObject, loginOutputBoundary, passwordEncryptionService);
+        LoginController loginController = new LoginController(userLoginInteractor);
+        LoginView loginView = new LoginView(loginViewModel, loginController);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        views.add(signupView, signupViewModel.getViewName());
+        views.add(loginView, loginViewModel.getViewName());
+
+        viewManagerModel.setActiveView(signupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
         application.pack();
