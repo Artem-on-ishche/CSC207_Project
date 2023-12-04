@@ -1,6 +1,8 @@
 package data_access.persistence;
 
 import model.User;
+import use_case.login.LoginDataAccessInterface;
+import use_case.signup.SignupDataAccessInterface;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,7 +10,7 @@ import javax.persistence.Persistence;
 
 import java.util.Optional;
 
-public class UserDao implements AutoCloseable {
+public class UserDao implements AutoCloseable, LoginDataAccessInterface, SignupDataAccessInterface {
 
     private final EntityManagerFactory entityManagerFactory;
 
@@ -20,7 +22,7 @@ public class UserDao implements AutoCloseable {
         this.entityManagerFactory.close();
     }
 
-    public void saveUser(User user) {
+    public void save(User user) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         entityManager.getTransaction().begin();
@@ -30,11 +32,11 @@ public class UserDao implements AutoCloseable {
         entityManager.close();
     }
 
-    public boolean existsByUsername(String username) {
-        return getByUsername(username).isPresent();
+    public boolean existsByName(String username) {
+        return get(username).isPresent();
     }
 
-    public Optional<User> getByUsername(String username) {
+    public Optional<User> get(String username) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         UserEntity userEntity = entityManager.find(UserEntity.class, username);

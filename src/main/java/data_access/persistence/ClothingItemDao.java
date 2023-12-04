@@ -13,9 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.io.FileUtils;
+import use_case.create_wardrobe.CreateDataAccess;
+import use_case.delete_clothing_item.DeleteDataAccess;
+import use_case.generate_outfit.ClothingDataSource;
+import use_case.get_clothing_item.GetClothingItemAccess;
+import use_case.update_clothing_item.UpdateDataAccess;
+import use_case.view_all_clothing_items.AllItemsOfUserDataAccess;
 
 
-public class ClothingItemDao implements AutoCloseable {
+public class ClothingItemDao implements AutoCloseable,
+        CreateDataAccess,
+        DeleteDataAccess,
+        ClothingDataSource,
+        GetClothingItemAccess,
+        UpdateDataAccess,
+        AllItemsOfUserDataAccess {
     public static final String IMAGES_DIRECTORY = "images";
 
     private final EntityManagerFactory entityManagerFactory;
@@ -30,7 +42,7 @@ public class ClothingItemDao implements AutoCloseable {
         this.entityManagerFactory.close();
     }
 
-    public Long saveClothingItem(ClothingItem clothingItem, String ownerUsername) {
+    public Long addClothingItem(ClothingItem clothingItem, String ownerUsername) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         var ownerEntity = entityManager.find(UserEntity.class, ownerUsername);
@@ -47,7 +59,11 @@ public class ClothingItemDao implements AutoCloseable {
         return clothingItemEntity.getId();
     }
 
-    public List<ClothingItem> getClothingItemsByUser(String username) {
+    public List<ClothingItem> getAllClothingItemsByUsername(String username) {
+        return getAllClothingItemsForUser(username);
+    }
+
+    public List<ClothingItem> getAllClothingItemsForUser(String username) {
         String sql = "SELECT * FROM clothing_item WHERE username = :username ORDER BY clothing_item_id";
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
