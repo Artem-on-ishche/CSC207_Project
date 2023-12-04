@@ -1,4 +1,4 @@
-package data_access;
+package data_access.api;
 
 import model.Location;
 import model.Weather;
@@ -39,10 +39,4 @@ public class OpenMeteoAPI implements WeatherDataSource {
 
         }
     //}
-
-    public static void main(String[] args) {
-        Location place = new Location(-79.4163, 43.6532);
-        WeatherDataSource testObject = new OpenMeteoAPI();
-        System.out.println(testObject.getWeatherData(place));
-    }
 }

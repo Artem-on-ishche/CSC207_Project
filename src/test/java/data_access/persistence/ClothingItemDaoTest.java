@@ -1,6 +1,5 @@
 package data_access.persistence;
 
-import data_access.FileImageCreator;
 import model.ClothingItem;
 import model.ClothingType;
 import model.Image;
@@ -24,7 +23,7 @@ class ClothingItemDaoTest {
 
     @BeforeAll
     static void setUp() {
-        userDao.saveUser(owner);
+        userDao.save(owner);
     }
 
     @AfterAll
@@ -38,7 +37,7 @@ class ClothingItemDaoTest {
     void givenManySequentialOperations_thenAllCorrect() {
         // create
         var item = new ClothingItem(null, itemName1, image, ClothingType.HEAD, 1, Optional.empty());
-        var id = clothingItemDao.saveClothingItem(item, owner.getUsername());
+        var id = clothingItemDao.addClothingItem(item, owner.getUsername());
 
         // read
         var queriedItem = clothingItemDao.getClothingItemById(id);
@@ -67,9 +66,9 @@ class ClothingItemDaoTest {
         );
 
         clothingItems.forEach(clothingItem ->
-                clothingItem.setId(clothingItemDao.saveClothingItem(clothingItem, owner.getUsername())));
+                clothingItem.setId(clothingItemDao.addClothingItem(clothingItem, owner.getUsername())));
 
-        var queriedClothingItems = clothingItemDao.getClothingItemsByUser(owner.getUsername());
+        var queriedClothingItems = clothingItemDao.getAllClothingItemsForUser(owner.getUsername());
 
         assertEquals(clothingItems, queriedClothingItems);
 

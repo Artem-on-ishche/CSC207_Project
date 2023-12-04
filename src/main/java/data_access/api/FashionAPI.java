@@ -1,4 +1,4 @@
-package data_access;
+package data_access.api;
 
 
 
@@ -187,16 +187,6 @@ public class FashionAPI {
         catch (Exception e) {
             throw new RuntimeException("Fashion API failed call.");
         }
-    }
-
-
-    public static void main(String[] args) {
-        FashionAPI fashionAPI = new FashionAPI();
-
-        ClothingType Clothingtype = fashionAPI.identifyClothingItem("https://img.freepik.com/free-photo/black-woman-trendy-grey-leather-jacket-posing-beige-background-studio-winter-autumn-fashion-look_273443-141.jpg");
-
-        System.out.println(Clothingtype);
-
     }
 
 }

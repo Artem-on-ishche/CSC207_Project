@@ -5,12 +5,12 @@ import model.ClothingItem;
 import java.util.Optional;
 
 public class GetClothingItemInteractor implements GetClothingItemInputBoundary {
-    private final GetIClothingItemAccess getIClothingItemAccess;
+    private final GetClothingItemAccess getClothingItemAccess;
     private final GetClothingItemOutputBoundary getPresenter;
 
-    public GetClothingItemInteractor(GetIClothingItemAccess getIClothingItemAccess,
+    public GetClothingItemInteractor(GetClothingItemAccess getClothingItemAccess,
                                      GetClothingItemOutputBoundary getPresenter) {
-        this.getIClothingItemAccess = getIClothingItemAccess;
+        this.getClothingItemAccess = getClothingItemAccess;
         this.getPresenter = getPresenter;
     }
 
@@ -18,7 +18,7 @@ public class GetClothingItemInteractor implements GetClothingItemInputBoundary {
     public void execute(GetClothingItemInputData inputData) {
         try {
             long itemId = inputData.itemId();
-            Optional<ClothingItem> clothingItem = getIClothingItemAccess.getClothingItemById(itemId);
+            Optional<ClothingItem> clothingItem = getClothingItemAccess.getClothingItemById(itemId);
 
             if (clothingItem.isPresent()) {
                 getPresenter.prepareSuccessView(new GetClothingItemOutputData(clothingItem, false));
