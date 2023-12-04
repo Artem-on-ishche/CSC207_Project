@@ -4,13 +4,13 @@ import java.awt.*;
 import java.util.Optional;
 
 public class CreateWardrobeState {
-    private Image photo;
+    private String imageSrc;
     private String name;
     private Optional<String> description;
-    private double minimumAppropriateTemperature;
+    private int minimumAppropriateTemperature;
 
     public CreateWardrobeState(CreateWardrobeState copy) {
-        photo = copy.photo;
+        imageSrc = copy.imageSrc;
         name = copy.name;
         description = copy.description;
         minimumAppropriateTemperature = copy.minimumAppropriateTemperature;
@@ -18,12 +18,12 @@ public class CreateWardrobeState {
 
     public CreateWardrobeState() {}
 
-    public Image getPhoto() {
-        return photo;
+    public String getImageSrc() {
+        return imageSrc;
     }
 
-    public void setPhoto(Image photo) {
-        this.photo = photo;
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
     public String getName() {
@@ -42,11 +42,11 @@ public class CreateWardrobeState {
         this.description = description;
     }
 
-    public double getMinimumAppropriateTemperature() {
+    public int getMinimumAppropriateTemperature() {
         return minimumAppropriateTemperature;
     }
 
-    public void setMinimumAppropriateTemperature(double minimumAppropriateTemperature) {
+    public void setMinimumAppropriateTemperature(int minimumAppropriateTemperature) {
         this.minimumAppropriateTemperature = minimumAppropriateTemperature;
     }
 

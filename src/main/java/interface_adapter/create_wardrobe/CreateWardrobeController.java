@@ -13,10 +13,10 @@ public class CreateWardrobeController {
     }
 
     public void execute(String name,
-                        Image image,
+                        String imageSrc,
                         Optional<String> description,
-                        double minimumAppropriateTemperature) {
-        CreateInputData createInputData = new CreateInputData(name, image, description, minimumAppropriateTemperature);
+                        int minimumAppropriateTemperature) {
+        CreateInputData createInputData = new CreateInputData(name, imageSrc, description, minimumAppropriateTemperature);
         createUseCaseInteractor.execute(createInputData);
     }
 }

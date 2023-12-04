@@ -1,12 +1,13 @@
 package use_case.generate_outfit;
 
+import business_rules.OutfitGenerationConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static use_case.generate_outfit.OutfitGenerationConstants.*;
+import static business_rules.OutfitGenerationConstants.*;
 
 class OutfitGenerationInteractorTest {
 

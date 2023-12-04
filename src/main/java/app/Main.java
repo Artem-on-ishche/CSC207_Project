@@ -3,6 +3,7 @@ package app;
 import data_access.InMemoryClothingDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import model.ClothingType;
 import use_case.create_wardrobe.ClothingIdentificationService;
 import use_case.create_wardrobe.CreateDataAccess;
 import view.CreateWardrobeView;
@@ -44,7 +45,7 @@ public class Main {
 
         ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
             @Override
-            public String identifyClothingItem(Image image) {
+            public ClothingType identifyClothingItem(String imageSrc) {
                 return null;
             }
         };
