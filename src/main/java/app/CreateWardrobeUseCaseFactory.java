@@ -1,9 +1,11 @@
 package app;
 
+import data_access.FileImageCreator;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobePresenter;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.create_wardrobe.*;
 import view.CreateWardrobeView;
 
@@ -18,10 +20,11 @@ public class CreateWardrobeUseCaseFactory {
             ViewManagerModel viewManagerModel,
             CreateWardrobeViewModel createWardrobeViewModel,
             CreateDataAccess createDataAccess,
-            ClothingIdentificationService clothingIdentificationService
+            ClothingIdentificationService clothingIdentificationService,
+            LoggedInViewModel loggedInViewModel
     ) {
         try {
-            CreateWardrobeController signupController = createUserSignupUseCase(viewManagerModel, createWardrobeViewModel, createDataAccess, clothingIdentificationService  );
+            CreateWardrobeController signupController = createUserSignupUseCase(viewManagerModel, createWardrobeViewModel, createDataAccess, clothingIdentificationService, loggedInViewModel);
 
             return new CreateWardrobeView(signupController, createWardrobeViewModel);
         } catch (IOException e) {
@@ -31,13 +34,14 @@ public class CreateWardrobeUseCaseFactory {
         return null;
     }
 
-    private static CreateWardrobeController createUserSignupUseCase(ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, CreateDataAccess userDataAccessObject, ClothingIdentificationService clothingIdentificationService) throws IOException {
+    private static CreateWardrobeController createUserSignupUseCase(ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, CreateDataAccess userDataAccessObject, ClothingIdentificationService clothingIdentificationService, LoggedInViewModel loggedInViewModel) throws IOException {
 
-        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel);
+        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, loggedInViewModel);
+        ImageCreator imageCreator = new FileImageCreator();
 
 
         CreateInputBoundary userSignupInteractor = new CreateInteractor(
-                userDataAccessObject, createOutputBoundary, clothingIdentificationService);
+                userDataAccessObject, createOutputBoundary, clothingIdentificationService, imageCreator);
 
         return new CreateWardrobeController(userSignupInteractor);
     }
