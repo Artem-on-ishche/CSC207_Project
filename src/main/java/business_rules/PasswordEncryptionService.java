@@ -32,12 +32,4 @@ public class PasswordEncryptionService implements PasswordEncryption{
         }
     }
 
-   /* public String decryption(String message) throws IllegalBlockSizeException, BadPaddingException {
-        try {
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            return new String(cipher.doFinal(message.getBytes()), StandardCharsets.UTF_8);
-        } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    } */
 }
