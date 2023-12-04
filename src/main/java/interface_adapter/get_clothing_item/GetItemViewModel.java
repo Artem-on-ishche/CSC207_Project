@@ -1,7 +1,6 @@
-package interface_adapter.get_item_by_id;
+package interface_adapter.get_clothing_item;
 
 import interface_adapter.ViewModel;
-import interface_adapter.delete_clothing_item.DeleteState;
 import lombok.Getter;
 
 import java.beans.PropertyChangeListener;

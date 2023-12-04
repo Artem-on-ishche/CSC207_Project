@@ -1,8 +1,8 @@
 package interface_adapter.update_clothing_item;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.get_item_by_id.GetItemState;
-import interface_adapter.get_item_by_id.GetItemViewModel;
+import interface_adapter.get_clothing_item.GetItemState;
+import interface_adapter.get_clothing_item.GetItemViewModel;
 import interface_adapter.view_all_items.ViewAllItemsState;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
