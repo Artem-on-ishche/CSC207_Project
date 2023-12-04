@@ -4,8 +4,6 @@ import business_rules.PasswordEncryptionService;
 import data_access.InMemoryClothingDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.signup.SignupViewModel;
 import model.ClothingType;
 import interface_adapter.logged_in.LoggedInViewModel;
 import model.User;
@@ -22,7 +20,7 @@ import java.awt.*;
 import java.security.NoSuchAlgorithmException;
 
 public class Main {
-    public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException {
+    public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -57,6 +55,8 @@ public class Main {
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
 
         PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
+        CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
+        ViewAllItemsViewModel viewAllItemsViewModel = new ViewAllItemsViewModel();
 
         ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
             @Override
@@ -93,10 +93,10 @@ public class Main {
                 createWardrobeViewModel,
                 dataAccessObject,
                 clothingIdentificationService,
-                loggedInViewModel
+                viewAllItemsViewModel
 
         );
-        views.add(createWardrobeView, createWardrobeView.viewName);
+        views.add(signupView, signupView.viewName);
 
 
         viewManagerModel.setActiveView(signupView.viewName);

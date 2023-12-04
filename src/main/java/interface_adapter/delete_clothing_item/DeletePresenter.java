@@ -3,6 +3,8 @@ package interface_adapter.delete_clothing_item;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.view_all_items.ViewAllItemsState;
+import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
 import use_case.delete_clothing_item.DeleteOutputBoundary;
 import use_case.delete_clothing_item.DeleteOutputData;
@@ -14,30 +16,30 @@ public class DeletePresenter implements DeleteOutputBoundary {
     private final DeleteViewModel deleteViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    private final LoggedInViewModel loggedInViewModel;
+    private final ViewAllItemsViewModel viewAllItemsViewModel;
 
-    public DeletePresenter(DeleteViewModel deleteViewModel, ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
+    public DeletePresenter(DeleteViewModel deleteViewModel, ViewManagerModel viewManagerModel, ViewAllItemsViewModel viewAllItemsViewModel) {
         this.deleteViewModel = deleteViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.viewAllItemsViewModel = viewAllItemsViewModel;
     }
 
     @Override
     public void prepareSuccessView(DeleteOutputData response) {
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        List<ClothingItem> newWardrobe = new ArrayList<>(loggedInState.getWardrobe());
-        for (ClothingItem clothingItem : loggedInState.getWardrobe()) {
+        ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
+        List<ClothingItem> newWardrobe = new ArrayList<>(viewAllItemsState.getWardrobe());
+        for (ClothingItem clothingItem : viewAllItemsState.getWardrobe()) {
             if (clothingItem.getId().equals(deleteViewModel.getState().getDeletedItemId())) {
                 newWardrobe.remove(clothingItem);
                 break;
             }
         }
 
-        loggedInState.setWardrobe(newWardrobe);
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        viewAllItemsState.setWardrobe(newWardrobe);
+        this.viewAllItemsViewModel.setState(viewAllItemsState);
+        this.viewAllItemsViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 

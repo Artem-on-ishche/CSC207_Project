@@ -52,6 +52,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                             CreateWardrobeState currentState = createWardrobeViewModel.getState();
 
                             CreateWardrobeView.this.createWardrobeController.execute(
+                                    "username_goes_here",
                                     currentState.getName(),
                                     currentState.getImageSrc(),
                                     currentState.getDescription(),
