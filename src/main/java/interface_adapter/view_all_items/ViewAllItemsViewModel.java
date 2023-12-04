@@ -10,7 +10,7 @@ public class ViewAllItemsViewModel extends ViewModel {
     public final String TITLE_LABEL = "View All";
 
     @Getter
-    private ViewAllItemsState state = new ViewAllItemsState();
+    private ViewAllItemsState state = new ViewAllItemsState(wardrobe);
 
     public ViewAllItemsViewModel() {
         super("view all");

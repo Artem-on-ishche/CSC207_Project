@@ -3,8 +3,8 @@ package interface_adapter.update_clothing_item;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_item_by_id.GetItemState;
 import interface_adapter.get_item_by_id.GetItemViewModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.view_all_items.ViewAllItemsState;
+import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
 import use_case.update_clothing_item.UpdateOutputBoundary;
 import use_case.update_clothing_item.UpdateOutputData;
@@ -12,30 +12,30 @@ import use_case.update_clothing_item.UpdateOutputData;
 
 public class UpdatePresenter implements UpdateOutputBoundary {
     private final UpdateViewModel updateViewModel;
-    private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewModel;
-
     private final GetItemViewModel getItemViewModel;
 
+    private final ViewAllItemsViewModel viewAllItemsViewModel;
+
     public UpdatePresenter(ViewManagerModel viewManagerModel,
-                                   UpdateViewModel updateViewModel, LoggedInViewModel loggedInViewModel, GetItemViewModel getItemViewModel) {
+                                   UpdateViewModel updateViewModel, ViewAllItemsViewModel viewAllItemsViewModel, GetItemViewModel getItemViewModel) {
         this.updateViewModel = updateViewModel;
         this.viewModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.viewAllItemsViewModel = viewAllItemsViewModel;
         this.getItemViewModel = getItemViewModel;
     }
 
     @Override
     public void prepareSuccessView(UpdateOutputData outputData) {
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        for (ClothingItem clothingItem : loggedInState.getWardrobe()) {
+        ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
+        for (ClothingItem clothingItem : viewAllItemsState.getWardrobe()) {
             if (clothingItem.getId().equals(outputData.updatedClothingItem().getId())) {
-                loggedInState.getWardrobe().set(loggedInState.getWardrobe().indexOf(clothingItem), outputData.updatedClothingItem());
+                viewAllItemsState.getWardrobe().set(viewAllItemsState.getWardrobe().indexOf(clothingItem), outputData.updatedClothingItem());
                 break;
             }
         }
-        loggedInViewModel.setState(loggedInState);
-        loggedInViewModel.firePropertyChanged();
+        viewAllItemsViewModel.setState(viewAllItemsState);
+        viewAllItemsViewModel.firePropertyChanged();
 
         UpdateState updateState = updateViewModel.getState();
         updateState.setClothingItem(outputData.updatedClothingItem());

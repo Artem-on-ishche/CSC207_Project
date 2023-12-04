@@ -5,6 +5,8 @@ import interface_adapter.ViewModel;
 import interface_adapter.delete_clothing_item.DeleteState;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.view_all_items.ViewAllItemsState;
+import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
 import use_case.create_wardrobe.CreateOutputBoundary;
 import use_case.create_wardrobe.CreateOutputData;
@@ -13,24 +15,24 @@ import java.util.List;
 
 public class CreateWardrobePresenter implements CreateOutputBoundary {
     private final CreateWardrobeViewModel createWardrobeViewModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private final ViewAllItemsViewModel viewAllItemsViewModel;
     private final ViewManagerModel viewModel;
 
     public CreateWardrobePresenter(ViewManagerModel viewManagerModel,
-                                   CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel) {
+                                   CreateWardrobeViewModel createWardrobeViewModel, ViewAllItemsViewModel viewAllItemsViewModel) {
         this.createWardrobeViewModel = createWardrobeViewModel;
         this.viewModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.viewAllItemsViewModel = viewAllItemsViewModel;
     }
 
     @Override
     public void prepareSuccessView(CreateOutputData outputData) {
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.getWardrobe().add(outputData.newClothingItem());
-        loggedInViewModel.setState(loggedInState);
-        loggedInViewModel.firePropertyChanged();
+        ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
+        viewAllItemsState.getWardrobe().add(outputData.newClothingItem());
+        viewAllItemsViewModel.setState(viewAllItemsState);
+        viewAllItemsViewModel.firePropertyChanged();
 
-        viewModel.setActiveView(loggedInViewModel.getViewName());
+        viewModel.setActiveView(viewAllItemsViewModel.getViewName());
         viewModel.firePropertyChanged();
     }
 

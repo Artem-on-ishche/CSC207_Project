@@ -1,29 +1,25 @@
 package interface_adapter.view_all_items;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.view_all_clothing_items.ViewAllClothingItemsOutputBoundary;
 import use_case.view_all_clothing_items.ViewAllClothingItemsOutputData;
 
 public class ViewAllItemsPresenter implements ViewAllClothingItemsOutputBoundary {
-    private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final ViewAllItemsViewModel viewAllItemsViewModel;
 
-    public ViewAllItemsPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, ViewAllItemsViewModel viewAllItemsViewModel) {
+    public ViewAllItemsPresenter(ViewManagerModel viewManagerModel, ViewAllItemsViewModel viewAllItemsViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
         this.viewAllItemsViewModel = viewAllItemsViewModel;
     }
     @Override
     public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setWardrobe(outputData.clothingItems());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
+        viewAllItemsState.setWardrobe(outputData.clothingItems());
+        this.viewAllItemsViewModel.setState(viewAllItemsState);
+        this.viewAllItemsViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        this.viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
