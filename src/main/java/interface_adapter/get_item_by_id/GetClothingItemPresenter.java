@@ -17,7 +17,9 @@ public class GetClothingItemPresenter implements GetClothingItemOutputBoundary {
     @Override
     public void prepareSuccessView(GetClothingItemOutputData response) {
         GetItemState getItemState = getItemViewModel.getState();
-        getItemState.setClothingItem(response.clothingItem());
+        if(response.clothingItem().isPresent()) {
+            getItemState.setClothingItem(response.clothingItem().get());
+        }
         this.getItemViewModel.setState(getItemState);
         getItemViewModel.firePropertyChanged();
 
