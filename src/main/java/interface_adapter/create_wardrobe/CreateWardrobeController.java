@@ -12,11 +12,12 @@ public class CreateWardrobeController {
         this.createUseCaseInteractor = createUseCaseInteractor;
     }
 
-    public void execute(String name,
+    public void execute(String username,
+                        String name,
                         String imageSrc,
                         Optional<String> description,
                         int minimumAppropriateTemperature) {
-        CreateInputData createInputData = new CreateInputData(name, imageSrc, description, minimumAppropriateTemperature);
+        CreateInputData createInputData = new CreateInputData(username, name, imageSrc, description, minimumAppropriateTemperature);
         createUseCaseInteractor.execute(createInputData);
     }
 }
