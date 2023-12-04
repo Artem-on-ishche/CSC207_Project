@@ -1,27 +1,27 @@
 package use_case.login;
 
-import business_rules.PasswordEncryptionService;
+import business_rules.PasswordEncryption;
 import model.User;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
-    final PasswordEncryptionService passwordEncryptionService;
+    final PasswordEncryption passwordEncryption;
 
     public LoginInteractor(LoginDataAccessInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary,
-                           PasswordEncryptionService passwordEncryptionService) {
+                           PasswordEncryption passwordEncryption) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
-        this.passwordEncryptionService = passwordEncryptionService;
+        this.passwordEncryption = passwordEncryption;
     }
 
     @Override
     public void execute(LoginInputData loginData) {
         String username = loginData.getUsername();
         String password = loginData.getPassword();
-        String encrypted = passwordEncryptionService.encryptMessage(password);
+        String encrypted = passwordEncryption.encryptMessage(password);
 
         var optionalUser = userDataAccessObject.get(username);
         if (optionalUser.isEmpty()) {
@@ -39,4 +39,7 @@ public class LoginInteractor implements LoginInputBoundary {
         }
     }
 
+    public static void main(String[] args) {
+
+    }
 }
