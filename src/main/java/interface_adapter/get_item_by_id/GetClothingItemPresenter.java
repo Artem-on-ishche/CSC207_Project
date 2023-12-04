@@ -1,21 +1,21 @@
 package interface_adapter.get_item_by_id;
 
 import interface_adapter.ViewManagerModel;
-import use_case.get_item_by_id.GetItemByIdOutputBoundary;
-import use_case.get_item_by_id.GetItemByIdOutputData;
+import use_case.get_clothing_item.GetClothingItemOutputBoundary;
+import use_case.get_clothing_item.GetClothingItemOutputData;
 
-public class GetItemPresenter implements GetItemByIdOutputBoundary {
+public class GetClothingItemPresenter implements GetClothingItemOutputBoundary {
     private final GetItemViewModel getItemViewModel;
     private final ViewManagerModel viewManagerModel;
 
 
-    public GetItemPresenter(GetItemViewModel getItemViewModel, ViewManagerModel viewManagerModel) {
+    public GetClothingItemPresenter(GetItemViewModel getItemViewModel, ViewManagerModel viewManagerModel) {
         this.getItemViewModel = getItemViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccessView(GetItemByIdOutputData response) {
+    public void prepareSuccessView(GetClothingItemOutputData response) {
         GetItemState getItemState = getItemViewModel.getState();
         getItemState.setClothingItem(response.clothingItem());
         this.getItemViewModel.setState(getItemState);

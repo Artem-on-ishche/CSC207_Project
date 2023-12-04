@@ -1,20 +1,28 @@
 package app;
 
+import business_rules.PasswordEncryptionService;
 import data_access.InMemoryClothingDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupViewModel;
 import model.ClothingType;
 import interface_adapter.logged_in.LoggedInViewModel;
+import model.User;
 import use_case.create_wardrobe.ClothingIdentificationService;
 import use_case.create_wardrobe.CreateDataAccess;
+import use_case.signup.SignupDataAccessInterface;
 import view.CreateWardrobeView;
+import view.SignupView;
 import view.ViewManager;
 
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -42,8 +50,13 @@ public class Main {
 
 
         CreateDataAccess dataAccessObject = new InMemoryClothingDataAccessObject();
-        CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
+
+        LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
+
+        PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
 
         ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
             @Override
@@ -52,7 +65,30 @@ public class Main {
             }
         };
 
-        CreateWardrobeView signupView = CreateWardrobeUseCaseFactory.create(
+        SignupDataAccessInterface userDataAccessObject = new SignupDataAccessInterface() {
+            @Override
+            public boolean existsByName(String identifier) {
+                return false;
+            }
+
+            @Override
+            public void save(User user) {
+
+            }
+        };
+
+        SignupView signupView = SignupUseCaseFactory.create(
+                viewManagerModel,
+                loginViewModel,
+                signupViewModel,
+                userDataAccessObject,
+                passwordEncryptionService
+
+        );
+        views.add(signupView, signupView.viewName);
+
+
+        CreateWardrobeView createWardrobeView = CreateWardrobeUseCaseFactory.create(
                 viewManagerModel,
                 createWardrobeViewModel,
                 dataAccessObject,
@@ -60,7 +96,7 @@ public class Main {
                 loggedInViewModel
 
         );
-        views.add(signupView, signupView.viewName);
+        views.add(createWardrobeView, createWardrobeView.viewName);
 
 
         viewManagerModel.setActiveView(signupView.viewName);
