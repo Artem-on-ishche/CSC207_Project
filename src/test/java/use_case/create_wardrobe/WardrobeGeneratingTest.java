@@ -10,7 +10,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WardrobeGeneratingTest {
-    private static final CreateInputData defaultInputData = new CreateInputData("item", null, null, 20);
+    private static final CreateInputData defaultInputData = new CreateInputData(null, "item", null, null, 20);
     private static CreateDataAccess createDataAccess;
     private static CreateOutputBoundary createPresenter;
     private static ClothingIdentificationService clothingIdentificationService;
@@ -30,7 +30,7 @@ class WardrobeGeneratingTest {
     void givenInvalidInput_shouldPrepareFailView() {
         createDataAccess = new CreateDataAccess() {
             @Override
-            public Long addClothingItem(ClothingItem clothingItem) {
+            public Long addClothingItem(ClothingItem clothingItem, String username) {
                 fail("Should not be called");
                 return null;
             }
@@ -60,7 +60,7 @@ class WardrobeGeneratingTest {
                 clothingIdentificationService,
                 createImage);
 
-        CreateInputData invalidInputData = new CreateInputData(
+        CreateInputData invalidInputData = new CreateInputData(null,
                 null, null, null, 0)
         ;
 
