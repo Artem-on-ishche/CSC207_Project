@@ -6,6 +6,7 @@ import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobePresenter;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import use_case.create_wardrobe.*;
 import view.CreateWardrobeView;
 
@@ -21,10 +22,10 @@ public class CreateWardrobeUseCaseFactory {
             CreateWardrobeViewModel createWardrobeViewModel,
             CreateDataAccess createDataAccess,
             ClothingIdentificationService clothingIdentificationService,
-            LoggedInViewModel loggedInViewModel
+            ViewAllItemsViewModel viewAllItemsViewModel
     ) {
         try {
-            CreateWardrobeController signupController = createUserSignupUseCase(viewManagerModel, createWardrobeViewModel, createDataAccess, clothingIdentificationService, loggedInViewModel);
+            CreateWardrobeController signupController = createUserSignupUseCase(viewManagerModel, createWardrobeViewModel, createDataAccess, clothingIdentificationService, viewAllItemsViewModel);
 
             return new CreateWardrobeView(signupController, createWardrobeViewModel);
         } catch (IOException e) {
@@ -34,9 +35,9 @@ public class CreateWardrobeUseCaseFactory {
         return null;
     }
 
-    private static CreateWardrobeController createUserSignupUseCase(ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, CreateDataAccess userDataAccessObject, ClothingIdentificationService clothingIdentificationService, LoggedInViewModel loggedInViewModel) throws IOException {
+    private static CreateWardrobeController createUserSignupUseCase(ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, CreateDataAccess userDataAccessObject, ClothingIdentificationService clothingIdentificationService, ViewAllItemsViewModel viewAllItemsViewModel) throws IOException {
 
-        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, loggedInViewModel);
+        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllItemsViewModel);
         ImageCreator imageCreator = new FileImageCreator();
 
 

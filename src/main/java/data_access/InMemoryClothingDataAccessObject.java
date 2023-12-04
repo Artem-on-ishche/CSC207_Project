@@ -5,7 +5,7 @@ import use_case.create_wardrobe.CreateDataAccess;
 
 public class InMemoryClothingDataAccessObject implements CreateDataAccess {
     @Override
-    public Long addClothingItem(ClothingItem clothingItem) {
+    public Long addClothingItem(ClothingItem clothingItem, String username) {
 
         return null;
     }
