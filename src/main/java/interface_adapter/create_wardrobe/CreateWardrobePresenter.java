@@ -3,9 +3,13 @@ package interface_adapter.create_wardrobe;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
 import interface_adapter.delete_clothing_item.DeleteState;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import model.ClothingItem;
 import use_case.create_wardrobe.CreateOutputBoundary;
 import use_case.create_wardrobe.CreateOutputData;
+
+import java.util.List;
 
 public class CreateWardrobePresenter implements CreateOutputBoundary {
     private final CreateWardrobeViewModel createWardrobeViewModel;
@@ -21,13 +25,10 @@ public class CreateWardrobePresenter implements CreateOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateOutputData outputData) {
-        CreateWardrobeState createWardrobeState = createWardrobeViewModel.getState();
-        createWardrobeState.setDescription(outputData.newClothingItem().getDescription());
-        createWardrobeState.setName(outputData.newClothingItem().getName());
-//        createWardrobeState.setImageSrc(outputData.newClothingItem().getImage());
-        createWardrobeState.setMinimumAppropriateTemperature(outputData.newClothingItem().getMinimumAppropriateTemperature());
-        this.createWardrobeViewModel.setState(createWardrobeState);
-        createWardrobeViewModel.firePropertyChanged();
+        LoggedInState loggedInState = loggedInViewModel.getState();
+        loggedInState.getWardrobe().add(outputData.newClothingItem());
+        loggedInViewModel.setState(loggedInState);
+        loggedInViewModel.firePropertyChanged();
 
         viewModel.setActiveView(loggedInViewModel.getViewName());
         viewModel.firePropertyChanged();
