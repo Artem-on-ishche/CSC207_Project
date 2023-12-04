@@ -5,6 +5,7 @@ import java.util.Optional;
 
 public class CreateWardrobeState {
     private String imageSrc;
+    private String createError;
     private String name;
     private Optional<String> description;
     private int minimumAppropriateTemperature;
@@ -14,6 +15,7 @@ public class CreateWardrobeState {
         name = copy.name;
         description = copy.description;
         minimumAppropriateTemperature = copy.minimumAppropriateTemperature;
+        createError = copy.createError;
     }
 
     public CreateWardrobeState() {}
@@ -48,6 +50,14 @@ public class CreateWardrobeState {
 
     public void setMinimumAppropriateTemperature(int minimumAppropriateTemperature) {
         this.minimumAppropriateTemperature = minimumAppropriateTemperature;
+    }
+
+    public String getCreateError() {
+        return createError;
+    }
+
+    public void setCreateError(String createError) {
+        this.createError = createError;
     }
 
     @Override

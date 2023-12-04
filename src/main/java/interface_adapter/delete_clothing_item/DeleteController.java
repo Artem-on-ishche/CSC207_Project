@@ -4,7 +4,7 @@ import use_case.delete_clothing_item.DeleteInputBoundary;
 import use_case.delete_clothing_item.DeleteInputData;
 
 public class DeleteController {
-    final DeleteInputBoundary deleteUseCaseInteractor;
+    private final DeleteInputBoundary deleteUseCaseInteractor;
     public DeleteController(DeleteInputBoundary deleteInputBoundary) {
         this.deleteUseCaseInteractor = deleteInputBoundary;
     }

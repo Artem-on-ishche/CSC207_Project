@@ -1,23 +1,24 @@
-package interface_adapter.delete_clothing_item;
+package interface_adapter.get_item_by_id;
 
 import interface_adapter.ViewModel;
+import interface_adapter.delete_clothing_item.DeleteState;
 import lombok.Getter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class DeleteViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Delete Clothing Item";
-    public static final String DELETE_BUTTON_LABEL = "Delete";
+public class GetItemViewModel extends ViewModel {
+    public static final String TITLE_LABEL = "Get Clothing Item";
+    public static final String Get_BUTTON_LABEL = "View more";
 
     @Getter
-    private DeleteState state = new DeleteState();
+    private GetItemState state = new GetItemState();
 
-    public DeleteViewModel() {
-        super("delete item");
+    public GetItemViewModel() {
+        super("get item");
     }
 
-    public void setState(DeleteState state) {
+    public void setState(GetItemState state) {
         this.state = state;
     }
 

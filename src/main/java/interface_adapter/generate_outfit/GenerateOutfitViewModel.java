@@ -1,4 +1,4 @@
-package interface_adapter.delete_clothing_item;
+package interface_adapter.generate_outfit;
 
 import interface_adapter.ViewModel;
 import lombok.Getter;
@@ -6,18 +6,18 @@ import lombok.Getter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class DeleteViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Delete Clothing Item";
-    public static final String DELETE_BUTTON_LABEL = "Delete";
+public class GenerateOutfitViewModel extends ViewModel {
+    public static final String TITLE_LABEL = "Generate Outfit";
+    public static final String GENERATE_BUTTON_LABEL = "Generate Outfit";
 
     @Getter
-    private DeleteState state = new DeleteState();
+    private GenerateOutfitState state = new GenerateOutfitState();
 
-    public DeleteViewModel() {
-        super("delete item");
+    public GenerateOutfitViewModel() {
+        super("generate outfit");
     }
 
-    public void setState(DeleteState state) {
+    public void setState(GenerateOutfitState state) {
         this.state = state;
     }
 

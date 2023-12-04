@@ -1,4 +1,4 @@
-package interface_adapter.delete_clothing_item;
+package interface_adapter.update_clothing_item;
 
 import interface_adapter.ViewModel;
 import lombok.Getter;
@@ -6,23 +6,22 @@ import lombok.Getter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class DeleteViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Delete Clothing Item";
-    public static final String DELETE_BUTTON_LABEL = "Delete";
+public class UpdateViewModel extends ViewModel {
+    public static final String TITLE_LABEL = "Update Clothing Item";
+    public static final String DELETE_BUTTON_LABEL = "Update";
 
     @Getter
-    private DeleteState state = new DeleteState();
+    private UpdateState state = new UpdateState();
 
-    public DeleteViewModel() {
-        super("delete item");
+    public UpdateViewModel() {
+        super("update item");
     }
 
-    public void setState(DeleteState state) {
+    public void setState(UpdateState state) {
         this.state = state;
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);

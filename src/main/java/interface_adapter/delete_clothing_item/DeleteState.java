@@ -1,19 +1,25 @@
 package interface_adapter.delete_clothing_item;
 
 
+import lombok.Getter;
+
+@Getter
 public class DeleteState {
+
+    public void setDeletedItem(Long deletedItem) {
+        this.deletedItemId = deletedItem;
+    }
+
+    private Long deletedItemId;
 
     private String deleteError;
 
-    public DeleteState(DeleteState copy) {
+    public DeleteState(Long deletedItem, DeleteState copy) {
+        this.deletedItemId = deletedItem;
         this.deleteError = copy.deleteError;
     }
 
     public DeleteState() {}
-
-    public String getDeleteError() {
-        return deleteError;
-    }
 
     public void setDeleteError(String deleteError) {
         this.deleteError = deleteError;

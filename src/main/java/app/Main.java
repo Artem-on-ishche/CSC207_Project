@@ -4,6 +4,7 @@ import data_access.InMemoryClothingDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import model.ClothingType;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.create_wardrobe.ClothingIdentificationService;
 import use_case.create_wardrobe.CreateDataAccess;
 import view.CreateWardrobeView;
@@ -42,6 +43,7 @@ public class Main {
 
         CreateDataAccess dataAccessObject = new InMemoryClothingDataAccessObject();
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
+        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 
         ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
             @Override
@@ -54,7 +56,9 @@ public class Main {
                 viewManagerModel,
                 createWardrobeViewModel,
                 dataAccessObject,
-                clothingIdentificationService
+                clothingIdentificationService,
+                loggedInViewModel
+
         );
         views.add(signupView, signupView.viewName);
 
