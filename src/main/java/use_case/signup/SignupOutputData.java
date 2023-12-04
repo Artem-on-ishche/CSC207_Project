@@ -1,16 +1,13 @@
 package use_case.signup;
 
+import lombok.Getter;
+
+@Getter
 public class SignupOutputData {
     private final String username;
 
-    private boolean useCaseFailed;
-
     public SignupOutputData(String username) {
         this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
 }

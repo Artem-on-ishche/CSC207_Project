@@ -189,14 +189,4 @@ public class FashionAPI {
         }
     }
 
-
-    public static void main(String[] args) {
-        FashionAPI fashionAPI = new FashionAPI();
-
-        ClothingType Clothingtype = fashionAPI.identifyClothingItem("https://img.freepik.com/free-photo/black-woman-trendy-grey-leather-jacket-posing-beige-background-studio-winter-autumn-fashion-look_273443-141.jpg");
-
-        System.out.println(Clothingtype);
-
-    }
-
 }
