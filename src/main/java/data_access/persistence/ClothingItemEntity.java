@@ -1,6 +1,5 @@
 package data_access.persistence;
 
-import data_access.FileImageCreator;
 import model.ClothingItem;
 import model.ClothingType;
 import model.User;

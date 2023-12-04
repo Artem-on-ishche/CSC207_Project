@@ -1,9 +1,7 @@
-package data_access;
+package data_access.api;
 
-import model.ClothingType;
+import data_access.api.FashionAPI;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FashionAPITest {
 

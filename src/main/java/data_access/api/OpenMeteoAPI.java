@@ -1,4 +1,4 @@
-package data_access;
+package data_access.api;
 
 import model.Location;
 import model.Weather;
