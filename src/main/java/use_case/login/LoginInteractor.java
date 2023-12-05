@@ -1,7 +1,11 @@
 package use_case.login;
 
 import business_rules.PasswordEncryption;
+import business_rules.PasswordEncryptionService;
 import model.User;
+
+import javax.crypto.NoSuchPaddingException;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginDataAccessInterface userDataAccessObject;
@@ -37,9 +41,5 @@ public class LoginInteractor implements LoginInputBoundary {
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }
