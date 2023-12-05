@@ -2,6 +2,7 @@ package app;
 
 import business_rules.PasswordEncryptionService;
 import data_access.InMemoryClothingDataAccessObject;
+import data_access.persistence.UserDao;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.login.LoginController;
@@ -24,10 +25,7 @@ import use_case.signup.SignupDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.CreateWardrobeView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
@@ -73,54 +71,31 @@ public class Main {
         PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
         ViewAllItemsViewModel viewAllItemsViewModel = new ViewAllItemsViewModel();
 
-        ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
-            @Override
-            public ClothingType identifyClothingItem(String imageSrc) {
-                return null;
-            }
-        };
-
-        SignupDataAccessInterface userDataAccessObject = new SignupDataAccessInterface() {
-            @Override
-            public boolean existsByName(String identifier) {
-                return false;
-            }
-
-            @Override
-            public void save(User user) {
-
-            }
-        };
+        UserDao userDao = new UserDao();
 
 
         //Sign Up
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, passwordEncryptionService);
+                userDao, signupOutputBoundary, passwordEncryptionService);
         SignupController signupController = new SignupController(userSignupInteractor);
-        SignupView signupView = new SignupView(signupController, signupViewModel);
+        SignupView signupView = new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel);
 
         //Log In
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
-        LoginDataAccessInterface loginDataAccessObject = new LoginDataAccessInterface() {
-            @Override
-            public void save(User user) {
 
-            }
-
-            @Override
-            public Optional<User> get(String username) {
-                return Optional.empty();
-            }
-        };
         LoginInputBoundary userLoginInteractor = new LoginInteractor(
-                loginDataAccessObject, loginOutputBoundary, passwordEncryptionService);
+                userDao, loginOutputBoundary, passwordEncryptionService);
         LoginController loginController = new LoginController(userLoginInteractor);
         LoginView loginView = new LoginView(loginViewModel, loginController);
 
+
+        //Logged In
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(signupView, signupViewModel.getViewName());
         views.add(loginView, loginViewModel.getViewName());
+        views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
