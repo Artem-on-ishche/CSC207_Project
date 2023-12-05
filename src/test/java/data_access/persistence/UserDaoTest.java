@@ -2,8 +2,6 @@ package data_access.persistence;
 
 import model.User;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,11 +22,11 @@ class UserDaoTest {
     void givenManySequentialOperations_AllCorrect() {
         // create
         var user = new User(username, password1);
-        userDao.saveUser(user);
-        assertTrue(userDao.existsByUsername(username));
+        userDao.save(user);
+        assertTrue(userDao.existsByName(username));
 
         // read
-        var queriedUser = userDao.getByUsername(username);
+        var queriedUser = userDao.get(username);
         assertTrue(queriedUser.isPresent());
         assertEquals(queriedUser.get().getPassword(), password1);
 
@@ -36,14 +34,14 @@ class UserDaoTest {
         user = new User(username, password2);
         userDao.updateUser(user);
 
-        queriedUser = userDao.getByUsername(username);
+        queriedUser = userDao.get(username);
         assertTrue(queriedUser.isPresent());
         assertEquals(queriedUser.get().getPassword(), password2);
 
         // delete
         userDao.deleteUser(username);
-        queriedUser = userDao.getByUsername(username);
+        queriedUser = userDao.get(username);
         assertFalse(queriedUser.isPresent());
-        assertFalse(userDao.existsByUsername(username));
+        assertFalse(userDao.existsByName(username));
     }
 }

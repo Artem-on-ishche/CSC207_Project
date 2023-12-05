@@ -144,8 +144,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
+        if (evt.getSource().equals(cancel)) {
+            int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to cancel?", "Cancel Confirmation", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                usernameInputField.setText("");
+                passwordInputField.setText("");
+                repeatPasswordInputField.setText("");
+            }
+        }
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

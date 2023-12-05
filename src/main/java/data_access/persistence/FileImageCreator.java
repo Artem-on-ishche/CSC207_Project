@@ -1,4 +1,4 @@
-package data_access;
+package data_access.persistence;
 
 import model.Image;
 import use_case.create_wardrobe.ImageCreator;

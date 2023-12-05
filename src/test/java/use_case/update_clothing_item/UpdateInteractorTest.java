@@ -16,9 +16,6 @@ public class UpdateInteractorTest {
     private static final UpdateDataAccess updateDataAccess = clothingItem -> {
         if (clothingItem.getClothingType() == null)
             throw new IllegalArgumentException();
-        else {
-            return clothingItem;
-        }
     };
     private static UpdateInputBoundary interactor;
 
