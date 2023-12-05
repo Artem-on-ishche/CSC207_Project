@@ -3,6 +3,7 @@ package interface_adapter.view_all_items;
 import lombok.Getter;
 import model.ClothingItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,9 @@ public class ViewAllItemsState {
         this.wardrobe = wardrobe;
     }
 
-    public ViewAllItemsState(){}
+    public ViewAllItemsState(){
+        this.wardrobe = new ArrayList<>();
+    }
 
     public void setWardrobe(List<ClothingItem> wardrobe) {
         this.wardrobe = wardrobe;

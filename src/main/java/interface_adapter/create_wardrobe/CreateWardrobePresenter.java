@@ -41,5 +41,6 @@ public class CreateWardrobePresenter implements CreateOutputBoundary {
         CreateWardrobeState createWardrobeState = createWardrobeViewModel.getState();
         createWardrobeState.setCreateError(error);
         createWardrobeViewModel.firePropertyChanged();
+        viewModel.firePropertyChanged();
     }
 }

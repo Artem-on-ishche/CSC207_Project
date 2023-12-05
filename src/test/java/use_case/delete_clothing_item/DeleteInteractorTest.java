@@ -5,7 +5,6 @@ import model.ClothingItem;
 import model.ClothingType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import use_case.update_clothing_item.*;
 
 import java.util.ArrayList;
 import java.util.List;
