@@ -1,11 +1,11 @@
-package interface_adapter.view_all_items;
+package interface_adapter.view_all_clothing_items;
 
 import use_case.view_all_clothing_items.ViewAllClothingItemsInputBoundary;
 import use_case.view_all_clothing_items.ViewAllClothingItemsInputData;
 
-public class ViewAllItemsController {
+public class ViewAllClothingItemsController {
     private final ViewAllClothingItemsInputBoundary viewAllClothingItemsInteractor;
-    public ViewAllItemsController(ViewAllClothingItemsInputBoundary viewAllClothingItemsInteractor) {
+    public ViewAllClothingItemsController(ViewAllClothingItemsInputBoundary viewAllClothingItemsInteractor) {
         this.viewAllClothingItemsInteractor = viewAllClothingItemsInteractor;
     }
 

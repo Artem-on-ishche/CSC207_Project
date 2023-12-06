@@ -3,7 +3,7 @@ package view;
 import interface_adapter.generate_outfit.GenerateOutfitController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.view_all_items.ViewAllItemsController;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton generateOutfit;
 
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewAllItemsController viewAllItemsController, GenerateOutfitController generateOutfitController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewAllClothingItemsController viewAllClothingItemsController, GenerateOutfitController generateOutfitController) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.generateOutfitController = generateOutfitController;
@@ -63,7 +63,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     LoggedInState currentState = loggedInViewModel.getState();
 
                     String username = currentState.getUsername();
-                    viewAllItemsController.execute(username);
+                    viewAllClothingItemsController.execute(username);
                 }
             }
         });

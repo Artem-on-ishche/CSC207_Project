@@ -30,9 +30,9 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.update_clothing_item.UpdateController;
 import interface_adapter.update_clothing_item.UpdatePresenter;
 import interface_adapter.update_clothing_item.UpdateViewModel;
-import interface_adapter.view_all_items.ViewAllItemsController;
-import interface_adapter.view_all_items.ViewAllItemsPresenter;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsController;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsPresenter;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.create_wardrobe.*;
 import use_case.delete_clothing_item.DeleteInputBoundary;
@@ -78,7 +78,7 @@ public class Main {
 
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
-        views.setPreferredSize(new Dimension(500, 500));
+        views.setPreferredSize(new Dimension(1450, 1000));
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int centerX = (screenSize.width - views.getPreferredSize().width) / 2;
@@ -94,7 +94,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
-        ViewAllItemsViewModel viewAllItemsViewModel = new ViewAllItemsViewModel();
+        ViewAllClothingItemsViewModel viewAllClothingItemsViewModel = new ViewAllClothingItemsViewModel();
         GenerateOutfitViewModel generateOutfitViewModel = new GenerateOutfitViewModel();
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
         GetClothingItemViewModel getClothingItemViewModel = new GetClothingItemViewModel();
@@ -125,11 +125,11 @@ public class Main {
         LoginView loginView = new LoginView(loginViewModel, loginController);
 
         //View Wardrobe
-        ViewAllClothingItemsOutputBoundary viewAllClothingItemsOutputBoundary = new ViewAllItemsPresenter(viewManagerModel, viewAllItemsViewModel);
+        ViewAllClothingItemsOutputBoundary viewAllClothingItemsOutputBoundary = new ViewAllClothingItemsPresenter(viewManagerModel, viewAllClothingItemsViewModel);
         ViewAllClothingItemsInputBoundary viewAllClothingItemsInteractor = new ViewAllClothingItemsInteractor(
                 clothingItemDao,
                 viewAllClothingItemsOutputBoundary);
-        ViewAllItemsController viewAllItemsController = new ViewAllItemsController(viewAllClothingItemsInteractor);
+        ViewAllClothingItemsController viewAllClothingItemsController = new ViewAllClothingItemsController(viewAllClothingItemsInteractor);
 
         //Outfit Generator
         OutputBoundary outputBoundary = new GenerateOutfitPresenter(viewManagerModel, generateOutfitViewModel);
@@ -146,14 +146,14 @@ public class Main {
 
 
         //Logged In
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewAllItemsController, generateOutfitController);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewAllClothingItemsController, generateOutfitController);
 
 
         //Generate Outfit
         GenerateOutfitView generateOutfitView = new GenerateOutfitView();
 
         //Add Item
-        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllItemsViewModel);
+        CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllClothingItemsViewModel);
         FileImageCreator fileImageCreator = new FileImageCreator();
         FashionAPI fashionAPI = new FashionAPI();
         CreateInputBoundary createInputBoundary = new CreateInteractor(
@@ -164,7 +164,7 @@ public class Main {
                 ;
 
         CreateWardrobeController  createWardrobeController = new CreateWardrobeController(createInputBoundary);
-        CreateWardrobeView createWardrobeView = new CreateWardrobeView(createWardrobeController, createWardrobeViewModel, loggedInViewModel, viewManagerModel, viewAllItemsViewModel);
+        CreateWardrobeView createWardrobeView = new CreateWardrobeView(createWardrobeController, createWardrobeViewModel, loggedInViewModel, viewManagerModel, viewAllClothingItemsViewModel);
 
         //Show one Item
         GetClothingItemOutputBoundary getClothingItemOutputBoundary = new GetClothingItemPresenter(getClothingItemViewModel, viewManagerModel);
@@ -174,20 +174,20 @@ public class Main {
 
         GetClothingItemController getClothingItemController = new GetClothingItemController(getClothingItemInputBoundary);
         //Show Wardrobe
-        ShowWardrobeView showWardrobeView = new ShowWardrobeView(viewAllItemsViewModel, viewManagerModel, createWardrobeViewModel, loggedInViewModel, getClothingItemController);
+        ShowWardrobeView showWardrobeView = new ShowWardrobeView(viewAllClothingItemsViewModel, viewManagerModel, createWardrobeViewModel, loggedInViewModel, getClothingItemController);
 
         //Update Controller
-        UpdateOutputBoundary updateOutputBoundary = new UpdatePresenter(viewManagerModel, new UpdateViewModel(), viewAllItemsViewModel, getClothingItemViewModel);
+        UpdateOutputBoundary updateOutputBoundary = new UpdatePresenter(viewManagerModel, new UpdateViewModel(), viewAllClothingItemsViewModel, getClothingItemViewModel);
         UpdateInputBoundary updateInputBoundary = new UpdateInteractor(updateOutputBoundary, clothingItemDao);
         UpdateController updateController = new UpdateController(updateInputBoundary);
 
         //Delete Controller
-        DeleteOutputBoundary deleteOutputBoundary = new DeletePresenter(new DeleteViewModel(), viewManagerModel, viewAllItemsViewModel);
+        DeleteOutputBoundary deleteOutputBoundary = new DeletePresenter(new DeleteViewModel(), viewManagerModel, viewAllClothingItemsViewModel);
         DeleteInputBoundary deleteInputBoundary = new DeleteInteractor(deleteOutputBoundary, clothingItemDao);
         DeleteController deleteController = new DeleteController(deleteInputBoundary);
 
         //Edit Item
-        EditItemView editItemView = new EditItemView(getClothingItemViewModel, updateController, deleteController, viewManagerModel, viewAllItemsViewModel, deleteViewModel);
+        EditItemView editItemView = new EditItemView(getClothingItemViewModel, updateController, deleteController, viewManagerModel, viewAllClothingItemsViewModel, deleteViewModel);
 
         views.add(signupView, signupViewModel.getViewName());
         views.add(loginView, loginViewModel.getViewName());

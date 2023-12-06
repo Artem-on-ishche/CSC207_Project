@@ -6,7 +6,7 @@ import interface_adapter.create_wardrobe.CreateWardrobeState;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -40,7 +40,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
 
 
 
-    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, ViewAllItemsViewModel viewAllItemsViewModel) {
+    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllClothingItemsViewModel) {
 
         this.createWardrobeController = createWardrobeController;
 
@@ -79,7 +79,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(cancel)) {
-                            viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
+                            viewManagerModel.setActiveView(viewAllClothingItemsViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
                     }
