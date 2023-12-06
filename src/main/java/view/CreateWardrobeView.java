@@ -220,8 +220,8 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
 
         this.add(title);
         this.add(imageInputField);
-        this.add(minTempInfo);
         this.add(nameInfo);
+        this.add(minTempInfo);
         this.add(descriptionInfo);
         this.add(buttons);
     }
