@@ -1,6 +1,9 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.generate_outfit.GenerateOutfitController;
+import interface_adapter.generate_outfit.GenerateOutfitState;
+import interface_adapter.generate_outfit.GenerateOutfitViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -28,7 +31,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton generateOutfit;
 
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewAllClothingItemsController viewAllClothingItemsController, GenerateOutfitController generateOutfitController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewAllClothingItemsController viewAllClothingItemsController, GenerateOutfitController generateOutfitController, GenerateOutfitViewModel generateOutfitViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.generateOutfitController = generateOutfitController;
@@ -74,7 +77,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.setBounds(buttonsX, buttonsY, 490, 200);
         buttons.setBackground(Color.white);
 
-        logOut.addActionListener(this);
+        logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(logOut)) {
+                    viewManagerModel.setActiveView(loginViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
 
         myWardrobe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -91,9 +101,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(generateOutfit)) {
                     LoggedInState currentState = loggedInViewModel.getState();
+                    GenerateOutfitState generateOutfitState = generateOutfitViewModel.getState();
 
                     String username = currentState.getUsername();
                     generateOutfitController.execute(username);
+
+                    if (generateOutfitState != null && !generateOutfitState.getGenerateOutfitError().isEmpty()) {
+                        showErrorMessage("Username Error: " + currentState.getUsername() + " already exist.");
+                    }
                 }
             }
         });
@@ -121,9 +136,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         g.setColor(Color.BLACK);
         g.drawRect(rectX, rectY, rectangleWidth, rectangleHeight);
     }
+    private void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(LoggedInView.this, message, "Generate Outfit Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+
     }
 
     @Override
@@ -131,4 +149,5 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         LoggedInState state = (LoggedInState) evt.getNewValue();
         username.setText(state.getUsername());
     }
+
 }

@@ -104,7 +104,7 @@ public class Main {
 
 
         //Logged In
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewAllClothingItemsController, generateOutfitController);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewAllClothingItemsController, generateOutfitController, generateOutfitViewModel, viewManagerModel, loginViewModel);
 
 
         //Generate Outfit

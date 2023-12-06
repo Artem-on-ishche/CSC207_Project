@@ -22,6 +22,7 @@ import java.util.Map;
 public class GenerateOutfitView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "generate outfit";
 
+    private final JTextField umbrellaTextField;
     private final ArrayList<JLabel> imageLabels = new ArrayList<>();
     Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
     private final JPanel imagePanel;
@@ -32,11 +33,9 @@ public class GenerateOutfitView extends JPanel implements ActionListener, Proper
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         imagePanel = new JPanel(new GridLayout(0, 1));
 
-
         JScrollPane clothingItemsScrollPane = new JScrollPane(imagePanel);
         clothingItemsScrollPane.setViewportView(imagePanel);
         clothingItemsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
 
         JPanel buttons = new JPanel();
 
@@ -54,6 +53,13 @@ public class GenerateOutfitView extends JPanel implements ActionListener, Proper
             }
         });
 
+        umbrellaTextField = new JTextField();
+        umbrellaTextField.setEditable(false);
+        umbrellaTextField.setFont(buttonFont);
+        umbrellaTextField.setForeground(Color.red);
+        umbrellaTextField.setPreferredSize(new Dimension(300, 30));
+        buttons.add(umbrellaTextField);
+
         this.add(buttons);
         this.add(clothingItemsScrollPane);
     }
@@ -68,6 +74,10 @@ public class GenerateOutfitView extends JPanel implements ActionListener, Proper
         GenerateOutfitState state = (GenerateOutfitState) evt.getNewValue();
         Outfit outfit = state.getOutfit();
         Map<ClothingType, ClothingItem> clothingItems = outfit.getClothingItems();
+
+        var isRaining = outfit.isUmbrellaRequired();
+        umbrellaTextField.setText(isRaining ? "Umbrella is required!" : "");
+
 
         imagePanel.removeAll();
         imageLabels.clear();

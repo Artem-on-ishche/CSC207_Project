@@ -109,6 +109,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
+
                         }
                     }
                 }
@@ -241,6 +242,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         title.setFont(titleFont);
         title.setBounds(centerX - 33, rectY + 30, 150, 25);
         add(title);
+    }
+
+    private void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(SignupView.this, message, "Generate Outfit Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
