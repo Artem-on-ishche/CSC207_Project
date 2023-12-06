@@ -1,6 +1,7 @@
 package interface_adapter.create_wardrobe;
 
 import interface_adapter.ViewModel;
+import lombok.Getter;
 
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
@@ -15,6 +16,7 @@ public class CreateWardrobeViewModel extends ViewModel {
     public static final String ADD_BUTTON_LABEL = "Add item";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
+    @Getter
     private CreateWardrobeState state = new CreateWardrobeState();
 
     public CreateWardrobeViewModel() {
@@ -37,7 +39,4 @@ public class CreateWardrobeViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public CreateWardrobeState getState() {
-        return state;
-    }
 }

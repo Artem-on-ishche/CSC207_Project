@@ -16,7 +16,6 @@ public class ViewAllClothingItemsPresenter implements ViewAllClothingItemsOutput
     public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {
         ViewAllClothingItemsState viewAllClothingItemsState = viewAllClothingItemsViewModel.getState();
         viewAllClothingItemsState.setWardrobe(outputData.clothingItems());
-
         this.viewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
         this.viewAllClothingItemsViewModel.firePropertyChanged();
 
@@ -25,7 +24,10 @@ public class ViewAllClothingItemsPresenter implements ViewAllClothingItemsOutput
     }
 
     @Override
-    public void prepareFailureView(String error) {
+    public void prepareFailView(String error) {
+        ViewAllClothingItemsState viewAllClothingItemsState = viewAllClothingItemsViewModel.getState();
+        viewAllClothingItemsState.setGetAllItemsError(error);
+
         viewAllClothingItemsViewModel.firePropertyChanged();
     }
 }

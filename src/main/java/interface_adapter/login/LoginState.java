@@ -6,13 +6,6 @@ public class LoginState {
     private String password = "";
     private String passwordError = null;
 
-    public LoginState(LoginState copy) {
-        username = copy.username;
-        usernameError = copy.usernameError;
-        password = copy.password;
-        passwordError = copy.passwordError;
-    }
-
     public LoginState() {}
 
     public String getUsername() {

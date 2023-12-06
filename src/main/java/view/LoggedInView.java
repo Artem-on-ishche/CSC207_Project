@@ -40,7 +40,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         JPanel buttons = new JPanel();
         myWardrobe = new JButton(LoggedInViewModel.MY_WARDROBE_BUTTON_LABEL);
         buttons.add(myWardrobe);
-       /* addItem = new JButton(ViewAllItemsViewModel.ADD_CLOTHING_ITEM);
+       /* addItem = new JButton(ViewAllClothingItemsViewModel.ADD_CLOTHING_ITEM);
         buttons.add(addItem);*/
         generateOutfit = new JButton(LoggedInViewModel.GENERATE_OUTFIT_BUTTON_LABEL);
         buttons.add(generateOutfit);

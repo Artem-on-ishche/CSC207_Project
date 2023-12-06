@@ -4,8 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.get_clothing_item.GetClothingItemController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.view_all_clothing_items.ViewAllClothingItemsState;
-import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
+import interface_adapter.view_all_clothing_items.*;
 import model.ClothingItem;
 
 import javax.swing.*;
