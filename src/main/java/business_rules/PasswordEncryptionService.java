@@ -1,6 +1,7 @@
 package business_rules;
 
 import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -17,10 +18,9 @@ public class PasswordEncryptionService implements PasswordEncryption{
     }
 
     private Key generateKey() throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        SecureRandom secureRandom = new SecureRandom();
-        keyGenerator.init(256, secureRandom);
-        return keyGenerator.generateKey();
+        //MODIFICATIONS!!!!
+        byte[] keyBytes = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
+        return new SecretKeySpec(keyBytes, "AES");
     }
 
     public String encryptMessage(String message) {
