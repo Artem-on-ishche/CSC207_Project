@@ -5,6 +5,7 @@ import model.ClothingType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,30 @@ class ViewAllClothingItemsInteractorTest {
 
     @Test
     void givenCorrectData_shouldPrepareSuccessView() {
+        outputBoundary = new ViewAllClothingItemsOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {
+                assertTrue(true);
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail();
+            }
+        };
+
+        interactor = new ViewAllClothingItemsInteractor(dao, outputBoundary);
+        interactor.execute(new ViewAllClothingItemsInputData(correctUsername));
+    }
+
+    @Test
+    void givenEmptyData_shouldPrepareSuccessView() {
+        AllItemsOfUserDataAccess dao = username -> {
+            if (!username.equals(correctUsername))
+                throw new IllegalArgumentException();
+
+            return new ArrayList<>();
+        };
         outputBoundary = new ViewAllClothingItemsOutputBoundary() {
             @Override
             public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {

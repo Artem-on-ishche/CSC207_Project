@@ -42,10 +42,8 @@ public class CreateInteractor implements CreateInputBoundary {
             createDataAccess.addClothingItem(clothingItem, inputData.username());
             createPresenter.prepareSuccessView(new CreateOutputData(clothingItem, false));
 
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             createPresenter.prepareFailView("Error adding clothing item "+ e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }
