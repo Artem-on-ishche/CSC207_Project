@@ -1,5 +1,8 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -13,25 +16,25 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+public class SignupView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "sign up";
 
-    private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
 
     private final JButton signUp;
+    private final JButton logIn;
     private final JButton cancel;
 
 
-    public SignupView(SignupController signupController, SignupViewModel signupViewModel) {
+    public SignupView(SignupController signupController, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel)  {
 
         this.signupController = signupController;
-        this.signupViewModel = signupViewModel;
 
         signupViewModel.addPropertyChangeListener(this);
+
 
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -46,6 +49,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
+        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(logIn);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
@@ -61,6 +66,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
+                        }
+                    }
+                }
+        );
+        logIn.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logIn)) {
+                            // loginViewModel.firePropertyChanged();
+                            viewManagerModel.setActiveView(loginViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
@@ -153,7 +169,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             }
         }
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

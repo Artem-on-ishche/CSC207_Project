@@ -6,18 +6,20 @@ import lombok.Getter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class GetItemViewModel extends ViewModel {
+public class GetClothingItemViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Get Clothing Item";
-    public static final String Get_BUTTON_LABEL = "View more";
+    public static final String SAVE_CHANGES_LABEL = "Save changes";
+    public static final String DELETE_LABEL = "Delete item";
+    public static final String BACK_LABEL = "Back";
 
     @Getter
-    private GetItemState state = new GetItemState();
+    private GetClothingItemState state = new GetClothingItemState();
 
-    public GetItemViewModel() {
+    public GetClothingItemViewModel() {
         super("get item");
     }
 
-    public void setState(GetItemState state) {
+    public void setState(GetClothingItemState state) {
         this.state = state;
     }
 

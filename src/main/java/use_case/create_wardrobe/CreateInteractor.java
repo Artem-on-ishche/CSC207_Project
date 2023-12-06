@@ -4,6 +4,8 @@ import model.ClothingItem;
 import model.ClothingType;
 import model.Image;
 
+import java.io.IOException;
+
 public class CreateInteractor implements CreateInputBoundary {
     private final CreateDataAccess createDataAccess;
     private final CreateOutputBoundary createPresenter;
@@ -42,6 +44,8 @@ public class CreateInteractor implements CreateInputBoundary {
 
         } catch (RuntimeException e) {
             createPresenter.prepareFailView("Error adding clothing item "+ e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

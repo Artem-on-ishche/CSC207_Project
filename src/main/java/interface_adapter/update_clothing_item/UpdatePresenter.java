@@ -1,8 +1,8 @@
 package interface_adapter.update_clothing_item;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.get_clothing_item.GetItemState;
-import interface_adapter.get_clothing_item.GetItemViewModel;
+import interface_adapter.get_clothing_item.GetClothingItemState;
+import interface_adapter.get_clothing_item.GetClothingItemViewModel;
 import interface_adapter.view_all_items.ViewAllItemsState;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
@@ -13,16 +13,16 @@ import use_case.update_clothing_item.UpdateOutputData;
 public class UpdatePresenter implements UpdateOutputBoundary {
     private final UpdateViewModel updateViewModel;
     private final ViewManagerModel viewModel;
-    private final GetItemViewModel getItemViewModel;
+    private final GetClothingItemViewModel getClothingItemViewModel;
 
     private final ViewAllItemsViewModel viewAllItemsViewModel;
 
     public UpdatePresenter(ViewManagerModel viewManagerModel,
-                                   UpdateViewModel updateViewModel, ViewAllItemsViewModel viewAllItemsViewModel, GetItemViewModel getItemViewModel) {
+                                   UpdateViewModel updateViewModel, ViewAllItemsViewModel viewAllItemsViewModel, GetClothingItemViewModel getClothingItemViewModel) {
         this.updateViewModel = updateViewModel;
         this.viewModel = viewManagerModel;
         this.viewAllItemsViewModel = viewAllItemsViewModel;
-        this.getItemViewModel = getItemViewModel;
+        this.getClothingItemViewModel = getClothingItemViewModel;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class UpdatePresenter implements UpdateOutputBoundary {
         updateViewModel.setState(updateState);
         updateViewModel.firePropertyChanged();
 
-        GetItemState getItemState = getItemViewModel.getState();
-        getItemState.setClothingItem(outputData.updatedClothingItem());
-        getItemViewModel.setState(getItemState);
-        getItemViewModel.firePropertyChanged();
+        GetClothingItemState getClothingItemState = getClothingItemViewModel.getState();
+        getClothingItemState.setClothingItem(outputData.updatedClothingItem());
+        getClothingItemViewModel.setState(getClothingItemState);
+        getClothingItemViewModel.firePropertyChanged();
 
-        viewModel.setActiveView(getItemViewModel.getViewName());
+        viewModel.setActiveView(getClothingItemViewModel.getViewName());
         viewModel.firePropertyChanged();
     }
 

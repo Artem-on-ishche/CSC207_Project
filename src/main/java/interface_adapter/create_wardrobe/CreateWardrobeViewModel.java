@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 public class CreateWardrobeViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Create Wardrobe";
     public static final String PHOTO_LABEL = "Upload photo";
+    public static final String DESCRIPTION_LABEL = "Description";
     public static final String NAME_LABEL = "Name";
     public static final String MIN_TEMP_LABEL = "Min temp";
 

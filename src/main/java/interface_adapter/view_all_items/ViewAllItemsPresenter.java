@@ -16,6 +16,7 @@ public class ViewAllItemsPresenter implements ViewAllClothingItemsOutputBoundary
     public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {
         ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
         viewAllItemsState.setWardrobe(outputData.clothingItems());
+
         this.viewAllItemsViewModel.setState(viewAllItemsState);
         this.viewAllItemsViewModel.firePropertyChanged();
 
