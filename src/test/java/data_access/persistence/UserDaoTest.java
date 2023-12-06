@@ -4,6 +4,8 @@ import model.User;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserDaoTest {
@@ -16,6 +18,19 @@ class UserDaoTest {
     @AfterAll
     static void tearDown() throws Exception {
         userDao.close();
+    }
+
+    @Test
+    void testUserEntity() {
+        var userEntity = new UserEntity();
+
+        userEntity.setUsername("fa");
+        userEntity.setPassword("fa");
+        userEntity.setClothingItemEntities(List.of());
+
+        userEntity.getUsername();
+        userEntity.getPassword();
+        userEntity.getClothingItemEntities();
     }
 
     @Test

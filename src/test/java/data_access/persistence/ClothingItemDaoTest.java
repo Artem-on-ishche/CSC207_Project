@@ -34,6 +34,27 @@ class ClothingItemDaoTest {
     }
 
     @Test
+    void testClothingItemEntity() {
+        var clothingItemEntity = new ClothingItemEntity();
+
+        clothingItemEntity.setId(5L);
+        clothingItemEntity.setName("5L");
+        clothingItemEntity.setDescription("5L");
+        clothingItemEntity.setImageData(new byte[]{});
+        clothingItemEntity.setClothingType(ClothingType.LOWER_BODY.toString());
+        clothingItemEntity.setMinimumAppropriateTemperature(2);
+        clothingItemEntity.setUserEntity(new UserEntity());
+
+        clothingItemEntity.getId();
+        clothingItemEntity.getName();
+        clothingItemEntity.getDescription();
+        clothingItemEntity.getImageData();
+        clothingItemEntity.getClothingType();
+        clothingItemEntity.getMinimumAppropriateTemperature();
+        clothingItemEntity.getUserEntity();
+    }
+
+    @Test
     void givenManySequentialOperations_thenAllCorrect() {
         // create
         var item = new ClothingItem(null, itemName1, image, ClothingType.HEAD, 1, Optional.empty());
