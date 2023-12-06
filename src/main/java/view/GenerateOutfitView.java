@@ -1,7 +1,10 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.generate_outfit.GenerateOutfitState;
 import interface_adapter.generate_outfit.GenerateOutfitViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import model.ClothingItem;
 import model.ClothingType;
 import model.Outfit;
@@ -20,16 +23,38 @@ public class GenerateOutfitView extends JPanel implements ActionListener, Proper
     public final String viewName = "generate outfit";
 
     private final ArrayList<JLabel> imageLabels = new ArrayList<>();
+    Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
     private final JPanel imagePanel;
+    private final JButton back;
 
-    public GenerateOutfitView(GenerateOutfitViewModel generateOutfitViewModel) {
+    public GenerateOutfitView(GenerateOutfitViewModel generateOutfitViewModel, ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
         generateOutfitViewModel.addPropertyChangeListener(this);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         imagePanel = new JPanel(new GridLayout(0, 1));
 
-        this.add(imagePanel);
 
         JScrollPane clothingItemsScrollPane = new JScrollPane(imagePanel);
-        clothingItemsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        clothingItemsScrollPane.setViewportView(imagePanel);
+        clothingItemsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+        JPanel buttons = new JPanel();
+
+        back = new JButton(ViewAllClothingItemsViewModel.BACK_TO_MAIN_VIEW);
+        back.setPreferredSize(new Dimension(150, 50));
+        back.setFont(buttonFont);
+        buttons.add(back);
+
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(back)) {
+                    viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
+
+        this.add(buttons);
         this.add(clothingItemsScrollPane);
     }
 
@@ -69,9 +94,6 @@ public class GenerateOutfitView extends JPanel implements ActionListener, Proper
 
             }
 
-        }
-        for (JLabel imageLabel : imageLabels) {
-            imagePanel.add(imageLabel);
         }
 
         revalidate();

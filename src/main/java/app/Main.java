@@ -108,7 +108,7 @@ public class Main {
 
 
         //Generate Outfit
-        GenerateOutfitView generateOutfitView = new GenerateOutfitView(generateOutfitViewModel);
+        GenerateOutfitView generateOutfitView = new GenerateOutfitView(generateOutfitViewModel, viewManagerModel, loggedInViewModel);
 
         //Add Item
         CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllClothingItemsViewModel);
