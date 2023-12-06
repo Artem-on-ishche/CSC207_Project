@@ -41,7 +41,7 @@ import use_case.delete_clothing_item.DeleteOutputBoundary;
 import use_case.generate_outfit.InputBoundary;
 import use_case.generate_outfit.OutfitGenerationInteractor;
 import use_case.generate_outfit.OutputBoundary;
-import use_case.generate_outfit.RandomClothingItemSelectionStrategy;
+import business_rules.RandomClothingItemSelectionStrategy;
 import use_case.get_clothing_item.GetClothingItemInputBoundary;
 import use_case.get_clothing_item.GetClothingItemInteractor;
 import use_case.get_clothing_item.GetClothingItemOutputBoundary;
