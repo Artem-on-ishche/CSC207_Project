@@ -3,7 +3,7 @@ package app;
 import business_rules.OutfitGenerator;
 import business_rules.PasswordEncryptionService;
 import data_access.api.FashionAPI;
-import data_access.api.IpAddressLocationDataSource;
+import data_access.api.LocationAPI;
 import data_access.api.OpenMeteoAPI;
 import data_access.persistence.ClothingItemDao;
 import data_access.persistence.FileImageCreator;
@@ -104,7 +104,7 @@ public class Main {
 
         UserDao userDao = new UserDao();
         ClothingItemDao clothingItemDao = new ClothingItemDao();
-        IpAddressLocationDataSource locationDao = new IpAddressLocationDataSource();
+        LocationAPI locationDao = new LocationAPI();
         OpenMeteoAPI openMeteoAPI = new OpenMeteoAPI();
 
 
