@@ -40,7 +40,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
 
 
 
-    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllItemsViewModel) {
+    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllClothingItemsViewModel) {
 
         this.createWardrobeController = createWardrobeController;
 
@@ -79,7 +79,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(cancel)) {
-                            viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
+                            viewManagerModel.setActiveView(viewAllClothingItemsViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
                     }
@@ -176,9 +176,32 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        CreateWardrobeState currentState = createWardrobeViewModel.getState();
-                        currentState.setMinimumAppropriateTemperature(Integer.parseInt(minTemp.getText() + e.getKeyChar()));
-                        createWardrobeViewModel.setState(currentState); // Hmm, is this necessary?
+                        char inputChar = e.getKeyChar();
+                        if (!Character.isDigit(inputChar) && inputChar != '-') {
+                            e.consume();
+                            return;
+                        }
+
+                        String currentText = minTemp.getText();
+
+                        if (inputChar == '-' && currentText.contains("-")) {
+                            e.consume();
+                            return;
+                        }
+
+                        if (currentText.isEmpty() && inputChar == '-') {
+                            return;
+                        }
+
+                        StringBuilder newText = new StringBuilder(currentText);
+                        newText.append(inputChar);
+
+                        try {
+                            CreateWardrobeState currentState = createWardrobeViewModel.getState();
+                            currentState.setMinimumAppropriateTemperature(Integer.parseInt(newText.toString()));
+                            createWardrobeViewModel.setState(currentState);
+                        } catch (NumberFormatException ex) {
+                        }
                     }
 
                     @Override
