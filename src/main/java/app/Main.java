@@ -62,7 +62,7 @@ public class Main {
 
         UserDao userDao = new UserDao();
         ClothingItemDao clothingItemDao = new ClothingItemDao();
-        IpAddressLocationDataSource locationDao = new IpAddressLocationDataSource();
+        LocationAPI locationDao = new LocationAPI();
         OpenMeteoAPI openMeteoAPI = new OpenMeteoAPI();
 
 

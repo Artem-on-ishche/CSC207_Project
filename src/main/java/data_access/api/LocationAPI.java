@@ -10,7 +10,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class IpAddressLocationDataSource implements LocationDataSource {
+public class LocationAPI implements LocationDataSource {
 
     private static final String PUBLIC_IP_ADDRESS_API_URI = "https://api.ipify.org";
     private static final String LATITUDE_KEY = "lat";

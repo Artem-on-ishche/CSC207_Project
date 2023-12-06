@@ -17,13 +17,8 @@ public class ViewAllClothingItemsInteractor implements ViewAllClothingItemsInput
         try {
             var clothingItems = dao.getAllClothingItemsByUsername(inputData.username());
 
-            if (clothingItems.isEmpty()) {
-                var emptyOutputData = new ViewAllClothingItemsOutputData(Collections.emptyList());
-                outputBoundary.prepareSuccessView(emptyOutputData);
-            } else {
-                var outputData = new ViewAllClothingItemsOutputData(clothingItems);
-                outputBoundary.prepareSuccessView(outputData);
-            }
+            var outputData = new ViewAllClothingItemsOutputData(clothingItems);
+            outputBoundary.prepareSuccessView(outputData);
         } catch (Exception e) {
             outputBoundary.prepareFailView("Error when trying to get all clothing items of user with id = " + inputData.username() + ": " + e.getMessage());
         }
