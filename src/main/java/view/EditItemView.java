@@ -198,8 +198,8 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         ClothingItem clothingItem = state.getClothingItem();
         var image = clothingItem.getImage();
 
-        int desiredWidth = 150;
-        int desiredHeight = 150;
+        int desiredWidth = 300;
+        int desiredHeight = 300;
 
         try {
 

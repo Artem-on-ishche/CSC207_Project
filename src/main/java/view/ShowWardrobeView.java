@@ -17,6 +17,9 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShowWardrobeView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -26,6 +29,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
     private GetClothingItemController getClothingItemController;
     private String selectedClothingItemId;
     private JScrollPane clothingItemsScrollPane;
+    private Map<String, ArrayList<ClothingItem>> clothingItemsByType;
 
     private final int columns = 3;
 
@@ -39,6 +43,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
         this.viewAllClothingItemsViewModel = viewAllClothingItemsViewModel;
         this.viewAllClothingItemsViewModel.addPropertyChangeListener(this);
         this.getClothingItemController = getClothingItemController;
+        clothingItemsByType = new HashMap<>();
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -83,9 +88,9 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
         clothingItemsPanel.setLayout(new BoxLayout(clothingItemsPanel, BoxLayout.Y_AXIS));
         this.add(clothingItemsPanel);
 
-        clothingItemsPanel = new JPanel(new GridLayout(0, columns));
+        clothingItemsPanel = new JPanel();
         clothingItemsScrollPane = new JScrollPane(clothingItemsPanel);
-        clothingItemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+       // clothingItemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         clothingItemsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         this.add(clothingItemsScrollPane);
@@ -98,65 +103,88 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        /*var newState = evt.getNewValue();
-        if (newState instanceof ViewAllItemsState state) {
-            if (state.getWardrobe() != null) {
-                JOptionPane.showMessageDialog(this, state.getWardrobe());
-            }
-        }*/
+
         ViewAllClothingItemsState state = (ViewAllClothingItemsState) evt.getNewValue();
         clothingItemsPanel.removeAll();
+        clothingItemsByType.clear();
 
         if (state.getWardrobe() != null && !state.getWardrobe().isEmpty()) {
             for (ClothingItem clothingItem : state.getWardrobe()) {
+                String clothingType = String.valueOf(clothingItem.getClothingType());
+                clothingItemsByType.computeIfAbsent(clothingType, k -> new ArrayList<>()).add(clothingItem);
+            }
 
-                var image = clothingItem.getImage();
-                String name = clothingItem.getName();
+            clothingItemsPanel.setLayout(new BoxLayout(clothingItemsPanel, BoxLayout.Y_AXIS));
+            for (Map.Entry<String, ArrayList<ClothingItem>> entry : clothingItemsByType.entrySet()) {
+                String clothingType = entry.getKey();
+                ArrayList<ClothingItem> items = entry.getValue();
 
-                int desiredWidth = 300;
-                int desiredHeight = 300;
-
+                JPanel typePanel = null;
                 try {
-
-                    var scaledImage = image.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-                    JLabel imageLabel = new JLabel(new ImageIcon(scaledImage.getImageData()));
-
-                    JPanel itemPanel = new JPanel();
-                    itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
-
-                    int spacing = 10;
-                    itemPanel.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing));
-
-                    itemPanel.add(imageLabel);
-
-                    JLabel nameLabel = new JLabel(name);
-                    itemPanel.add(nameLabel);
-
-                    itemPanel.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            selectedClothingItemId = String.valueOf(clothingItem.getId());
-                            getClothingItemController.execute(clothingItem.getId());
-                        }
-                    });
-
-                    clothingItemsPanel.add(itemPanel);
-
-
+                    typePanel = createTypePanel(clothingType, items);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-
+                clothingItemsPanel.add(typePanel);
             }
-        } else {
         }
 
         clothingItemsPanel.revalidate();
         clothingItemsPanel.repaint();
-
-        //SwingUtilities.invokeLater(() -> clothingItemsScrollPane.getVerticalScrollBar().setValue(0));
-
     }
+
+    private JPanel createTypePanel(String clothingType, ArrayList<ClothingItem> items) throws IOException {
+        JPanel typePanel = new JPanel();
+        typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
+
+        JLabel typeLabel = new JLabel(clothingType);
+        typeLabel.setFont(new Font(typeLabel.getFont().getName(), Font.BOLD, 14));
+        typeLabel.setPreferredSize(new Dimension(200, 30));
+        typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        typePanel.add(typeLabel);
+
+        JPanel itemsPanel = new JPanel(new GridLayout(0, columns));
+
+        for (ClothingItem item : items) {
+            var image = item.getImage();
+            String name = item.getName();
+
+            int desiredWidth = 300;
+            int desiredHeight = 300;
+
+            JPanel itemPanel = new JPanel();
+            try {
+                var scaledImage = image.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+                JLabel imageLabel = new JLabel(new ImageIcon(scaledImage.getImageData()));
+
+                itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
+
+                int spacing = 10;
+                itemPanel.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing));
+
+                itemPanel.add(imageLabel);
+
+                JLabel nameLabel = new JLabel(name);
+                itemPanel.add(nameLabel);
+
+                itemPanel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        selectedClothingItemId = String.valueOf(item.getId());
+                        getClothingItemController.execute(item.getId());
+                    }
+                });
+            } finally {
+
+            }
+
+            itemsPanel.add(itemPanel);
+        }
+
+        typePanel.add(itemsPanel);
+
+        return typePanel;
+    }
+
 
 }
