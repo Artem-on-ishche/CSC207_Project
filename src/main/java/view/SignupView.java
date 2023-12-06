@@ -22,6 +22,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(20);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(20);
     private final SignupController signupController;
+    Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
 
     private final JButton signUp;
     private final JButton logIn;
@@ -77,14 +78,22 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp.setPreferredSize(new Dimension(150, 50));
+        signUp.setFont(buttonFont);
         buttons.add(signUp);
+
         logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        logIn.setPreferredSize(new Dimension(150, 50));
+        logIn.setFont(buttonFont);
         buttons.add(logIn);
+
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
+        cancel.setPreferredSize(new Dimension(150, 50));
+        cancel.setFont(buttonFont);
         buttons.add(cancel);
 
         int buttonsX = rectX + (rectangleWidth / 2) + 470;
-        int buttonsY = rectY + rectangleHeight + 450;
+        int buttonsY = rectY + rectangleHeight + 410;
         buttons.setBounds(buttonsX, buttonsY, 510, 500);
 
 

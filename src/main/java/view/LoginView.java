@@ -18,9 +18,9 @@ import java.beans.PropertyChangeListener;
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
-    private final LoginViewModel loginViewModel;
 
     final JTextField usernameInputField = new JTextField(18);
+    Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
     private final JLabel usernameErrorField = new JLabel();
 
     final JPasswordField passwordInputField = new JPasswordField(18);
@@ -33,8 +33,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public LoginView(LoginViewModel loginViewModel, LoginController controller) {
 
         this.loginController = controller;
-        this.loginViewModel = loginViewModel;
-        this.loginViewModel.addPropertyChangeListener(this);
+        loginViewModel.addPropertyChangeListener(this);
 
         this.setLayout(null);
 
@@ -70,12 +69,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         JPanel buttons = new JPanel();
         logIn = new JButton(LoginViewModel.LOGIN_BUTTON_LABEL);
+        logIn.setPreferredSize(new Dimension(150, 50));
+        logIn.setFont(buttonFont);
         buttons.add(logIn);
+
         cancel = new JButton(LoginViewModel.CANCEL_BUTTON_LABEL);
+        cancel.setPreferredSize(new Dimension(150, 50));
+        cancel.setFont(buttonFont);
         buttons.add(cancel);
 
         int buttonsX = rectX + (rectangleWidth / 2) + 470;
-        int buttonsY = rectY + rectangleHeight + 450;
+        int buttonsY = rectY + rectangleHeight + 410;
         buttons.setBounds(buttonsX, buttonsY, 510, 500);
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.

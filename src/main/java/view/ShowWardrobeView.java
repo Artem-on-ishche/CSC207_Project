@@ -24,14 +24,11 @@ import java.util.Map;
 public class ShowWardrobeView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "view all";
-    private final ViewAllClothingItemsViewModel viewAllClothingItemsViewModel;
     private JPanel clothingItemsPanel;
-    private GetClothingItemController getClothingItemController;
+    private final GetClothingItemController getClothingItemController;
     private String selectedClothingItemId;
-    private JScrollPane clothingItemsScrollPane;
-    private Map<String, ArrayList<ClothingItem>> clothingItemsByType;
-
-    private final int columns = 3;
+    private final Map<String, ArrayList<ClothingItem>> clothingItemsByType;
+    Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
 
     public String getViewName() {
         return viewName;
@@ -40,8 +37,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
     private final JButton back;
 
     public ShowWardrobeView(ViewAllClothingItemsViewModel viewAllClothingItemsViewModel, ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, GetClothingItemController getClothingItemController) {
-        this.viewAllClothingItemsViewModel = viewAllClothingItemsViewModel;
-        this.viewAllClothingItemsViewModel.addPropertyChangeListener(this);
+        viewAllClothingItemsViewModel.addPropertyChangeListener(this);
         this.getClothingItemController = getClothingItemController;
         clothingItemsByType = new HashMap<>();
 
@@ -58,9 +54,13 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
         JPanel buttons = new JPanel();
 
         addItem = new JButton(ViewAllClothingItemsViewModel.ADD_CLOTHING_ITEM);
+        addItem.setPreferredSize(new Dimension(150, 50));
+        addItem.setFont(buttonFont);
         buttons.add(addItem);
 
         back = new JButton(ViewAllClothingItemsViewModel.BACK_TO_MAIN_VIEW);
+        back.setPreferredSize(new Dimension(150, 50));
+        back.setFont(buttonFont);
         buttons.add(back);
 
         addItem.addActionListener(new ActionListener() {
@@ -89,7 +89,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
         this.add(clothingItemsPanel);
 
         clothingItemsPanel = new JPanel();
-        clothingItemsScrollPane = new JScrollPane(clothingItemsPanel);
+        JScrollPane clothingItemsScrollPane = new JScrollPane(clothingItemsPanel);
        // clothingItemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         clothingItemsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
@@ -143,6 +143,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
         typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         typePanel.add(typeLabel);
 
+        int columns = 3;
         JPanel itemsPanel = new JPanel(new GridLayout(0, columns));
 
         for (ClothingItem item : items) {
@@ -159,12 +160,14 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
                 itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
 
-                int spacing = 10;
+                int spacing = 20;
                 itemPanel.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing));
 
                 itemPanel.add(imageLabel);
 
                 JLabel nameLabel = new JLabel(name);
+                nameLabel.setFont(buttonFont);
+                nameLabel.setBackground(Color.WHITE);
                 itemPanel.add(nameLabel);
 
                 itemPanel.addMouseListener(new MouseAdapter() {

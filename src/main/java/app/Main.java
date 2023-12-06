@@ -39,7 +39,6 @@ public class Main {
 
         CardLayout cardLayout = new CardLayout();
 
-
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         views.setPreferredSize(new Dimension(1450, 1000));
@@ -109,7 +108,7 @@ public class Main {
 
 
         //Generate Outfit
-        GenerateOutfitView generateOutfitView = new GenerateOutfitView();
+        GenerateOutfitView generateOutfitView = new GenerateOutfitView(generateOutfitViewModel);
 
         //Add Item
         CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllClothingItemsViewModel);
