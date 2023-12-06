@@ -2,10 +2,8 @@ package view;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
-import interface_adapter.get_clothing_item.GetItemController;
+import interface_adapter.get_clothing_item.GetClothingItemController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.signup.SignupState;
-import interface_adapter.view_all_items.ViewAllItemsController;
 import interface_adapter.view_all_items.ViewAllItemsState;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
@@ -25,7 +23,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
     public final String viewName = "view all";
     private final ViewAllItemsViewModel viewAllItemsViewModel;
     private JPanel clothingItemsPanel;
-    private GetItemController getItemController;
+    private GetClothingItemController getClothingItemController;
 
     public String getViewName() {
         return viewName;
@@ -34,10 +32,10 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
     private final JButton back;
 
-    public ShowWardrobeView(ViewAllItemsViewModel viewAllItemsViewModel, ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, GetItemController getItemController) {
+    public ShowWardrobeView(ViewAllItemsViewModel viewAllItemsViewModel, ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, GetClothingItemController getClothingItemController) {
         this.viewAllItemsViewModel = viewAllItemsViewModel;
         this.viewAllItemsViewModel.addPropertyChangeListener(this);
-        this.getItemController = getItemController;
+        this.getClothingItemController = getClothingItemController;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -117,7 +115,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
                     itemPanel.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            getItemController.execute(clothingItem.getId());
+                            getClothingItemController.execute(clothingItem.getId());
                         }
                     });
 

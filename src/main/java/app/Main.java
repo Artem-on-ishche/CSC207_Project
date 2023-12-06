@@ -16,8 +16,8 @@ import interface_adapter.generate_outfit.GenerateOutfitController;
 import interface_adapter.generate_outfit.GenerateOutfitPresenter;
 import interface_adapter.generate_outfit.GenerateOutfitViewModel;
 import interface_adapter.get_clothing_item.GetClothingItemPresenter;
-import interface_adapter.get_clothing_item.GetItemController;
-import interface_adapter.get_clothing_item.GetItemViewModel;
+import interface_adapter.get_clothing_item.GetClothingItemController;
+import interface_adapter.get_clothing_item.GetClothingItemViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -30,10 +30,7 @@ import interface_adapter.update_clothing_item.UpdateViewModel;
 import interface_adapter.view_all_items.ViewAllItemsController;
 import interface_adapter.view_all_items.ViewAllItemsPresenter;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
-import model.ClothingItem;
-import model.ClothingType;
 import interface_adapter.logged_in.LoggedInViewModel;
-import model.User;
 import use_case.create_wardrobe.*;
 import use_case.generate_outfit.InputBoundary;
 import use_case.generate_outfit.OutfitGenerationInteractor;
@@ -42,11 +39,9 @@ import use_case.generate_outfit.RandomClothingItemSelectionStrategy;
 import use_case.get_clothing_item.GetClothingItemInputBoundary;
 import use_case.get_clothing_item.GetClothingItemInteractor;
 import use_case.get_clothing_item.GetClothingItemOutputBoundary;
-import use_case.login.LoginDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.signup.SignupDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -62,7 +57,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException {
@@ -97,7 +91,7 @@ public class Main {
         ViewAllItemsViewModel viewAllItemsViewModel = new ViewAllItemsViewModel();
         GenerateOutfitViewModel generateOutfitViewModel = new GenerateOutfitViewModel();
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
-        GetItemViewModel getItemViewModel = new GetItemViewModel();
+        GetClothingItemViewModel getClothingItemViewModel = new GetClothingItemViewModel();
 
         PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
 
@@ -166,22 +160,22 @@ public class Main {
         CreateWardrobeView createWardrobeView = new CreateWardrobeView(createWardrobeController, createWardrobeViewModel, loggedInViewModel);
 
         //Show one Item
-        GetClothingItemOutputBoundary getClothingItemOutputBoundary = new GetClothingItemPresenter(getItemViewModel, viewManagerModel);
+        GetClothingItemOutputBoundary getClothingItemOutputBoundary = new GetClothingItemPresenter(getClothingItemViewModel, viewManagerModel);
         GetClothingItemInputBoundary getClothingItemInputBoundary = new GetClothingItemInteractor(
                 clothingItemDao,
                 getClothingItemOutputBoundary);
 
-        GetItemController getItemController = new GetItemController(getClothingItemInputBoundary);
+        GetClothingItemController getClothingItemController = new GetClothingItemController(getClothingItemInputBoundary);
         //Show Wardrobe
-        ShowWardrobeView showWardrobeView = new ShowWardrobeView(viewAllItemsViewModel, viewManagerModel, createWardrobeViewModel, loggedInViewModel,getItemController);
+        ShowWardrobeView showWardrobeView = new ShowWardrobeView(viewAllItemsViewModel, viewManagerModel, createWardrobeViewModel, loggedInViewModel, getClothingItemController);
 
         //Update Controller
-        UpdateOutputBoundary updateOutputBoundary = new UpdatePresenter(viewManagerModel, new UpdateViewModel(), viewAllItemsViewModel, getItemViewModel);
+        UpdateOutputBoundary updateOutputBoundary = new UpdatePresenter(viewManagerModel, new UpdateViewModel(), viewAllItemsViewModel, getClothingItemViewModel);
         UpdateInputBoundary updateInputBoundary = new UpdateInteractor(updateOutputBoundary, clothingItemDao);
         UpdateController updateController = new UpdateController(updateInputBoundary);
 
         //Edit Item
-        EditItemView editItemView = new EditItemView(getItemViewModel, updateController);
+        EditItemView editItemView = new EditItemView(getClothingItemViewModel, updateController);
 
         views.add(signupView, signupViewModel.getViewName());
         views.add(loginView, loginViewModel.getViewName());

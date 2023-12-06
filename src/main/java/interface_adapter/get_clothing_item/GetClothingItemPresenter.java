@@ -5,32 +5,32 @@ import use_case.get_clothing_item.GetClothingItemOutputBoundary;
 import use_case.get_clothing_item.GetClothingItemOutputData;
 
 public class GetClothingItemPresenter implements GetClothingItemOutputBoundary {
-    private final GetItemViewModel getItemViewModel;
+    private final GetClothingItemViewModel getClothingItemViewModel;
     private final ViewManagerModel viewManagerModel;
 
 
-    public GetClothingItemPresenter(GetItemViewModel getItemViewModel, ViewManagerModel viewManagerModel) {
-        this.getItemViewModel = getItemViewModel;
+    public GetClothingItemPresenter(GetClothingItemViewModel getClothingItemViewModel, ViewManagerModel viewManagerModel) {
+        this.getClothingItemViewModel = getClothingItemViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(GetClothingItemOutputData response) {
-        GetItemState getItemState = getItemViewModel.getState();
+        GetClothingItemState getClothingItemState = getClothingItemViewModel.getState();
         if(response.clothingItem().isPresent()) {
-            getItemState.setClothingItem(response.clothingItem().get());
+            getClothingItemState.setClothingItem(response.clothingItem().get());
         }
-        this.getItemViewModel.setState(getItemState);
-        getItemViewModel.firePropertyChanged();
+        this.getClothingItemViewModel.setState(getClothingItemState);
+        getClothingItemViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(getItemViewModel.getViewName());
+        viewManagerModel.setActiveView(getClothingItemViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        GetItemState getItemState = getItemViewModel.getState();
-        getItemState.setGetItemError(error);
-        getItemViewModel.firePropertyChanged();
+        GetClothingItemState getClothingItemState = getClothingItemViewModel.getState();
+        getClothingItemState.setGetItemError(error);
+        getClothingItemViewModel.firePropertyChanged();
     }
 }
