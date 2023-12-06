@@ -3,8 +3,11 @@ package view;
 import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobeState;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,11 +15,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Optional;
 
 public class CreateWardrobeView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "add item";
     private final JButton imageInputField = new JButton("Upload Image");
     private final JTextField nameInputField = new JTextField(15);
+    private final JTextField descriptionInputField = new JTextField(15);
     private final JTextField minTemp = new JTextField(15);
 
     private final CreateWardrobeController createWardrobeController;
@@ -25,12 +30,15 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
 
     LabelTextPanel nameInfo = new LabelTextPanel(
             new JLabel(CreateWardrobeViewModel.NAME_LABEL), nameInputField);
+
+    LabelTextPanel descriptionInfo = new LabelTextPanel(
+            new JLabel(CreateWardrobeViewModel.DESCRIPTION_LABEL), descriptionInputField);
     LabelTextPanel minTempInfo = new LabelTextPanel(
             new JLabel(CreateWardrobeViewModel.MIN_TEMP_LABEL), minTemp);
 
 
 
-    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel) {
+    public CreateWardrobeView(CreateWardrobeController createWardrobeController, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel) {
 
         this.createWardrobeController = createWardrobeController;
 
@@ -50,9 +58,10 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addItem)) {
                             CreateWardrobeState currentState = createWardrobeViewModel.getState();
+                            LoggedInState loggedInState = loggedInViewModel.getState();
 
                             CreateWardrobeView.this.createWardrobeController.execute(
-                                    "username_goes_here",
+                                    loggedInState.getUsername(),
                                     currentState.getName(),
                                     currentState.getImageSrc(),
                                     currentState.getDescription(),
@@ -72,12 +81,27 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                     public void actionPerformed(ActionEvent e) {
                         JFrame frame = new JFrame("Image Input Example");
                         JFileChooser fileChooser = new JFileChooser();
+
+                        FileFilter jpgFilter = new FileFilter() {
+                            @Override
+                            public boolean accept(java.io.File file) {
+                                String fileName = file.getName().toLowerCase();
+                                return file.isDirectory() || fileName.endsWith(".jpg");
+                            }
+                            @Override
+                            public String getDescription() {
+                                return "JPEG files (*.jpg)";
+                            }
+                        };
+
+                        fileChooser.setFileFilter(jpgFilter);
+
                         int result = fileChooser.showOpenDialog(frame);
                         CreateWardrobeState currentState = createWardrobeViewModel.getState();
 
                         if (result == JFileChooser.APPROVE_OPTION) {
                             String imagePath = fileChooser.getSelectedFile().getPath();
-                          //  currentState.setPhoto();
+                            currentState.setImageSrc(imagePath);
 
                         }
                     }
@@ -103,6 +127,39 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
                     }
                 }
         );
+
+        descriptionInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreateWardrobeState currentState = createWardrobeViewModel.getState();
+
+                        String userProvidedDescription = descriptionInputField.getText() + e.getKeyChar();
+
+                        Optional<String> optionalDescription;
+
+                        if (userProvidedDescription.isEmpty()) {
+                            optionalDescription = Optional.empty();
+                            System.out.println("dkfsekf");
+                        } else {
+                            optionalDescription = Optional.of(userProvidedDescription);
+                            System.out.println(optionalDescription);
+                        }
+
+                        currentState.setDescription(optionalDescription);
+                        createWardrobeViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                }
+        );
+
 
         minTemp.addKeyListener(
                 new KeyListener() {
@@ -131,6 +188,7 @@ public class CreateWardrobeView extends JPanel implements ActionListener, Proper
         this.add(imageInputField);
         this.add(minTempInfo);
         this.add(nameInfo);
+        this.add(descriptionInfo);
         this.add(buttons);
     }
 
