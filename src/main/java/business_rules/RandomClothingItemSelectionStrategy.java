@@ -1,6 +1,5 @@
-package use_case.generate_outfit;
+package business_rules;
 
-import business_rules.ClothingItemSelectionStrategy;
 import model.ClothingItem;
 
 import java.util.List;

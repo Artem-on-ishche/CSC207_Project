@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class OutfitGenerator {
-    public ClothingItemSelectionStrategy clothingItemSelectionStrategy;
+    private final ClothingItemSelectionStrategy clothingItemSelectionStrategy;
 
     public OutfitGenerator(ClothingItemSelectionStrategy clothingItemSelectionStrategy) {
         this.clothingItemSelectionStrategy = clothingItemSelectionStrategy;
