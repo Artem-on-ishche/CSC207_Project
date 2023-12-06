@@ -7,11 +7,6 @@ public class UpdateState {
 
     private ClothingItem clothingItem;
 
-    public UpdateState(String updateError, ClothingItem clothingItem) {
-        this.updateError = updateError;
-        this.clothingItem = clothingItem;
-    }
-
     public UpdateState() {}
 
     public String getUpdateError() {

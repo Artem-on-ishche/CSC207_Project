@@ -43,7 +43,7 @@ class ViewAllClothingItemsInteractorTest {
             }
 
             @Override
-            public void prepareFailureView(String error) {
+            public void prepareFailView(String error) {
                 fail();
             }
         };
@@ -61,7 +61,7 @@ class ViewAllClothingItemsInteractorTest {
             }
 
             @Override
-            public void prepareFailureView(String error) {
+            public void prepareFailView(String error) {
                 assertTrue(true);
             }
         };

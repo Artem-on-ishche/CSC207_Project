@@ -5,10 +5,6 @@ import model.Outfit;
 
 @Getter
 public class GenerateOutfitState {
-    public GenerateOutfitState(Outfit outfit, String generateOutfitError) {
-        this.outfit = outfit;
-        this.generateOutfitError = generateOutfitError;
-    }
 
     public void setOutfit(Outfit outfit) {
         this.outfit = outfit;

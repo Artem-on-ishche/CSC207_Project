@@ -4,9 +4,9 @@ package interface_adapter.get_clothing_item;
 import use_case.get_clothing_item.GetClothingItemInputBoundary;
 import use_case.get_clothing_item.GetClothingItemInputData;
 
-public class GetItemController {
+public class GetClothingItemController {
     private final GetClothingItemInputBoundary getClothingItemInputBoundary;
-    public GetItemController(GetClothingItemInputBoundary getClothingItemInputBoundary) {
+    public GetClothingItemController(GetClothingItemInputBoundary getClothingItemInputBoundary) {
         this.getClothingItemInputBoundary = getClothingItemInputBoundary;
     }
 

@@ -1,4 +1,4 @@
-package interface_adapter.view_all_items;
+package interface_adapter.view_all_clothing_items;
 
 import interface_adapter.ViewModel;
 import lombok.Getter;
@@ -6,17 +6,17 @@ import lombok.Getter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ViewAllItemsViewModel extends ViewModel {
+public class ViewAllClothingItemsViewModel extends ViewModel {
     public final String TITLE_LABEL = "View All";
 
     @Getter
-    private ViewAllItemsState state = new ViewAllItemsState();
+    private ViewAllClothingItemsState state = new ViewAllClothingItemsState();
 
-    public ViewAllItemsViewModel() {
+    public ViewAllClothingItemsViewModel() {
         super("view all");
     }
 
-    public void setState(ViewAllItemsState state) {
+    public void setState(ViewAllClothingItemsState state) {
         this.state = state;
     }
 

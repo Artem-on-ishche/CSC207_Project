@@ -1,7 +1,7 @@
 package interface_adapter.create_wardrobe;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import model.ClothingItem;
 import model.ClothingType;
 import org.junit.jupiter.api.AfterEach;
@@ -21,7 +21,7 @@ public class CreateWardrobeInterfaceAdapterTest {
     @Nested
     class CreateWardrobeControllerTest {
         @Test
-        public void givenValidData_shouldExecuteAndNotThrowExceptions() {
+        public void givenData_shouldExecuteAndNotThrowExceptions() {
             AtomicBoolean wasInteractorCalled = new AtomicBoolean(false);
 
             CreateInputBoundary mockCreateUseCaseInteractor = inputData -> {
@@ -47,12 +47,12 @@ public class CreateWardrobeInterfaceAdapterTest {
     class CreateWardrobePresenterTest {
         private ViewManagerModel mockViewManagerModel;
         private CreateWardrobeViewModel mockCreateWardrobeViewModel;
-        private ViewAllItemsViewModel mockViewAllItemsViewModel;
+        private ViewAllClothingItemsViewModel mockViewAllClothingItemsViewModel;
 
         @AfterEach
         public void tearDown() {
             mockCreateWardrobeViewModel = null;
-            mockViewAllItemsViewModel = null;
+            mockViewAllClothingItemsViewModel = null;
             mockViewManagerModel = null;
         }
 
@@ -67,7 +67,7 @@ public class CreateWardrobeInterfaceAdapterTest {
                 }
             }
 
-            class MockViewAllItemsViewModel extends interface_adapter.view_all_items.ViewAllItemsViewModel {
+            class MockViewAllClothingItemsViewModel extends ViewAllClothingItemsViewModel {
                 @Override
                 public void firePropertyChanged() {
                     hasChangedStateOfViewAllItems[0] = true;
@@ -76,15 +76,15 @@ public class CreateWardrobeInterfaceAdapterTest {
 
             mockViewManagerModel = new ViewManagerModel();
             mockCreateWardrobeViewModel = new MockCreateWardrobeViewModel();
-            mockViewAllItemsViewModel = new MockViewAllItemsViewModel();
-            CreateWardrobePresenter createWardrobePresenter = new CreateWardrobePresenter(mockViewManagerModel, mockCreateWardrobeViewModel, mockViewAllItemsViewModel);
+            mockViewAllClothingItemsViewModel = new MockViewAllClothingItemsViewModel();
+            CreateWardrobePresenter createWardrobePresenter = new CreateWardrobePresenter(mockViewManagerModel, mockCreateWardrobeViewModel, mockViewAllClothingItemsViewModel);
             CreateOutputData mockOutputData = new CreateOutputData(new ClothingItem(1L, "Hat", null, ClothingType.HEAD, 1, Optional.empty()), false);
 
             assertDoesNotThrow(() ->
                     createWardrobePresenter.prepareSuccessView(mockOutputData)
             );
             assertEquals(mockViewManagerModel.getActiveView(), "view all");
-            assertEquals(mockViewAllItemsViewModel.getState().getWardrobe().size(), 1);
+            assertEquals(mockViewAllClothingItemsViewModel.getState().getWardrobe().size(), 1);
             assertTrue(hasChangedStateOfViewAllItems[0]);
         }
 
@@ -100,7 +100,7 @@ public class CreateWardrobeInterfaceAdapterTest {
 
             }
 
-            class MockViewAllItemsViewModel extends interface_adapter.view_all_items.ViewAllItemsViewModel {
+            class MockViewAllClothingItemsViewModel extends ViewAllClothingItemsViewModel {
                 @Override
                 public void firePropertyChanged() {
                     fail("Should not change state of ViewAllItemsViewModel in this prepareFailView method.");
@@ -110,10 +110,10 @@ public class CreateWardrobeInterfaceAdapterTest {
 
             mockViewManagerModel = new ViewManagerModel();
             mockCreateWardrobeViewModel = new MockCreateWardrobeViewModel();
-            mockViewAllItemsViewModel = new MockViewAllItemsViewModel();
+            mockViewAllClothingItemsViewModel = new MockViewAllClothingItemsViewModel();
             mockViewManagerModel.setActiveView("add item");
 
-            CreateWardrobePresenter createWardrobePresenter = new CreateWardrobePresenter(mockViewManagerModel, mockCreateWardrobeViewModel, mockViewAllItemsViewModel);
+            CreateWardrobePresenter createWardrobePresenter = new CreateWardrobePresenter(mockViewManagerModel, mockCreateWardrobeViewModel, mockViewAllClothingItemsViewModel);
 
             assertDoesNotThrow(() -> {
                 createWardrobePresenter.prepareFailView("Error message");

@@ -4,7 +4,7 @@ import lombok.Getter;
 import model.ClothingItem;
 
 @Getter
-public class GetItemState {
+public class GetClothingItemState {
     public void setClothingItem(ClothingItem clothingItem) {
         this.clothingItem = clothingItem;
     }
@@ -16,11 +16,6 @@ public class GetItemState {
     private ClothingItem clothingItem;
     private String getItemError;
 
-    public GetItemState() {
-    }
-
-    public GetItemState(GetItemState copy) {
-        clothingItem = copy.clothingItem;
-        getItemError = copy.getItemError;
+    public GetClothingItemState() {
     }
 }

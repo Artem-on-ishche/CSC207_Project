@@ -10,7 +10,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import model.ClothingType;
 import interface_adapter.logged_in.LoggedInViewModel;
 import model.User;
@@ -24,7 +24,6 @@ import use_case.signup.SignupDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.CreateWardrobeView;
 import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
@@ -71,7 +70,7 @@ public class Main {
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
 
         PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
-        ViewAllItemsViewModel viewAllItemsViewModel = new ViewAllItemsViewModel();
+        ViewAllClothingItemsViewModel viewAllClothingItemsViewModel = new ViewAllClothingItemsViewModel();
 
         ClothingIdentificationService clothingIdentificationService = new ClothingIdentificationService() {
             @Override

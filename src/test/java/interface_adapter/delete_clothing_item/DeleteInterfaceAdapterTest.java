@@ -1,8 +1,8 @@
 package interface_adapter.delete_clothing_item;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.view_all_items.ViewAllItemsState;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsState;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import model.ClothingItem;
 import model.ClothingType;
 import org.junit.jupiter.api.AfterEach;
@@ -26,7 +26,7 @@ public class DeleteInterfaceAdapterTest {
     @Nested
     class DeleteControllerTest {
         @Test
-        public void givenValidData_shouldExecuteAndNotThrowExceptions() {
+        public void givenData_shouldExecuteAndNotThrowExceptions() {
             AtomicBoolean wasInteractorCalled = new AtomicBoolean(false);
 
             DeleteInputBoundary mockDeleteUseCaseInteractor = inputData -> {
@@ -57,12 +57,12 @@ public class DeleteInterfaceAdapterTest {
         private static List<ClothingItem> CLOTHING_ITEMS = new ArrayList<>(List.of(CLOTHING_ITEM1, CLOTHING_ITEM2, CLOTHING_ITEM3));
         private ViewManagerModel mockViewManagerModel;
         private DeleteViewModel mockDeleteViewModel;
-        private ViewAllItemsViewModel mockViewAllItemsViewModel;
+        private ViewAllClothingItemsViewModel mockViewAllClothingItemsViewModel;
 
         @AfterEach
         public void tearDown() {
             mockDeleteViewModel = null;
-            mockViewAllItemsViewModel = null;
+            mockViewAllClothingItemsViewModel = null;
             mockViewManagerModel = null;
         }
 
@@ -77,7 +77,7 @@ public class DeleteInterfaceAdapterTest {
                 }
             }
 
-            class MockViewAllItemsViewModel extends interface_adapter.view_all_items.ViewAllItemsViewModel {
+            class MockViewAllClothingItemsViewModel extends ViewAllClothingItemsViewModel {
                 @Override
                 public void firePropertyChanged() {
                     hasChangedStateOfViewAllItems[0] = true;
@@ -89,19 +89,21 @@ public class DeleteInterfaceAdapterTest {
             DeleteState deleteState = new DeleteState();
             deleteState.setDeletedItem(2L);
             mockDeleteViewModel.setState(deleteState);
-            mockViewAllItemsViewModel = new MockViewAllItemsViewModel();
-            mockViewAllItemsViewModel.setState(new ViewAllItemsState(CLOTHING_ITEMS));
-            DeletePresenter deletePresenter = new DeletePresenter(mockDeleteViewModel, mockViewManagerModel, mockViewAllItemsViewModel);
+            mockViewAllClothingItemsViewModel = new MockViewAllClothingItemsViewModel();
+            ViewAllClothingItemsState viewAllClothingItemsState = new ViewAllClothingItemsState();
+            viewAllClothingItemsState.setWardrobe(CLOTHING_ITEMS);
+            mockViewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
+            DeletePresenter deletePresenter = new DeletePresenter(mockDeleteViewModel, mockViewManagerModel, mockViewAllClothingItemsViewModel);
             DeleteOutputData mockOutputData = new DeleteOutputData();
 
             assertDoesNotThrow(() ->
                     deletePresenter.prepareSuccessView(mockOutputData)
             );
             assertEquals(mockViewManagerModel.getActiveView(), "view all");
-            assertEquals(mockViewAllItemsViewModel.getState().getWardrobe().size(), 2);
-            assertTrue(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM1));
-            assertFalse(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM2));
-            assertTrue(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM3));
+            assertEquals(mockViewAllClothingItemsViewModel.getState().getWardrobe().size(), 2);
+            assertTrue(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM1));
+            assertFalse(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM2));
+            assertTrue(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM3));
             assertTrue(hasChangedStateOfViewAllItems[0]);
         }
 
@@ -119,7 +121,7 @@ public class DeleteInterfaceAdapterTest {
 
             }
 
-            class MockViewAllItemsViewModel extends interface_adapter.view_all_items.ViewAllItemsViewModel {
+            class MockViewAllClothingItemsViewModel extends ViewAllClothingItemsViewModel {
                 @Override
                 public void firePropertyChanged() {
                     fail("Should not change state of ViewAllItemsViewModel in this prepareFailView method.");
@@ -132,11 +134,13 @@ public class DeleteInterfaceAdapterTest {
             DeleteState deleteState = new DeleteState();
             deleteState.setDeletedItem(id);
             mockDeleteViewModel.setState(deleteState);
-            mockViewAllItemsViewModel = new MockViewAllItemsViewModel();
-            mockViewAllItemsViewModel.setState(new ViewAllItemsState(CLOTHING_ITEMS));
+            mockViewAllClothingItemsViewModel = new MockViewAllClothingItemsViewModel();
+            ViewAllClothingItemsState viewAllClothingItemsState = new ViewAllClothingItemsState();
+            viewAllClothingItemsState.setWardrobe(CLOTHING_ITEMS);
+            mockViewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
             mockViewManagerModel.setActiveView("delete item");
 
-            DeletePresenter deletePresenter = new DeletePresenter(mockDeleteViewModel, mockViewManagerModel, mockViewAllItemsViewModel);
+            DeletePresenter deletePresenter = new DeletePresenter(mockDeleteViewModel, mockViewManagerModel, mockViewAllClothingItemsViewModel);
 
             assertDoesNotThrow(() -> {
                 deletePresenter.prepareFailView("Error message");
@@ -145,10 +149,10 @@ public class DeleteInterfaceAdapterTest {
             assertEquals(mockViewManagerModel.getActiveView(), "delete item");
             assertEquals(mockDeleteViewModel.getState().getDeleteError(), "Error message");
 
-            assertEquals(mockViewAllItemsViewModel.getState().getWardrobe().size(), 3);
-            assertTrue(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM1));
-            assertTrue(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM2));
-            assertTrue(mockViewAllItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM3));
+            assertEquals(mockViewAllClothingItemsViewModel.getState().getWardrobe().size(), 3);
+            assertTrue(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM1));
+            assertTrue(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM2));
+            assertTrue(mockViewAllClothingItemsViewModel.getState().getWardrobe().contains(CLOTHING_ITEM3));
 
             assertTrue(hasChangedStateOfDelete[0]);
         }
