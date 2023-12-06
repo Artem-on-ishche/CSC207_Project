@@ -1,8 +1,13 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.delete_clothing_item.DeleteController;
+import interface_adapter.delete_clothing_item.DeleteState;
+import interface_adapter.delete_clothing_item.DeleteViewModel;
 import interface_adapter.get_clothing_item.GetClothingItemState;
 import interface_adapter.get_clothing_item.GetClothingItemViewModel;
 import interface_adapter.update_clothing_item.UpdateController;
+import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import model.ClothingItem;
 
 import javax.swing.*;
@@ -17,6 +22,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
     private final JButton saveChanges;
 
     private final JButton back;
+    private final JButton delete;
     private JPanel imagePanel;
 
     final JTextField nameInputField = new JTextField(15);
@@ -25,7 +31,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
 
 
     GetClothingItemViewModel getClothingItemViewModel;
-    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController) {
+    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController, DeleteController deleteController, ViewManagerModel viewManagerModel, ViewAllItemsViewModel viewAllItemsViewModel, DeleteViewModel deleteViewModel) {
         this.getClothingItemViewModel = getClothingItemViewModel;
         this.getClothingItemViewModel.addPropertyChangeListener(this);
 
@@ -36,6 +42,10 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         back = new JButton(GetClothingItemViewModel.BACK_LABEL);
         buttons.add(back);
 
+        delete = new JButton(GetClothingItemViewModel.DELETE_LABEL);
+        buttons.add(delete);
+
+        JPanel inputs = new JPanel();
         LabelTextPanel nameInfo = new LabelTextPanel(
                 new JLabel("Name"), nameInputField);
         LabelTextPanel minTempInfo = new LabelTextPanel(
@@ -44,8 +54,13 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         LabelTextPanel descriptionTempInfo = new LabelTextPanel(
                 new JLabel("Min Temperature"), descriptonInputField);
 
+        inputs.add(nameInfo);
+        inputs.add(minTempInfo);
+        inputs.add(descriptionTempInfo);
+
         imagePanel = new JPanel();
 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         saveChanges.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -59,6 +74,33 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+
+        delete.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(delete)) {
+                            GetClothingItemState currentState = getClothingItemViewModel.getState();
+                            DeleteState deleteState = new DeleteState();
+                            deleteState.setDeletedItem(currentState.getClothingItem().getId());
+
+                            deleteViewModel.setState(deleteState);
+
+                            deleteController.execute(
+                                    currentState.getClothingItem().getId()
+                            );
+                        }
+                    }
+                }
+        );
+
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(back)) {
+                    viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
 
         nameInputField.addKeyListener(new KeyListener() {
             @Override
@@ -112,9 +154,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         });
 
         this.add(imagePanel);
-        this.add(nameInfo);
-        this.add(minTempInfo);
-        this.add(descriptionTempInfo);
+        this.add(inputs);
         this.add(buttons);
     }
     @Override

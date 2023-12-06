@@ -1,17 +1,9 @@
 package view;
 
-import data_access.persistence.UserDao;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.generate_outfit.GenerateOutfitController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.signup.SignupState;
-import interface_adapter.signup.SignupViewModel;
 import interface_adapter.view_all_items.ViewAllItemsController;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
-import use_case.view_all_clothing_items.ViewAllClothingItemsInteractor;
 
 import javax.swing.*;
 import java.awt.*;

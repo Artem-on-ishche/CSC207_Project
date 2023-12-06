@@ -12,6 +12,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeController;
 import interface_adapter.create_wardrobe.CreateWardrobePresenter;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
+import interface_adapter.delete_clothing_item.DeleteController;
+import interface_adapter.delete_clothing_item.DeletePresenter;
+import interface_adapter.delete_clothing_item.DeleteViewModel;
 import interface_adapter.generate_outfit.GenerateOutfitController;
 import interface_adapter.generate_outfit.GenerateOutfitPresenter;
 import interface_adapter.generate_outfit.GenerateOutfitViewModel;
@@ -32,6 +35,9 @@ import interface_adapter.view_all_items.ViewAllItemsPresenter;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.create_wardrobe.*;
+import use_case.delete_clothing_item.DeleteInputBoundary;
+import use_case.delete_clothing_item.DeleteInteractor;
+import use_case.delete_clothing_item.DeleteOutputBoundary;
 import use_case.generate_outfit.InputBoundary;
 import use_case.generate_outfit.OutfitGenerationInteractor;
 import use_case.generate_outfit.OutputBoundary;
@@ -92,6 +98,7 @@ public class Main {
         GenerateOutfitViewModel generateOutfitViewModel = new GenerateOutfitViewModel();
         CreateWardrobeViewModel createWardrobeViewModel = new CreateWardrobeViewModel();
         GetClothingItemViewModel getClothingItemViewModel = new GetClothingItemViewModel();
+        DeleteViewModel deleteViewModel = new DeleteViewModel();
 
         PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
 
@@ -143,7 +150,7 @@ public class Main {
 
 
         //Generate Outfit
-        GenerateOutgitView generateOutgitView = new GenerateOutgitView();
+        GenerateOutfitView generateOutfitView = new GenerateOutfitView();
 
         //Add Item
         CreateOutputBoundary createOutputBoundary = new CreateWardrobePresenter(viewManagerModel, createWardrobeViewModel, viewAllItemsViewModel);
@@ -157,7 +164,7 @@ public class Main {
                 ;
 
         CreateWardrobeController  createWardrobeController = new CreateWardrobeController(createInputBoundary);
-        CreateWardrobeView createWardrobeView = new CreateWardrobeView(createWardrobeController, createWardrobeViewModel, loggedInViewModel);
+        CreateWardrobeView createWardrobeView = new CreateWardrobeView(createWardrobeController, createWardrobeViewModel, loggedInViewModel, viewManagerModel, viewAllItemsViewModel);
 
         //Show one Item
         GetClothingItemOutputBoundary getClothingItemOutputBoundary = new GetClothingItemPresenter(getClothingItemViewModel, viewManagerModel);
@@ -174,8 +181,13 @@ public class Main {
         UpdateInputBoundary updateInputBoundary = new UpdateInteractor(updateOutputBoundary, clothingItemDao);
         UpdateController updateController = new UpdateController(updateInputBoundary);
 
+        //Delete Controller
+        DeleteOutputBoundary deleteOutputBoundary = new DeletePresenter(new DeleteViewModel(), viewManagerModel, viewAllItemsViewModel);
+        DeleteInputBoundary deleteInputBoundary = new DeleteInteractor(deleteOutputBoundary, clothingItemDao);
+        DeleteController deleteController = new DeleteController(deleteInputBoundary);
+
         //Edit Item
-        EditItemView editItemView = new EditItemView(getClothingItemViewModel, updateController);
+        EditItemView editItemView = new EditItemView(getClothingItemViewModel, updateController, deleteController, viewManagerModel, viewAllItemsViewModel, deleteViewModel);
 
         views.add(signupView, signupViewModel.getViewName());
         views.add(loginView, loginViewModel.getViewName());
@@ -183,6 +195,7 @@ public class Main {
         views.add(showWardrobeView, showWardrobeView.getViewName());
         views.add(createWardrobeView, createWardrobeView.viewName);
         views.add(editItemView, editItemView.viewName);
+        views.add(generateOutfitView, generateOutfitView.viewName);
 
         viewManagerModel.setActiveView(signupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

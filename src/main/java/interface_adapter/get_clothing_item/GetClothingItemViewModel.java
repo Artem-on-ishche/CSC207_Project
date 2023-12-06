@@ -9,6 +9,7 @@ import java.beans.PropertyChangeSupport;
 public class GetClothingItemViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Get Clothing Item";
     public static final String SAVE_CHANGES_LABEL = "Save changes";
+    public static final String DELETE_LABEL = "Delete item";
     public static final String BACK_LABEL = "Back";
 
     @Getter

@@ -24,6 +24,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
     private final ViewAllItemsViewModel viewAllItemsViewModel;
     private JPanel clothingItemsPanel;
     private GetClothingItemController getClothingItemController;
+    private String selectedClothingItemId;
 
     public String getViewName() {
         return viewName;
@@ -95,6 +96,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
         if (state.getWardrobe() != null && !state.getWardrobe().isEmpty()) {
             for (ClothingItem clothingItem : state.getWardrobe()) {
+
                 var image = clothingItem.getImage();
                 String name = clothingItem.getName();
 
@@ -115,6 +117,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
                     itemPanel.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
+                            selectedClothingItemId = String.valueOf(clothingItem.getId());
                             getClothingItemController.execute(clothingItem.getId());
                         }
                     });

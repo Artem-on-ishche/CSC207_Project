@@ -2,6 +2,7 @@ package interface_adapter.view_all_items;
 
 import interface_adapter.ViewModel;
 import lombok.Getter;
+import model.ClothingItem;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -31,4 +32,5 @@ public class ViewAllItemsViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
 }
