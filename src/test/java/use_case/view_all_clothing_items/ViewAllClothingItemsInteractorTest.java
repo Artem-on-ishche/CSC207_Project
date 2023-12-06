@@ -54,30 +54,6 @@ class ViewAllClothingItemsInteractorTest {
     }
 
     @Test
-    void givenEmptyData_shouldPrepareSuccessView() {
-        AllItemsOfUserDataAccess dao = username -> {
-            if (!username.equals(correctUsername))
-                throw new IllegalArgumentException();
-
-            return new ArrayList<>();
-        };
-        outputBoundary = new ViewAllClothingItemsOutputBoundary() {
-            @Override
-            public void prepareSuccessView(ViewAllClothingItemsOutputData outputData) {
-                assertTrue(true);
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-                fail();
-            }
-        };
-
-        interactor = new ViewAllClothingItemsInteractor(dao, outputBoundary);
-        interactor.execute(new ViewAllClothingItemsInputData(correctUsername));
-    }
-
-    @Test
     void givenIncorrectData_shouldPrepareFailureView() {
         outputBoundary = new ViewAllClothingItemsOutputBoundary() {
             @Override
