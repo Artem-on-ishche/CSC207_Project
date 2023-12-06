@@ -1,6 +1,7 @@
 package interface_adapter.logged_in;
 
 import interface_adapter.ViewModel;
+import lombok.Getter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,12 +9,14 @@ import java.beans.PropertyChangeSupport;
 public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
+    @Getter
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     public static final String MY_WARDROBE_BUTTON_LABEL = "My Wardrobe";
     public static final String GENERATE_OUTFIT_BUTTON_LABEL = "Generate Outfit!";
 
+    @Getter
     private String loggedInUser;
 
     public LoggedInViewModel() {
@@ -34,14 +37,6 @@ public class LoggedInViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public LoggedInState getState() {
-        return state;
-    }
-
-
-    public String getLoggedInUser() {
-        return loggedInUser;
-    }
 
     public void setLoggedInUser(String loggedInUser) {
         this.loggedInUser = loggedInUser;

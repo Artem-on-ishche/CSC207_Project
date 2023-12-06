@@ -18,9 +18,4 @@ public class GetClothingItemState {
 
     public GetClothingItemState() {
     }
-
-    public GetClothingItemState(GetClothingItemState copy) {
-        clothingItem = copy.clothingItem;
-        getItemError = copy.getItemError;
-    }
 }

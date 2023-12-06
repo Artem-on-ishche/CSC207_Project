@@ -14,11 +14,6 @@ public class DeleteState {
 
     private String deleteError;
 
-    public DeleteState(Long deletedItem, DeleteState copy) {
-        this.deletedItemId = deletedItem;
-        this.deleteError = copy.deleteError;
-    }
-
     public DeleteState() {}
 
     public void setDeleteError(String deleteError) {

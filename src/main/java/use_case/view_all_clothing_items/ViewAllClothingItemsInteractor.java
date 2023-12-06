@@ -25,7 +25,7 @@ public class ViewAllClothingItemsInteractor implements ViewAllClothingItemsInput
                 outputBoundary.prepareSuccessView(outputData);
             }
         } catch (Exception e) {
-            outputBoundary.prepareFailureView("Error when trying to get all clothing items of user with id = " + inputData.username() + ": " + e.getMessage());
+            outputBoundary.prepareFailView("Error when trying to get all clothing items of user with id = " + inputData.username() + ": " + e.getMessage());
         }
     }
 }

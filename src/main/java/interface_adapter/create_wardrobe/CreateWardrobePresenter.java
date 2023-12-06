@@ -1,38 +1,31 @@
 package interface_adapter.create_wardrobe;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.ViewModel;
-import interface_adapter.delete_clothing_item.DeleteState;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.view_all_items.ViewAllItemsState;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
-import model.ClothingItem;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsState;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import use_case.create_wardrobe.CreateOutputBoundary;
 import use_case.create_wardrobe.CreateOutputData;
 
-import java.util.List;
-
 public class CreateWardrobePresenter implements CreateOutputBoundary {
     private final CreateWardrobeViewModel createWardrobeViewModel;
-    private final ViewAllItemsViewModel viewAllItemsViewModel;
+    private final ViewAllClothingItemsViewModel viewAllClothingItemsViewModel;
     private final ViewManagerModel viewModel;
 
     public CreateWardrobePresenter(ViewManagerModel viewManagerModel,
-                                   CreateWardrobeViewModel createWardrobeViewModel, ViewAllItemsViewModel viewAllItemsViewModel) {
+                                   CreateWardrobeViewModel createWardrobeViewModel, ViewAllClothingItemsViewModel viewAllClothingItemsViewModel) {
         this.createWardrobeViewModel = createWardrobeViewModel;
         this.viewModel = viewManagerModel;
-        this.viewAllItemsViewModel = viewAllItemsViewModel;
+        this.viewAllClothingItemsViewModel = viewAllClothingItemsViewModel;
     }
 
     @Override
     public void prepareSuccessView(CreateOutputData outputData) {
-        ViewAllItemsState viewAllItemsState = viewAllItemsViewModel.getState();
-        viewAllItemsState.getWardrobe().add(outputData.newClothingItem());
-        viewAllItemsViewModel.setState(viewAllItemsState);
-        viewAllItemsViewModel.firePropertyChanged();
+        ViewAllClothingItemsState viewAllClothingItemsState = viewAllClothingItemsViewModel.getState();
+        viewAllClothingItemsState.getWardrobe().add(outputData.newClothingItem());
+        viewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
+        viewAllClothingItemsViewModel.firePropertyChanged();
 
-        viewModel.setActiveView(viewAllItemsViewModel.getViewName());
+        viewModel.setActiveView(viewAllClothingItemsViewModel.getViewName());
         viewModel.firePropertyChanged();
     }
 

@@ -4,8 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_wardrobe.CreateWardrobeViewModel;
 import interface_adapter.get_clothing_item.GetClothingItemController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.view_all_items.ViewAllItemsState;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.*;
 import model.ClothingItem;
 
 import javax.swing.*;
@@ -21,7 +20,7 @@ import java.io.IOException;
 public class ShowWardrobeView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "view all";
-    private final ViewAllItemsViewModel viewAllItemsViewModel;
+    private final ViewAllClothingItemsViewModel viewAllItemsViewModel;
     private JPanel clothingItemsPanel;
     private GetClothingItemController getClothingItemController;
     private String selectedClothingItemId;
@@ -33,7 +32,7 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
     private final JButton back;
 
-    public ShowWardrobeView(ViewAllItemsViewModel viewAllItemsViewModel, ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, GetClothingItemController getClothingItemController) {
+    public ShowWardrobeView(ViewAllClothingItemsViewModel viewAllItemsViewModel, ViewManagerModel viewManagerModel, CreateWardrobeViewModel createWardrobeViewModel, LoggedInViewModel loggedInViewModel, GetClothingItemController getClothingItemController) {
         this.viewAllItemsViewModel = viewAllItemsViewModel;
         this.viewAllItemsViewModel.addPropertyChangeListener(this);
         this.getClothingItemController = getClothingItemController;
@@ -45,10 +44,10 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
 
         JPanel buttons = new JPanel();
 
-        addItem = new JButton(ViewAllItemsViewModel.ADD_CLOTHING_ITEM);
+        addItem = new JButton(ViewAllClothingItemsViewModel.ADD_CLOTHING_ITEM);
         buttons.add(addItem);
 
-        back = new JButton(ViewAllItemsViewModel.BACK_TO_MAIN_VIEW);
+        back = new JButton(ViewAllClothingItemsViewModel.BACK_TO_MAIN_VIEW);
         buttons.add(back);
 
         addItem.addActionListener(new ActionListener() {
@@ -86,12 +85,12 @@ public class ShowWardrobeView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         /*var newState = evt.getNewValue();
-        if (newState instanceof ViewAllItemsState state) {
+        if (newState instanceof ViewAllClothingItemsState state) {
             if (state.getWardrobe() != null) {
                 JOptionPane.showMessageDialog(this, state.getWardrobe());
             }
         }*/
-        ViewAllItemsState state = (ViewAllItemsState) evt.getNewValue();
+        ViewAllClothingItemsState state = (ViewAllClothingItemsState) evt.getNewValue();
         clothingItemsPanel.removeAll();
 
         if (state.getWardrobe() != null && !state.getWardrobe().isEmpty()) {

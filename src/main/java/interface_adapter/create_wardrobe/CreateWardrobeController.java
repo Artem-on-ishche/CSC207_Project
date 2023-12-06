@@ -3,7 +3,6 @@ package interface_adapter.create_wardrobe;
 import use_case.create_wardrobe.CreateInputBoundary;
 import use_case.create_wardrobe.CreateInputData;
 
-import java.awt.*;
 import java.util.Optional;
 
 public class CreateWardrobeController {

@@ -7,7 +7,7 @@ import interface_adapter.delete_clothing_item.DeleteViewModel;
 import interface_adapter.get_clothing_item.GetClothingItemState;
 import interface_adapter.get_clothing_item.GetClothingItemViewModel;
 import interface_adapter.update_clothing_item.UpdateController;
-import interface_adapter.view_all_items.ViewAllItemsViewModel;
+import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
 import model.ClothingItem;
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
 
 
     GetClothingItemViewModel getClothingItemViewModel;
-    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController, DeleteController deleteController, ViewManagerModel viewManagerModel, ViewAllItemsViewModel viewAllItemsViewModel, DeleteViewModel deleteViewModel) {
+    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController, DeleteController deleteController, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllItemsViewModel, DeleteViewModel deleteViewModel) {
         this.getClothingItemViewModel = getClothingItemViewModel;
         this.getClothingItemViewModel.addPropertyChangeListener(this);
 
