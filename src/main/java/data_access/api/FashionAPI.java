@@ -4,28 +4,38 @@ package data_access.api;
 
 import model.ClothingType;
 import org.json.JSONObject;
+import use_case.create_wardrobe.ClothingIdentificationService;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class FashionAPI {
+public class FashionAPI implements ClothingIdentificationService {
     private static final String API_KEY = "9a77e212eaab431faddb9de943af7bf6";
     private static final String API_URL = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/apparel-recognition/versions/dc2cd6d9bff5425a80bfe0c4105583c1/outputs";
 
 
-    public ClothingType identifyClothingItem(String imageUrl) {
+    public ClothingType identifyClothingItem(String imageUrl) throws IOException {
+        Path path = Paths.get(imageUrl);
+        byte[] imageBytes = Files.readAllBytes(path);
+
+        String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
+
         String requestBody = "{\n" +
                 "  \"inputs\": [\n" +
                 "    {\n" +
                 "      \"data\": {\n" +
                 "        \"image\": {\n" +
-                "          \"url\": \"" + imageUrl + "\"\n" +
+                "          \"base64\": \"" + base64Image + "\"\n" +
                 "        }\n" +
                 "      }\n" +
                 "    }\n" +
@@ -188,5 +198,14 @@ public class FashionAPI {
             throw new RuntimeException("Fashion API failed call.");
         }
     }
+
+   /* public static void main(String[] args) throws IOException {
+        FashionAPI fashionAPI = new FashionAPI();
+        ClothingType inputClothingItem = fashionAPI.identifyClothingItem("C:/Users/User/Documents/pants.jpg");
+
+
+        System.out.println(inputClothingItem);
+
+    }*/
 
 }
