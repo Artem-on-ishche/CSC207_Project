@@ -19,7 +19,6 @@ import java.beans.PropertyChangeListener;
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "sign up";
 
-    private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
@@ -33,7 +32,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public SignupView(SignupController signupController, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel, LoginViewModel loginViewModel)  {
 
         this.signupController = signupController;
-        this.signupViewModel = signupViewModel;
 
         signupViewModel.addPropertyChangeListener(this);
 
@@ -76,7 +74,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
-                            loginViewModel.firePropertyChanged();
+                            // loginViewModel.firePropertyChanged();
                             viewManagerModel.setActiveView(loginViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
