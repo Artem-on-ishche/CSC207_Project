@@ -31,7 +31,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
 
 
     GetClothingItemViewModel getClothingItemViewModel;
-    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController, DeleteController deleteController, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllItemsViewModel, DeleteViewModel deleteViewModel) {
+    public EditItemView(GetClothingItemViewModel getClothingItemViewModel, UpdateController updateController, DeleteController deleteController, ViewManagerModel viewManagerModel, ViewAllClothingItemsViewModel viewAllClothingItemsViewModel, DeleteViewModel deleteViewModel) {
         this.getClothingItemViewModel = getClothingItemViewModel;
         this.getClothingItemViewModel.addPropertyChangeListener(this);
 
@@ -96,7 +96,7 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(back)) {
-                    viewManagerModel.setActiveView(viewAllItemsViewModel.getViewName());
+                    viewManagerModel.setActiveView(viewAllClothingItemsViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
             }
@@ -122,9 +122,32 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         minTempInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
+                char inputChar = e.getKeyChar();
+                if (!Character.isDigit(inputChar) && inputChar != '-') {
+                    e.consume();
+                    return;
+                }
+
+                String currentText = minTempInputField.getText();
+
+                if (inputChar == '-' && currentText.contains("-")) {
+                    e.consume();
+                    return;
+                }
+
+                if (currentText.isEmpty() && inputChar == '-') {
+                    return;
+                }
+
+                StringBuilder newText = new StringBuilder(currentText);
+                newText.append(inputChar);
+
+                try {
                 GetClothingItemState currentState = getClothingItemViewModel.getState();
-                currentState.getClothingItem().setMinimumAppropriateTemperature(Integer.parseInt(minTempInputField.getText() + e.getKeyChar()));
+                currentState.getClothingItem().setMinimumAppropriateTemperature(Integer.parseInt(newText.toString()));
                 getClothingItemViewModel.setState(currentState);
+                } catch (NumberFormatException ex) {
+                }
             }
 
             @Override

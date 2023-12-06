@@ -30,10 +30,10 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.update_clothing_item.UpdateController;
 import interface_adapter.update_clothing_item.UpdatePresenter;
 import interface_adapter.update_clothing_item.UpdateViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.view_all_clothing_items.ViewAllClothingItemsController;
 import interface_adapter.view_all_clothing_items.ViewAllClothingItemsPresenter;
 import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.create_wardrobe.*;
 import use_case.delete_clothing_item.DeleteInputBoundary;
 import use_case.delete_clothing_item.DeleteInteractor;
@@ -78,7 +78,7 @@ public class Main {
 
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
-        views.setPreferredSize(new Dimension(500, 500));
+        views.setPreferredSize(new Dimension(1450, 1000));
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int centerX = (screenSize.width - views.getPreferredSize().width) / 2;
