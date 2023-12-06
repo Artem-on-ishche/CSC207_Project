@@ -1,7 +1,5 @@
 package model;
 
-import data_access.persistence.FileImageCreator;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;

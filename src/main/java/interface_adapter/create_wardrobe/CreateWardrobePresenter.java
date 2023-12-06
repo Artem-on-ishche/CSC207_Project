@@ -3,8 +3,12 @@ package interface_adapter.create_wardrobe;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.view_all_clothing_items.ViewAllClothingItemsState;
 import interface_adapter.view_all_clothing_items.ViewAllClothingItemsViewModel;
+import model.ClothingItem;
 import use_case.create_wardrobe.CreateOutputBoundary;
 import use_case.create_wardrobe.CreateOutputData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateWardrobePresenter implements CreateOutputBoundary {
     private final CreateWardrobeViewModel createWardrobeViewModel;
@@ -21,7 +25,11 @@ public class CreateWardrobePresenter implements CreateOutputBoundary {
     @Override
     public void prepareSuccessView(CreateOutputData outputData) {
         ViewAllClothingItemsState viewAllClothingItemsState = viewAllClothingItemsViewModel.getState();
-        viewAllClothingItemsState.getWardrobe().add(outputData.newClothingItem());
+        
+        List<ClothingItem> newWardrobe = new ArrayList<>(viewAllClothingItemsState.getWardrobe());
+        newWardrobe.add(outputData.newClothingItem());
+
+        viewAllClothingItemsState.setWardrobe(newWardrobe);
         viewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
         viewAllClothingItemsViewModel.firePropertyChanged();
 

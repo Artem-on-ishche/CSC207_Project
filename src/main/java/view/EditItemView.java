@@ -100,8 +100,8 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
                             GetClothingItemState currentState = getClothingItemViewModel.getState();
                             DeleteState deleteState = new DeleteState();
                             deleteState.setDeletedItem(currentState.getClothingItem().getId());
-
                             deleteViewModel.setState(deleteState);
+                            deleteViewModel.firePropertyChanged();
 
                             deleteController.execute(
                                     currentState.getClothingItem().getId()

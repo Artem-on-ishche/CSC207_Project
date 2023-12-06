@@ -9,6 +9,9 @@ import model.ClothingItem;
 import use_case.update_clothing_item.UpdateOutputBoundary;
 import use_case.update_clothing_item.UpdateOutputData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class UpdatePresenter implements UpdateOutputBoundary {
     private final UpdateViewModel updateViewModel;
@@ -28,12 +31,16 @@ public class UpdatePresenter implements UpdateOutputBoundary {
     @Override
     public void prepareSuccessView(UpdateOutputData outputData) {
         ViewAllClothingItemsState viewAllClothingItemsState = viewAllClothingItemsViewModel.getState();
+
+        List<ClothingItem> newWardrobe = new ArrayList<>(viewAllClothingItemsState.getWardrobe());
         for (ClothingItem clothingItem : viewAllClothingItemsState.getWardrobe()) {
             if (clothingItem.getId().equals(outputData.updatedClothingItem().getId())) {
-                viewAllClothingItemsState.getWardrobe().set(viewAllClothingItemsState.getWardrobe().indexOf(clothingItem), outputData.updatedClothingItem());
+                newWardrobe.set(viewAllClothingItemsState.getWardrobe().indexOf(clothingItem), outputData.updatedClothingItem());
                 break;
             }
         }
+
+        viewAllClothingItemsState.setWardrobe(newWardrobe);
         viewAllClothingItemsViewModel.setState(viewAllClothingItemsState);
         viewAllClothingItemsViewModel.firePropertyChanged();
 

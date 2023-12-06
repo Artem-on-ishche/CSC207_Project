@@ -1,16 +1,18 @@
 package use_case.create_wardrobe;
 
 import model.ClothingItem;
+import model.ClothingType;
 import model.Image;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WardrobeGeneratingTest {
-    private static final CreateInputData defaultInputData = new CreateInputData(null, "item", null, null, 20);
+class CreateInteractorTest {
     private static CreateDataAccess createDataAccess;
     private static CreateOutputBoundary createPresenter;
     private static ClothingIdentificationService clothingIdentificationService;
@@ -27,7 +29,7 @@ class WardrobeGeneratingTest {
     }
 
     @Test
-    void givenInvalidInput_shouldPrepareFailView() {
+    void thrownException_shouldPrepareFailView() {
         createDataAccess = new CreateDataAccess() {
             @Override
             public Long addClothingItem(ClothingItem clothingItem, String username) {
@@ -49,7 +51,7 @@ class WardrobeGeneratingTest {
         };
 
         clothingIdentificationService = image -> {
-            throw new RuntimeException("Identification error");
+            throw new RuntimeException("Runtime exception thrown.");
         };
 
         createImage = src -> new Image(new File(src), new byte[]{});
@@ -65,5 +67,45 @@ class WardrobeGeneratingTest {
         ;
 
         createInteractor.execute(invalidInputData);
+    }
+
+    @Test
+    void givenValidInput_shouldPrepareSuccessView() {
+        final boolean[] wasEverythingCalled = {false, false};
+
+        createDataAccess = new CreateDataAccess() {
+            @Override
+            public Long addClothingItem(ClothingItem clothingItem, String username) {
+                wasEverythingCalled[0] = true;
+                return null;
+            }
+        };
+
+        createPresenter = new CreateOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateOutputData outputData) {
+                assertFalse(outputData.useCaseFailed());
+                wasEverythingCalled[1] = true;
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Should not be called");
+            }
+        };
+
+        clothingIdentificationService = image -> ClothingType.LOWER_BODY;
+
+        createImage = src -> new Image(new File(src), new byte[]{});
+
+        createInteractor = new CreateInteractor(
+                createDataAccess,
+                createPresenter,
+                clothingIdentificationService,
+                createImage);
+
+        CreateInputData validInputData = new CreateInputData("anna", "Boots", "\\image.jpg", Optional.of("this is a description"), 10);
+
+        createInteractor.execute(validInputData);
     }
 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public final class ClothingItem {

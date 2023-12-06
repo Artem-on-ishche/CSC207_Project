@@ -140,7 +140,7 @@ public class Main {
         UpdateController updateController = new UpdateController(updateInputBoundary);
 
         //Delete Controller
-        DeleteOutputBoundary deleteOutputBoundary = new DeletePresenter(new DeleteViewModel(), viewManagerModel, viewAllClothingItemsViewModel);
+        DeleteOutputBoundary deleteOutputBoundary = new DeletePresenter(deleteViewModel, viewManagerModel, viewAllClothingItemsViewModel);
         DeleteInputBoundary deleteInputBoundary = new DeleteInteractor(deleteOutputBoundary, clothingItemDao);
         DeleteController deleteController = new DeleteController(deleteInputBoundary);
 

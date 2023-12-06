@@ -4,7 +4,6 @@ import model.ClothingItem;
 import model.ClothingType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Optional;
 
