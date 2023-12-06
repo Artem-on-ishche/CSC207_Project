@@ -57,7 +57,7 @@ public class CreateWardrobeInterfaceAdapterTest {
         }
 
         @Test
-        public void givenValidData_prepareSuccessView() {
+        public void shouldPrepareSuccessViewAndNotThrowExceptions() {
             final boolean[] hasChangedStateOfViewAllItems = {false};
 
             class MockCreateWardrobeViewModel extends interface_adapter.create_wardrobe.CreateWardrobeViewModel {
@@ -89,7 +89,7 @@ public class CreateWardrobeInterfaceAdapterTest {
         }
 
         @Test
-        public void testPrepareFailView() {
+        public void shouldPrepareFailViewAndNotThrowExceptions() {
             final boolean[] hasChangedStateOfCreate = {false};
 
             class MockCreateWardrobeViewModel extends interface_adapter.create_wardrobe.CreateWardrobeViewModel {
