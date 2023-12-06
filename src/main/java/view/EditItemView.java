@@ -19,15 +19,16 @@ import java.io.IOException;
 
 public class EditItemView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get item";
+    Font buttonFont = new Font("SansSerif", Font.PLAIN, 18);
     private final JButton saveChanges;
 
     private final JButton back;
     private final JButton delete;
     private JPanel imagePanel;
 
-    final JTextField nameInputField = new JTextField(15);
-    final JTextField minTempInputField = new JTextField(15);
-    final JTextField descriptonInputField = new JTextField(15);
+    final JTextField nameInputField = new JTextField(18);
+    final JTextField minTempInputField = new JTextField(18);
+    final JTextField descriptonInputField = new JTextField(18);
 
 
     GetClothingItemViewModel getClothingItemViewModel;
@@ -35,24 +36,41 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         this.getClothingItemViewModel = getClothingItemViewModel;
         this.getClothingItemViewModel.addPropertyChangeListener(this);
 
+
         JPanel buttons = new JPanel();
         saveChanges = new JButton(GetClothingItemViewModel.SAVE_CHANGES_LABEL);
+        saveChanges.setPreferredSize(new Dimension(150, 50));
+        saveChanges.setFont(buttonFont);
         buttons.add(saveChanges);
 
         back = new JButton(GetClothingItemViewModel.BACK_LABEL);
+        back.setPreferredSize(new Dimension(150, 50));
+        back.setFont(buttonFont);
         buttons.add(back);
 
         delete = new JButton(GetClothingItemViewModel.DELETE_LABEL);
+        delete.setPreferredSize(new Dimension(150, 50));
+        delete.setFont(buttonFont);
         buttons.add(delete);
 
         JPanel inputs = new JPanel();
-        LabelTextPanel nameInfo = new LabelTextPanel(
-                new JLabel("Name"), nameInputField);
-        LabelTextPanel minTempInfo = new LabelTextPanel(
-                new JLabel("Min Temperature"), minTempInputField);
 
+        JLabel name = new JLabel("Name              ");
+        name.setFont(buttonFont);
+        LabelTextPanel nameInfo = new LabelTextPanel(
+               name , nameInputField);
+
+        JLabel temp = new JLabel("Min Temperature   ");
+        temp.setFont(buttonFont);
+        LabelTextPanel minTempInfo = new LabelTextPanel(
+                temp, minTempInputField);
+
+        JLabel desc = new JLabel("Description       ");
+        desc.setFont(buttonFont);
         LabelTextPanel descriptionTempInfo = new LabelTextPanel(
-                new JLabel("Min Temperature"), descriptonInputField);
+                desc, descriptonInputField);
+
+        inputs.setLayout(new GridLayout(0, 1));
 
         inputs.add(nameInfo);
         inputs.add(minTempInfo);
@@ -198,8 +216,8 @@ public class EditItemView extends JPanel implements ActionListener, PropertyChan
         ClothingItem clothingItem = state.getClothingItem();
         var image = clothingItem.getImage();
 
-        int desiredWidth = 150;
-        int desiredHeight = 150;
+        int desiredWidth = 300;
+        int desiredHeight = 300;
 
         try {
 
