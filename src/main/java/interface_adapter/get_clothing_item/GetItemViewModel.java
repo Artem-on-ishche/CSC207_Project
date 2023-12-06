@@ -8,7 +8,8 @@ import java.beans.PropertyChangeSupport;
 
 public class GetItemViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Get Clothing Item";
-    public static final String Get_BUTTON_LABEL = "View more";
+    public static final String SAVE_CHANGES_LABEL = "Save change";
+    public static final String BACK_LABEL = "Back";
 
     @Getter
     private GetItemState state = new GetItemState();

@@ -2,7 +2,6 @@ package app;
 
 import business_rules.OutfitGenerator;
 import business_rules.PasswordEncryptionService;
-import data_access.InMemoryClothingDataAccessObject;
 import data_access.api.FashionAPI;
 import data_access.api.IpAddressLocationDataSource;
 import data_access.api.OpenMeteoAPI;
@@ -25,6 +24,9 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.update_clothing_item.UpdateController;
+import interface_adapter.update_clothing_item.UpdatePresenter;
+import interface_adapter.update_clothing_item.UpdateViewModel;
 import interface_adapter.view_all_items.ViewAllItemsController;
 import interface_adapter.view_all_items.ViewAllItemsPresenter;
 import interface_adapter.view_all_items.ViewAllItemsViewModel;
@@ -48,6 +50,9 @@ import use_case.signup.SignupDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.update_clothing_item.UpdateInputBoundary;
+import use_case.update_clothing_item.UpdateInteractor;
+import use_case.update_clothing_item.UpdateOutputBoundary;
 import use_case.view_all_clothing_items.ViewAllClothingItemsInputBoundary;
 import use_case.view_all_clothing_items.ViewAllClothingItemsInteractor;
 import use_case.view_all_clothing_items.ViewAllClothingItemsOutputBoundary;
@@ -170,8 +175,13 @@ public class Main {
         //Show Wardrobe
         ShowWardrobeView showWardrobeView = new ShowWardrobeView(viewAllItemsViewModel, viewManagerModel, createWardrobeViewModel, loggedInViewModel,getItemController);
 
+        //Update Controller
+        UpdateOutputBoundary updateOutputBoundary = new UpdatePresenter(viewManagerModel, new UpdateViewModel(), viewAllItemsViewModel, getItemViewModel);
+        UpdateInputBoundary updateInputBoundary = new UpdateInteractor(updateOutputBoundary, clothingItemDao);
+        UpdateController updateController = new UpdateController(updateInputBoundary);
+
         //Edit Item
-        EditItemView editItemView = new EditItemView(getItemViewModel);
+        EditItemView editItemView = new EditItemView(getItemViewModel, updateController);
 
         views.add(signupView, signupViewModel.getViewName());
         views.add(loginView, loginViewModel.getViewName());

@@ -26,7 +26,6 @@ public class ViewAllItemsPresenter implements ViewAllClothingItemsOutputBoundary
 
     @Override
     public void prepareFailureView(String error) {
-        System.out.println("fmwfmw");
         viewAllItemsViewModel.firePropertyChanged();
     }
 }

@@ -11,6 +11,7 @@ public class GetItemController {
     }
 
     public void execute(Long itemId) {
+        System.out.println(itemId);
         GetClothingItemInputData getClothingItemInputData = new GetClothingItemInputData(itemId);
         getClothingItemInputBoundary.execute(getClothingItemInputData);
     }
